@@ -1,0 +1,78 @@
+<svg width="1200" height="580" viewBox="0 0 1200 580" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="map-bg" x1="40" y1="30" x2="1150" y2="550" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#061126"/>
+      <stop offset="0.52" stop-color="#0C1E44"/>
+      <stop offset="1" stop-color="#1D0D42"/>
+    </linearGradient>
+    <linearGradient id="core" x1="460" y1="175" x2="745" y2="410" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1B446F"/>
+      <stop offset="1" stop-color="#352064"/>
+    </linearGradient>
+    <linearGradient id="signal" x1="120" y1="120" x2="1080" y2="470" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#42E8E0"/>
+      <stop offset="0.5" stop-color="#6AA9FF"/>
+      <stop offset="1" stop-color="#A769FF"/>
+    </linearGradient>
+    <filter id="map-glow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="map-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" stroke="#8AB4FF" stroke-opacity="0.07"/>
+    </pattern>
+  </defs>
+
+  <rect x="1" y="1" width="1198" height="578" rx="26" fill="url(#map-bg)" stroke="#285184" stroke-opacity="0.65" stroke-width="2"/>
+  <rect x="1" y="1" width="1198" height="578" rx="26" fill="url(#map-grid)"/>
+
+  <text x="600" y="54" text-anchor="middle" fill="#F7FAFF" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="5">PROJECT SYSTEM</text>
+  <text x="600" y="80" text-anchor="middle" fill="#7298C9" font-family="Arial, Helvetica, sans-serif" font-size="12" letter-spacing="3">FOUR PATHS · ONE OPERATING MINDSET</text>
+
+  <path d="M330 180C425 180 440 230 480 255" stroke="url(#signal)" stroke-width="2" stroke-dasharray="7 8"/>
+  <path d="M870 180C775 180 760 230 720 255" stroke="url(#signal)" stroke-width="2" stroke-dasharray="7 8"/>
+  <path d="M330 410C425 410 440 360 480 330" stroke="url(#signal)" stroke-width="2" stroke-dasharray="7 8"/>
+  <path d="M870 410C775 410 760 360 720 330" stroke="url(#signal)" stroke-width="2" stroke-dasharray="7 8"/>
+
+  <circle cx="600" cy="292" r="118" fill="#42E8E0" fill-opacity="0.04" stroke="#42E8E0" stroke-opacity="0.25"/>
+  <circle cx="600" cy="292" r="89" fill="url(#core)" stroke="url(#signal)" stroke-width="2"/>
+  <circle cx="600" cy="292" r="76" stroke="#A769FF" stroke-opacity="0.35" stroke-dasharray="4 8"/>
+  <circle cx="600" cy="203" r="4" fill="#42E8E0" filter="url(#map-glow)"/>
+  <text x="600" y="278" text-anchor="middle" fill="#F7FAFF" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" letter-spacing="2">MISSION CONTROL</text>
+  <text x="600" y="307" text-anchor="middle" fill="#42E8E0" font-family="Arial, Helvetica, sans-serif" font-size="14" letter-spacing="2">BUSINESS × TECHNOLOGY</text>
+  <text x="600" y="334" text-anchor="middle" fill="#9EB9DB" font-family="Arial, Helvetica, sans-serif" font-size="11" letter-spacing="1">IDEA → ADOPTION</text>
+
+  <g>
+    <rect x="70" y="112" width="290" height="128" rx="18" fill="#0B2142" stroke="#42E8E0" stroke-opacity="0.75"/>
+    <circle cx="101" cy="143" r="11" fill="#42E8E0" fill-opacity="0.2" stroke="#42E8E0"/>
+    <text x="126" y="148" fill="#42E8E0" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" letter-spacing="1.5">OPERATIONS SYSTEMS</text>
+    <text x="101" y="181" fill="#F7FAFF" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">Workflow design + analytics</text>
+    <text x="101" y="207" fill="#8FAFE0" font-family="Arial, Helvetica, sans-serif" font-size="12">Python · KPIs · Process improvement</text>
+  </g>
+
+  <g>
+    <rect x="840" y="112" width="290" height="128" rx="18" fill="#17183F" stroke="#7DA8FF" stroke-opacity="0.75"/>
+    <circle cx="871" cy="143" r="11" fill="#7DA8FF" fill-opacity="0.2" stroke="#7DA8FF"/>
+    <text x="896" y="148" fill="#7DA8FF" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" letter-spacing="1.5">FINANCE + REAL ESTATE</text>
+    <text x="871" y="181" fill="#F7FAFF" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">Underwriting + market signals</text>
+    <text x="871" y="207" fill="#9EB9DB" font-family="Arial, Helvetica, sans-serif" font-size="12">$2B+ portfolios · NPV · IRR</text>
+  </g>
+
+  <g>
+    <rect x="70" y="350" width="290" height="128" rx="18" fill="#102B38" stroke="#55E6A5" stroke-opacity="0.75"/>
+    <circle cx="101" cy="381" r="11" fill="#55E6A5" fill-opacity="0.2" stroke="#55E6A5"/>
+    <text x="126" y="386" fill="#55E6A5" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" letter-spacing="1.5">PRODUCT PROTOTYPING</text>
+    <text x="101" y="419" fill="#F7FAFF" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">Echo rotating lamp</text>
+    <text x="101" y="445" fill="#91CDB8" font-family="Arial, Helvetica, sans-serif" font-size="12">Hardware · Testing · User experience</text>
+  </g>
+
+  <g>
+    <rect x="840" y="350" width="290" height="128" rx="18" fill="#261447" stroke="#A769FF" stroke-opacity="0.75"/>
+    <circle cx="871" cy="381" r="11" fill="#A769FF" fill-opacity="0.2" stroke="#A769FF"/>
+    <text x="896" y="386" fill="#B98CFF" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" letter-spacing="1.5">STRATEGY + DELIVERY</text>
+    <text x="871" y="419" fill="#F7FAFF" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">Roadmaps + alignment</text>
+    <text x="871" y="445" fill="#B7A4D6" font-family="Arial, Helvetica, sans-serif" font-size="12">Agile · Stakeholders · Execution</text>
+  </g>
+
+  <text x="600" y="535" text-anchor="middle" fill="#8FAFE0" font-family="Arial, Helvetica, sans-serif" font-size="13" letter-spacing="3">FRAME → BUILD → TEST → MEASURE → IMPROVE</text>
+</svg>
