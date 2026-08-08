@@ -34,7 +34,7 @@ I care about the full path from idea to adoption: understanding the user, choosi
 
 ### Let's connect
 
-[Portfolio](https://AlphaSoumare.com) · [LinkedIn](https://www.linkedin.com/in/alphasoumare)
+[Portfolio](https://AlphaSoumare.com) · [LinkedIn](https://www.linkedin.com/in/alpha-soumare-381910332)
 
 <p align="center">
   <img src="https://github-readme-stats.vercel.app/api?username=soumarealpha2-hub&show_icons=true&hide_border=true&theme=tokyonight" alt="Alpha's GitHub statistics" />
