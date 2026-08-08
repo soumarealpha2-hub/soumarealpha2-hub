@@ -3,10 +3,13 @@
 </p>
 
 <p align="center">
-  <a href="https://AlphaSoumare.com"><img src="https://img.shields.io/badge/PORTFOLIO-AlphaSoumare.com-42E8E0?style=for-the-badge&labelColor=07152D" alt="Portfolio" /></a>
+  <img src="https://img.shields.io/badge/NYU_TANDON-BUSINESS_%2B_TECHNOLOGY-8B6CFF?style=for-the-badge&labelColor=07152D" alt="NYU Tandon Business and Technology" />
+  <img src="https://img.shields.io/badge/BASE-NEW_YORK_CITY-42E8E0?style=for-the-badge&labelColor=07152D" alt="Based in New York City" />
   <a href="https://www.linkedin.com/in/alpha-soumare-381910332"><img src="https://img.shields.io/badge/LINKEDIN-Connect-8B6CFF?style=for-the-badge&logo=linkedin&logoColor=white&labelColor=07152D" alt="LinkedIn" /></a>
   <a href="https://github.com/soumarealpha2-hub/soumarealpha2-hub/actions/workflows/portfolio-tests.yml"><img src="https://img.shields.io/github/actions/workflow/status/soumarealpha2-hub/soumarealpha2-hub/portfolio-tests.yml?style=for-the-badge&label=BUILD&labelColor=07152D&color=55E6A5" alt="Portfolio test status" /></a>
 </p>
+
+<p align="center"><code>ALPHA.OS // NYC NODE // STATUS: BUILDING</code></p>
 
 <h3 align="center">Business + Technology @ NYU Tandon</h3>
 <p align="center">
@@ -79,9 +82,7 @@ Good technology should make work clearer, faster, and more useful for the people
 I'm exploring **2027 opportunities** across technology consulting, strategy, product, operations, and financial technology.
 
 <p align="center">
-  <a href="https://AlphaSoumare.com"><strong>Explore my portfolio</strong></a>
-  &nbsp;·&nbsp;
-  <a href="https://www.linkedin.com/in/alpha-soumare-381910332"><strong>Connect on LinkedIn</strong></a>
+  <a href="https://www.linkedin.com/in/alpha-soumare-381910332"><strong>Open LinkedIn Channel</strong></a>
 </p>
 
 <p align="center"><code>SYSTEM STATUS: ONLINE</code></p>
