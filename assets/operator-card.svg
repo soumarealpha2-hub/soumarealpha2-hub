@@ -1,0 +1,64 @@
+<svg width="1200" height="430" viewBox="0 0 1200 430" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="card-bg" x1="30" y1="20" x2="1170" y2="410" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#071124"/>
+      <stop offset="0.55" stop-color="#101D3B"/>
+      <stop offset="1" stop-color="#25123F"/>
+    </linearGradient>
+    <linearGradient id="edge" x1="100" y1="80" x2="1090" y2="350" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#42E8E0"/>
+      <stop offset="0.54" stop-color="#729DFF"/>
+      <stop offset="1" stop-color="#B066FF"/>
+    </linearGradient>
+    <filter id="card-glow" x="-70%" y="-70%" width="240%" height="240%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="card-grid" width="36" height="36" patternUnits="userSpaceOnUse">
+      <path d="M36 0H0V36" stroke="#8AAEFF" stroke-opacity="0.055"/>
+    </pattern>
+  </defs>
+
+  <rect x="1" y="1" width="1198" height="428" rx="24" fill="url(#card-bg)" stroke="url(#edge)" stroke-opacity="0.58" stroke-width="2"/>
+  <rect x="1" y="1" width="1198" height="428" rx="24" fill="url(#card-grid)"/>
+  <text x="56" y="54" fill="#7895C5" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" letter-spacing="3">OPERATOR FILE // AS-001</text>
+  <text x="1144" y="54" text-anchor="end" fill="#55E6A5" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" letter-spacing="3">VERIFIED ONLINE</text>
+
+  <g transform="translate(215 222)">
+    <circle r="126" fill="#42E8E0" fill-opacity="0.035" stroke="#42E8E0" stroke-opacity="0.22"/>
+    <circle r="102" fill="#0B1933" stroke="url(#edge)" stroke-width="2"/>
+    <path d="M0 -76L66 -38V38L0 76L-66 38V-38Z" fill="#13254B" stroke="#7BA4FF" stroke-opacity="0.6"/>
+    <path d="M0 -61L53 -30V30L0 61L-53 30V-30Z" stroke="#42E8E0" stroke-opacity="0.38" stroke-dasharray="5 7"/>
+    <text x="0" y="18" text-anchor="middle" fill="#F7FAFF" font-family="Arial, Helvetica, sans-serif" font-size="55" font-weight="800" letter-spacing="4">AS</text>
+    <circle cx="0" cy="-102" r="5" fill="#FFCC66" filter="url(#card-glow)"/>
+  </g>
+
+  <text x="390" y="105" fill="#42E8E0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" letter-spacing="3">PRIMARY CLASS</text>
+  <text x="390" y="140" fill="#F7FAFF" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="800">SYSTEMS STRATEGIST</text>
+  <text x="390" y="174" fill="#9EB8DE" font-family="Arial, Helvetica, sans-serif" font-size="14" letter-spacing="1">Business clarity + technical execution</text>
+
+  <line x1="390" y1="202" x2="1134" y2="202" stroke="#7198D1" stroke-opacity="0.25"/>
+
+  <text x="390" y="240" fill="#7895C5" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" letter-spacing="2">SUBCLASSES</text>
+  <g transform="translate(390 258)">
+    <rect width="138" height="34" rx="8" fill="#0A2533" stroke="#42E8E0" stroke-opacity="0.55"/>
+    <text x="69" y="22" text-anchor="middle" fill="#BDEEEA" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" letter-spacing="1">PRODUCT</text>
+  </g>
+  <g transform="translate(544 258)">
+    <rect width="138" height="34" rx="8" fill="#10203B" stroke="#719DFF" stroke-opacity="0.55"/>
+    <text x="69" y="22" text-anchor="middle" fill="#C0D2FF" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" letter-spacing="1">OPERATIONS</text>
+  </g>
+  <g transform="translate(698 258)">
+    <rect width="138" height="34" rx="8" fill="#1A183B" stroke="#987AFF" stroke-opacity="0.55"/>
+    <text x="69" y="22" text-anchor="middle" fill="#D4C7FF" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" letter-spacing="1">ANALYTICS</text>
+  </g>
+  <g transform="translate(852 258)">
+    <rect width="138" height="34" rx="8" fill="#281A31" stroke="#FFCC66" stroke-opacity="0.55"/>
+    <text x="69" y="22" text-anchor="middle" fill="#FFE7A3" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" letter-spacing="1">FINANCE</text>
+  </g>
+
+  <text x="390" y="337" fill="#7895C5" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" letter-spacing="2">CORE LOOP</text>
+  <text x="390" y="371" fill="#F7FAFF" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" letter-spacing="1">FRAME  →  BUILD  →  TEST  →  MEASURE  →  IMPROVE</text>
+  <rect x="390" y="392" width="744" height="4" rx="2" fill="#1C2B4D"/>
+  <rect x="390" y="392" width="744" height="4" rx="2" fill="url(#edge)"/>
+</svg>
