@@ -14,6 +14,7 @@ I am especially interested in technology consulting, strategic consulting, produ
 - Supported fleet-technology deployment across **100+ vehicles**, improving dispatch accuracy by **23%**
 - Analyzed **$2B+** in commercial real estate portfolios across **10+ U.S. markets**
 - Helped coordinate technology evaluation and agile planning across a **30+ student** engineering program
+- Led the development, testing, and presentation of an **interactive rotating lamp prototype** that responded to sound
 - Teach and support **100+ NYU students** working with C++, Java, and Fusion 360
 
 ### Featured projects
@@ -22,6 +23,7 @@ I am especially interested in technology consulting, strategic consulting, produ
 | --- | --- | --- |
 | [Delivery Operations Analytics](./delivery-ops-analytics) | KPI design, regional analysis, executive recommendations | Python, Pandas, Pytest |
 | [CRE Underwriting Model](./cre-underwriting-model) | NOI, debt service, DSCR, cash-on-cash return, NPV, and IRR | Python, JSON, Pytest |
+| [Echo Rotating Lamp](./business-technology-case-studies/case-studies/echo-rotating-lamp.md) | Hardware product development, usability testing, and project delivery | Electronics, Prototyping, User-Centered Design |
 | [Business Technology Case Studies](./business-technology-case-studies) | Problem framing, stakeholder alignment, and measurable outcomes | Strategy, Agile, Operations |
 
 ### Toolkit
