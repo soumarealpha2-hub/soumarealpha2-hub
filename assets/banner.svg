@@ -1,0 +1,31 @@
+<svg width="1200" height="360" viewBox="0 0 1200 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="40" y1="20" x2="1160" y2="340" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#07152D"/>
+      <stop offset="0.52" stop-color="#10285B"/>
+      <stop offset="1" stop-color="#251155"/>
+    </linearGradient>
+    <linearGradient id="line" x1="250" y1="60" x2="970" y2="300" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#42E8E0"/>
+      <stop offset="1" stop-color="#A769FF"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" stroke="#8AB4FF" stroke-opacity="0.10"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="360" rx="24" fill="url(#bg)"/>
+  <rect width="1200" height="360" rx="24" fill="url(#grid)"/>
+  <circle cx="1080" cy="62" r="150" fill="#7446E8" fill-opacity="0.10"/>
+  <circle cx="103" cy="329" r="165" fill="#33E1D4" fill-opacity="0.08"/>
+  <path d="M70 278C205 224 303 276 427 204C551 132 651 167 779 112C907 57 1019 78 1130 45" stroke="url(#line)" stroke-opacity="0.5" stroke-width="2"/>
+  <circle cx="427" cy="204" r="5" fill="#42E8E0" filter="url(#glow)"/>
+  <circle cx="779" cy="112" r="5" fill="#A769FF" filter="url(#glow)"/>
+  <text x="600" y="145" text-anchor="middle" fill="#F7FAFF" font-family="Arial, Helvetica, sans-serif" font-size="54" font-weight="700" letter-spacing="4">ALPHA SOUMARÉ</text>
+  <rect x="320" y="175" width="560" height="2" fill="url(#line)"/>
+  <text x="600" y="225" text-anchor="middle" fill="#BFD7FF" font-family="Arial, Helvetica, sans-serif" font-size="22" letter-spacing="2">BUSINESS × TECHNOLOGY</text>
+  <text x="600" y="267" text-anchor="middle" fill="#8FAFE0" font-family="Arial, Helvetica, sans-serif" font-size="17" letter-spacing="1">OPERATIONS · PRODUCT · ANALYTICS · STRATEGY</text>
+</svg>
