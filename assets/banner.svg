@@ -24,6 +24,15 @@
   <path d="M70 278C205 224 303 276 427 204C551 132 651 167 779 112C907 57 1019 78 1130 45" stroke="url(#line)" stroke-opacity="0.5" stroke-width="2"/>
   <circle cx="427" cy="204" r="5" fill="#42E8E0" filter="url(#glow)"/>
   <circle cx="779" cy="112" r="5" fill="#A769FF" filter="url(#glow)"/>
+  <g transform="translate(1050 68) rotate(-18)">
+    <path d="M0 0L28 8L43 24L19 21L5 34L7 17L0 0Z" fill="#F7FAFF" fill-opacity="0.9"/>
+    <path d="M7 17L-8 23L4 7Z" fill="#42E8E0" filter="url(#glow)"/>
+    <circle cx="22" cy="14" r="4" fill="#A769FF"/>
+  </g>
+  <circle cx="119" cy="69" r="2" fill="#F7FAFF"/>
+  <circle cx="174" cy="111" r="1.5" fill="#42E8E0"/>
+  <circle cx="105" cy="151" r="1" fill="#A769FF"/>
+  <path d="M119 69L174 111L105 151L119 69Z" stroke="#8AB4FF" stroke-opacity="0.28"/>
   <text x="600" y="145" text-anchor="middle" fill="#F7FAFF" font-family="Arial, Helvetica, sans-serif" font-size="54" font-weight="700" letter-spacing="4">ALPHA SOUMARÉ</text>
   <rect x="320" y="175" width="560" height="2" fill="url(#line)"/>
   <text x="600" y="225" text-anchor="middle" fill="#BFD7FF" font-family="Arial, Helvetica, sans-serif" font-size="22" letter-spacing="2">BUSINESS × TECHNOLOGY</text>
