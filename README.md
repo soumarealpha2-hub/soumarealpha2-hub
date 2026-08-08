@@ -20,9 +20,9 @@ I am especially interested in technology consulting, strategic consulting, produ
 
 | Project | What it demonstrates | Stack |
 | --- | --- | --- |
-| [Delivery Operations Analytics](https://github.com/soumarealpha2-hub/delivery-ops-analytics) | KPI design, regional analysis, executive recommendations | Python, Pandas, Pytest |
-| [CRE Underwriting Model](https://github.com/soumarealpha2-hub/cre-underwriting-model) | NOI, debt service, DSCR, cash-on-cash return, NPV, and IRR | Python, JSON, Pytest |
-| [Business Technology Case Studies](https://github.com/soumarealpha2-hub/business-technology-case-studies) | Problem framing, stakeholder alignment, and measurable outcomes | Strategy, Agile, Operations |
+| [Delivery Operations Analytics](./delivery-ops-analytics) | KPI design, regional analysis, executive recommendations | Python, Pandas, Pytest |
+| [CRE Underwriting Model](./cre-underwriting-model) | NOI, debt service, DSCR, cash-on-cash return, NPV, and IRR | Python, JSON, Pytest |
+| [Business Technology Case Studies](./business-technology-case-studies) | Problem framing, stakeholder alignment, and measurable outcomes | Strategy, Agile, Operations |
 
 ### Toolkit
 
