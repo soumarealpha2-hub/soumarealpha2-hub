@@ -1,0 +1,23 @@
+name: StratForge Tests
+
+on:
+  push:
+    paths:
+      - 'stratforge/**'
+      - '.github/workflows/stratforge-tests.yml'
+  pull_request:
+    paths:
+      - 'stratforge/**'
+      - '.github/workflows/stratforge-tests.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r stratforge/requirements.txt
+      - run: python -m py_compile stratforge/app.py
+      - run: python -c "import pandas, numpy, plotly, streamlit"
