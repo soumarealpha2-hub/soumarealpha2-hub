@@ -43,10 +43,11 @@ I like the hard middle of a project: translating between people and technology, 
 
 | Quest | Objective | Loadout |
 | --- | --- | --- |
-| **[01 // Delivery Operations Analytics](./delivery-ops-analytics)** | Turn synthetic delivery records into reliability, cost, productivity, and regional KPIs, then connect the findings to operating decisions. | `Python` `Pandas` `Pytest` |
-| **[02 // CRE Underwriting Model](./cre-underwriting-model)** | Evaluate a fictional commercial real estate acquisition through NOI, debt service, DSCR, cash-on-cash return, NPV, IRR, and exit value. | `Python` `Finance` `JSON` |
-| **[03 // Echo Rotating Lamp](./business-technology-case-studies/case-studies/echo-rotating-lamp.md)** | Lead delivery and testing for a working prototype that rotates, responds to sound, and was presented to NYU faculty and advisors. | `Prototyping` `Electronics` `Testing` |
-| **[04 // Business Technology Case Files](./business-technology-case-studies)** | Show how I frame problems, align stakeholders, build operating systems, and connect technology decisions to measurable outcomes. | `Strategy` `Agile` `Operations` |
+| **[01 // NexusOps](./nexusops)** | Operate an interactive supply-chain control tower that scores supplier risk, surfaces inventory and service issues, and models demand, lead-time, and supplier-disruption scenarios. | `Python` `Streamlit` `Pandas` `Plotly` |
+| **[02 // Delivery Operations Analytics](./delivery-ops-analytics)** | Turn synthetic delivery records into reliability, cost, productivity, and regional KPIs, then connect the findings to operating decisions. | `Python` `Pandas` `Pytest` |
+| **[03 // CRE Underwriting Model](./cre-underwriting-model)** | Evaluate a fictional commercial real estate acquisition through NOI, debt service, DSCR, cash-on-cash return, NPV, IRR, and exit value. | `Python` `Finance` `JSON` |
+| **[04 // Echo Rotating Lamp](./business-technology-case-studies/case-studies/echo-rotating-lamp.md)** | Lead delivery and testing for a working prototype that rotates, responds to sound, and was presented to NYU faculty and advisors. | `Prototyping` `Electronics` `Testing` |
+| **[05 // Business Technology Case Files](./business-technology-case-studies)** | Show how I frame problems, align stakeholders, build operating systems, and connect technology decisions to measurable outcomes. | `Strategy` `Agile` `Operations` |
 
 <p align="center">
   <img src="./assets/project-map.svg" alt="Alpha's business and technology mission map" width="100%" />
