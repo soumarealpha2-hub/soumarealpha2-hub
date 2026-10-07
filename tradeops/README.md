@@ -56,6 +56,29 @@ Fixed-income quotes are prices per $100 par; equities and ETF prices are per sha
 
 The stress simulator is an illustrative capacity model. Exceptions stay open and clean trades settle up to available capacity. It does not predict actual settlement outcomes or simulate funding, inventory, or market prices.
 
+## Host on Vercel
+
+This app has a standalone Vite build for Vercel. It uses the existing dashboard and sample data, without Base44 services or hosting credentials.
+
+Import this repository in Vercel and use these settings:
+
+| Setting | Value |
+| --- | --- |
+| Root Directory | `tradeops` |
+| Framework | Vite |
+| Build Command | `npm run build:vercel` |
+| Output Directory | `dist-vercel` |
+| Environment variables | None required |
+
+The build and SPA routing are configured in `vercel.json`. Pushes to the linked production branch can deploy automatically.
+
+For the standalone version locally:
+
+```bash
+pnpm dev:vercel
+pnpm build:vercel
+```
+
 ## Stack
 
 React, TypeScript, Vinext, Tailwind CSS v4, shadcn/ui, Lucide icons, and Cloudflare-compatible build tooling. Dependency versions are pinned in `pnpm-lock.yaml`.
