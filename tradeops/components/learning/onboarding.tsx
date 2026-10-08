@@ -31,13 +31,20 @@ export function GuidedTour({step,onNext,onBack,onSkip,onAction}:{step:number;onN
   const card=useRef<HTMLDivElement>(null);
   useEffect(()=>{
     card.current?.focus();
-    const element=document.querySelector(`[data-tour="${current.target}"]`);
+    let element=document.querySelector(`[data-tour="${current.target}"]`);
     const measure=()=>setRect(element?.getBoundingClientRect()??null);
     element?.scrollIntoView({block:'center',behavior:'instant'});
     const frame=requestAnimationFrame(measure);
     const observer=new ResizeObserver(measure); if(element)observer.observe(element);
+    // The Learning Center loads on demand; highlight it as soon as its target mounts.
+    const mounts=new MutationObserver(()=>{
+      if(element?.isConnected)return;
+      element=document.querySelector(`[data-tour="${current.target}"]`);
+      if(element){observer.observe(element);element.scrollIntoView({block:'center',behavior:'instant'});measure();}
+    });
+    mounts.observe(document.body,{childList:true,subtree:true});
     window.addEventListener('resize',measure);window.addEventListener('scroll',measure,true);
-    return ()=>{cancelAnimationFrame(frame);observer.disconnect();window.removeEventListener('resize',measure);window.removeEventListener('scroll',measure,true);};
+    return ()=>{cancelAnimationFrame(frame);observer.disconnect();mounts.disconnect();window.removeEventListener('resize',measure);window.removeEventListener('scroll',measure,true);};
   },[current.target]);
   useEffect(()=>{const key=(e:KeyboardEvent)=>{if(e.key==='Escape')onSkip();};window.addEventListener('keydown',key);return ()=>window.removeEventListener('keydown',key);},[onSkip]);
   const spotlight:CSSProperties|undefined=rect?{top:Math.max(4,rect.top-6),left:Math.max(4,rect.left-6),width:Math.min(rect.width+12,window.innerWidth-8),height:Math.min(rect.height+12,window.innerHeight-8)}:undefined;

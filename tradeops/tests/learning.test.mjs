@@ -51,6 +51,7 @@ test('retaking preserves the earned badge and best score through save and reload
   assert.equal(restored.lessons[lesson.id].completed,true);
   assert.equal(restored.lessons[lesson.id].bestScore,100);
   assert.equal(canComplete(lesson,restored.lessons[lesson.id]),false);
+  assert.equal(recommendLesson(restored).lesson.id,lesson.id);
   const question=lesson.questions[0];
   let lp=recordAnswer(lesson,retaking,question.id,(question.answer+1)%3);
   lp=completeLesson(lesson,answered(lesson,lp));

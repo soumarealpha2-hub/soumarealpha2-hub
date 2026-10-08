@@ -1,6 +1,7 @@
 /* Learning uses the same desk palette, spacing, and accessible controls. */
 .text-button {display:inline-flex;align-items:center;gap:7px;font-size:.875rem;font-weight:550;color:#2563eb;background:none;border:0;cursor:pointer;padding:3px 0}
 .text-button:hover {color:#1845a6;text-decoration:underline;text-underline-offset:3px}
+[data-slot=sheet-content][data-state=closed],[data-slot=dialog-content][data-state=closed],[data-slot=sheet-overlay][data-state=closed],[data-slot=dialog-overlay][data-state=closed] {pointer-events:none}
 .button:disabled {opacity:.5;cursor:not-allowed}
 .learning-center :is(button,input,select,summary):focus-visible,.explain-button:focus-visible,.metric-explain:focus-visible,.tour-coach button:focus-visible {outline:2px solid #2563eb;outline-offset:3px}
 .learning-center:focus {outline:none}

@@ -114,7 +114,7 @@ export function parseProgress(raw:string|null):LearningProgress {
       for(const question of lesson.questions){
         const a=lp.answers?.[question.id];
         if(!a || typeof a.choice!=='number' || !Number.isInteger(a.choice) || a.choice<0 || a.choice>=question.choices.length) continue;
-        answers[question.id]={choice:a.choice,correct:a.choice===question.answer,firstCorrect:a.firstCorrect===true,attempts:Math.max(1,bounded(a.attempts,999))};
+        answers[question.id]={choice:a.choice,correct:a.choice===question.answer,firstCorrect:a.firstCorrect===true&&a.choice===question.answer,attempts:Math.max(1,bounded(a.attempts,999))};
       }
       const practice={stage:bounded(lp.practice?.stage,lesson.exercise.stages),input:typeof lp.practice?.input==='string'?lp.practice.input.slice(0,100):'',checks:Array.isArray(lp.practice?.checks)?lp.practice.checks.filter((s:unknown):s is string=>typeof s==='string' && ['cash','stock','source','reviewer','audit'].includes(s)).slice(0,5):[]};
       const bestScore=scoreValue(lp.bestScore),lastScore=scoreValue(lp.lastScore);
@@ -146,7 +146,7 @@ export function completeLesson(lesson:Lesson,lp:LessonProgress):LessonProgress {
   return {...lp,section:3,completed:true,lastScore:score,bestScore:Math.max(lp.bestScore??0,score)};
 }
 export function recommendLesson(progress:LearningProgress):{lesson:Lesson;reason:string} {
-  const resume=progress.lastLesson && LESSONS.find(l=>l.id===progress.lastLesson && progress.lessons[l.id] && !progress.lessons[l.id].completed);
+  const resume=progress.lastLesson && LESSONS.find(l=>l.id===progress.lastLesson && progress.lessons[l.id] && (!progress.lessons[l.id].completed || progress.lessons[l.id].section===2&&!canComplete(l,progress.lessons[l.id])));
   if(resume)return {lesson:resume,reason:'Continue the tutorial you started. Your exercise and quiz checkpoints are saved.'};
   const review=LESSONS.filter(l=>progress.lessons[l.id]?.completed && (progress.lessons[l.id].bestScore??100)<70).sort((a,b)=>(progress.lessons[a.id].bestScore??0)-(progress.lessons[b.id].bestScore??0))[0];
   if(review)return {lesson:review,reason:`Review ${review.title.toLowerCase()}: your best first-attempt quiz score is ${progress.lessons[review.id].bestScore}%.`};
