@@ -2,7 +2,7 @@
 
 A trading operations command center built by Alpha Soumaré.
 
-**[Open the live app](https://tradeops.soumarealpha2.chatgpt.site)**
+**[Open the live app](https://tradeops-training.vercel.app/)**
 
 ## Features
 
@@ -11,9 +11,13 @@ A trading operations command center built by Alpha Soumaré.
 - Exception investigation, priority queues, separate matching and settlement actions.
 - Trade details, lifecycle views, and a session activity log.
 - Workload simulator with volume, capacity, and exception-rate sliders.
+- Optional six-step onboarding with interactive highlights, actions, skip, and restart.
+- Eight learning modules, 24 quiz questions, and independent simulated cases.
+- Beginner, Intermediate, and Advanced paths with performance-based recommendations.
+- Contextual explanations, glossary, earned badges, and saved browser progress.
 - Responsive layout with Tailwind CSS v4 and shadcn/ui components.
 
-All trade records and prices are synthetic. Changes reset on page reload. The app does not connect to a broker, bank, or market-data service.
+All trade records and prices are synthetic. Workspace changes reset on page reload; tutorial progress saves in browser local storage (versioned as `tradeops.learning.v1`). Progress is device-specific and does not require an account. The app does not connect to a broker, bank, or market-data service.
 
 ## Run locally
 
@@ -33,7 +37,7 @@ Open http://localhost:5173.
 pnpm exec tsc --noEmit
 
 # Core calculations and trade lifecycle checks
-node --experimental-strip-types --test tests/operations.test.mjs
+node --experimental-strip-types --test tests/*.test.mjs
 
 # Production build
 pnpm build
@@ -45,6 +49,10 @@ pnpm build
 | --- | --- |
 | `app/page.tsx` | Dashboard, blotter, exceptions, simulator, and interactions |
 | `app/globals.css` | Tailwind imports, design tokens, and responsive styling |
+| `lib/learning.ts` | Curriculum, quiz scoring, completion rules, and saved-progress validation |
+| `components/learning/` | Onboarding, explanations, lessons, quizzes, and practice lab |
+| `app/learning.css` | Responsive learning interface and tutorial highlights |
+| `tests/learning.test.mjs` | Progress recovery, scoring, completion, and recommendations |
 | `lib/operations.ts` | Sample records, KPIs, trade transitions, and capacity model |
 | `tests/operations.test.mjs` | Calculation and lifecycle checks |
 | `components/ui/` | Shared shadcn/ui controls |
