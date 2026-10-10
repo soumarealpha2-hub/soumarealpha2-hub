@@ -1,7 +1,7 @@
 'use client';
 
-import {useState,useSyncExternalStore} from 'react';
-import {AnimatePresence,m as motion} from 'framer-motion';
+import {useState,useSyncExternalStore,type ReactNode} from 'react';
+import {AnimatePresence,useIsPresent,m as motion} from 'framer-motion';
 import {ArrowDown,ArrowRight,Check,CheckCircle2,ChevronRight,FlaskConical,Lightbulb,LockKeyhole,ShieldCheck,Trophy,Zap} from 'lucide-react';
 import {MISSIONS,advanceMission,replayMission,emptyMission,emptyMissions,earnedMissionXp,mastery,parseMissions,type MissionProgress,type MissionState,type MissionId} from '@/lib/missions';
 import type {LearningProgress} from '@/lib/learning';
@@ -21,6 +21,7 @@ export function MasteryBar({learning}:{learning:LearningProgress}) {
   const wins=MISSIONS.filter(m=>progress.earned.includes(m.id));
   return <section className="mastery-strip" aria-label="Training mastery"><div className="mastery-rank"><span className="rank-emblem"><ShieldCheck size={24}/></span><div><small>YOUR DESK RANK · LEVEL {rank.level}</small><strong>{rank.title}</strong></div></div><div className="mastery-xp"><span><Zap size={14}/>{xp.toLocaleString()} XP <small>{rank.next?`/ ${rank.next.toLocaleString()} next level`:'· top training level'}</small></span><div role="progressbar" aria-label="Skill level progress" aria-valuemin={0} aria-valuemax={100} aria-valuenow={rank.next?Math.round((xp-rank.min)/(rank.next-rank.min)*100):100}><motion.i animate={{width:`${rank.next?(xp-rank.min)/(rank.next-rank.min)*100:100}%`}}/></div></div><div className="mastery-achievements"><Trophy size={19}/><span>{wins.length} / 3 mission achievements</span><small>{saved?'Progress saved on this device':'Saving unavailable in this browser'}</small></div></section>;
 }
+function MissionScreen({children}:{children:ReactNode}){const present=useIsPresent();return <motion.div className="mission-screen" aria-hidden={!present} style={{pointerEvents:present?'auto':'none'}} initial={{opacity:0,y:9}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-7}} transition={{duration:.18}}>{children}</motion.div>;}
 const stages=['Order','Execute','Match','Settle','Reconcile'];
 const currency=(n:number)=>n.toLocaleString('en-US',{style:'currency',currency:'USD'});
 export function MissionDesk({onLearn,onExplain}:{onLearn:()=>void;onExplain:(id:string)=>void}) {
@@ -40,7 +41,7 @@ export function MissionDesk({onLearn,onExplain}:{onLearn:()=>void;onExplain:(id:
     <div className="mission-stage"><div className="orbit orbit-one"/><div className="orbit orbit-two"/><span className="stage-coordinate">SIM / 001 · EQUITIES</span><div className="mission-selector" role="group" aria-label="Choose a mission">{MISSIONS.map((m,i)=><button key={m.id} aria-pressed={mission.id===m.id} onClick={()=>choose(m.id)}>{progress.earned.includes(m.id)?<Check size={13}/>:<span>0{i+1}</span>}{m.title}</button>)}</div>
       <div className="trade-journey" aria-label="Trade journey timeline">{stages.map((label,i)=><button key={label} className={state.step>i?'done':state.step===i?'current':''} onClick={()=>onExplain(i===2?'matching':i===3?'settlement':i===4?'reconciliation':'trade')} aria-label={`Explain ${label}`}><span>{state.step>i?<Check size={14}/>:i+1}</span><small>{label}</small>{i<4&&<i/>}</button>)}</div>
       <div className="mission-console" id="mission-console" tabIndex={-1}><div className="console-heading"><span><FlaskConical size={13}/>{mission.tag}</span><span className="mission-reward"><Zap size={12}/>300 XP · first completion</span></div>
-        <AnimatePresence mode="wait" initial={false}><motion.div key={`${mission.id}-${state.step}`} className="mission-screen" initial={{opacity:0,y:9}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-7}} transition={{duration:.18}}>
+        <AnimatePresence mode="wait" initial={false}><MissionScreen key={`${mission.id}-${state.step}`}>
           <div className="execution-ticket"><div><small>BUY ORDER / SAMPLE</small><strong>{mission.symbol}<span>USD</span></strong></div><div><small>{mission.quantity} SHARES × {currency(mission.price)}</small><strong>{currency(value)}</strong></div></div>
           {state.step===0&&<><h3>A trade is an agreement.<br/>You make it a good handoff.</h3><p>{mission.description} The sample client has approved the quantity and price shown above.</p><button disabled={!ready} className="button primary" onClick={next}>Accept the sample order<ArrowRight size={16}/></button></>}
           {state.step===1&&<><h3>Execute the training trade.</h3><p>Capture the agreed {mission.quantity} shares at {currency(mission.price)}. Execution records the agreement; it does not mean cash and securities have settled.</p><button className="button primary" onClick={next}>Execute simulated trade<ArrowRight size={16}/></button></>}
@@ -50,7 +51,7 @@ export function MissionDesk({onLearn,onExplain}:{onLearn:()=>void;onExplain:(id:
           {state.step===5&&<div className="mission-complete"><span className="complete-seal"><Trophy size={32}/></span><h3>From trade to trust.</h3><p>You executed, matched, settled and reconciled the sample trade. Achievement unlocked. Your first completion earns 300 XP.</p><div className="mission-actions"><button className="button primary" onClick={()=>choose(MISSIONS[(MISSIONS.findIndex(m=>m.id===mission.id)+1)%MISSIONS.length].id)}>Choose the next mission<ArrowRight size={16}/></button><button className="button" onClick={replay}>Replay mission</button></div></div>}
           {feedback&&<p className={`mission-feedback ${feedback.correct?'correct':'incorrect'}`} role="status">{feedback.text}</p>}
           {state.step<5&&<><button className="mission-hint" onClick={()=>setHint(!hint)} aria-expanded={hint}><Lightbulb size={13}/>{hint?'Hide hint':'Need a hint?'}</button>{hint&&<p className="mission-hint-copy">{state.step===2?'The original execution is the source of truth for quantity.':state.step===3?'The cash shortfall is trade value minus available cash. Verify funding before release.':state.step===4?'Received shares plus a verified pending movement should explain the executed quantity.':'Move through each checkpoint. Matching confirms details; settlement transfers cash and securities.'}</p>}</>}
-        </motion.div></AnimatePresence>
+        </MissionScreen></AnimatePresence>
         <div className="console-footer"><span><span className="live-dot"/>SIMULATION ONLY</span><span>{saved?'CHECKPOINT SAVED':'SAVING UNAVAILABLE'}</span></div>
       </div>
     </div>
