@@ -17,7 +17,7 @@ export const TOUR_STEPS:{title:string;text:string;why:string;target:string;view:
 export function WelcomeTutorial({open,onStart,onSkip}:{open:boolean;onStart:()=>void;onSkip:()=>void}) {
   return <Dialog open={open} onOpenChange={o=>{if(!o)onSkip();}}><DialogContent className="welcome-tutorial" showCloseButton={false}>
     <div className="welcome-icon"><Compass size={29}/></div>
-    <DialogHeader><div className="eyebrow">WELCOME TO TRADEOPS</div><DialogTitle>Your first day on the desk.</DialogTitle><DialogDescription>You do not need a finance background. We’ll show you the workspace, then help you learn by doing.</DialogDescription></DialogHeader>
+    <DialogHeader><div className="eyebrow">WELCOME TO TRADEOPS ACADEMY</div><DialogTitle>Your first day on the desk.</DialogTitle><DialogDescription>You do not need a finance background. We’ll show you the workspace, then help you learn by doing.</DialogDescription></DialogHeader>
     <div className="welcome-features"><span><CheckCircle2 size={17}/>A quick tour of the real tools</span><span><BookOpen size={17}/>Short lessons and sample trade cases</span><span><Compass size={17}/>Optional, at your own pace</span></div>
     <button className="button primary" onClick={onStart}>Start guided walkthrough<ArrowRight size={17}/></button>
     <button className="text-button" onClick={onSkip}>Skip Tutorial</button>
