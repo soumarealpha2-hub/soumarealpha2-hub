@@ -12,5 +12,6 @@ export default defineConfig({
   build: {
     outDir: fileURLToPath(new URL("./dist-vercel", import.meta.url)),
     emptyOutDir: true,
+    rolldownOptions: {output: {codeSplitting: {groups: [{name: "motion", test: /node_modules[\\/](?:framer-motion|motion-dom|motion-utils)[\\/]/}]}}},
   },
 });
