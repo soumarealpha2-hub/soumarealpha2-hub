@@ -21,7 +21,7 @@ export function WelcomeTutorial({open,onStart,onSkip}:{open:boolean;onStart:()=>
     <div className="welcome-features"><span><CheckCircle2 size={17}/>A quick tour of the real tools</span><span><BookOpen size={17}/>Short lessons and sample trade cases</span><span><Compass size={17}/>Optional, at your own pace</span></div>
     <button className="button primary" onClick={onStart}>Start guided walkthrough<ArrowRight size={17}/></button>
     <button className="text-button" onClick={onSkip}>Skip Tutorial</button>
-    <p className="learning-footnote">Restart the tutorial anytime from the sidebar or Learning Center.</p>
+    <p className="learning-footnote">Restart the tutorial anytime from the header or Academy.</p>
   </DialogContent></Dialog>;
 }
 
