@@ -38,8 +38,9 @@ export function SpotlightTour({step,onStep,onClose}:{step:number;onStep:(n:numbe
  let left=box?Math.max(12,Math.min(box.left,box.viewportWidth-width-12)):12;
  let top=box?box.top+box.height+18:80;
  if(box&&!mobile&&box.left+box.width+width+28<box.viewportWidth){left=box.left+box.width+20;top=Math.max(12,box.top);}
- const below=box&&top+270>box.viewportHeight;
- if(box&&below)top=Math.max(12,box.top-280);
+ const below=box&&top+360>box.viewportHeight;
+ if(box&&below)top=Math.max(12,box.top-370);
+ if(box)top=Math.min(top,Math.max(12,box.viewportHeight-360-12));
  return typeof document==='undefined'?null:createPortal(<div className="academy ac-spotlight-root">
   {box?<div className="ac-spotlight-ring" style={{left:box.left,top:box.top,width:box.width,height:box.height}} aria-hidden="true"/>:<div className="ac-spotlight-loading"/>}
   <motion.div ref={panel} role="dialog" aria-label={`Platform tour: ${s.title}`} aria-describedby="spotlight-description" tabIndex={-1} className="ac-spotlight-panel" style={{left,top,width}} initial={{opacity:0,y:reduced?0:8}} animate={{opacity:1,y:0}} transition={{duration:reduced?0:.18}} key={step}>
