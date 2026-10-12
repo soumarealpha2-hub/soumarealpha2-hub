@@ -7,11 +7,13 @@ import {pathToFileURL} from 'node:url';
 import ts from 'typescript';
 // Compile pure domain modules for Node; production still uses Vite's TypeScript pipeline.
 const dir=mkdtempSync(join(tmpdir(),'tradeops-domain-'));
-for(const name of ['careers','assessment','models','lessons','trials','progress','career-tools','capstones']){
+for(const name of ['careers','assessment','models','lessons','trials','progress','career-tools','capstones','learning-hub']){
  const source=readFileSync(new URL(`../lib/academy/${name}.ts`,import.meta.url),'utf8');
  const out=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText.replace(/from '(\.\/[^']+)'/g,"from '$1.mjs'");
- writeFileSync(join(dir,`${name}.mjs`),out);
+ writeFileSync(join(dir,`${name}.mjs`),out.replace("from '../learning'", "from './legacy-learning.mjs'"));
 }
+writeFileSync(join(dir,'legacy-learning.mjs'),ts.transpileModule(readFileSync(new URL('../lib/learning.ts',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText);
+const {GLOSSARY,AFRICA_CASES,answerMatches,portfolioItems,portfolioMarkdown}=await import(pathToFileURL(join(dir,'learning-hub.mjs')));
 const {CAREERS,DIMS}=await import(pathToFileURL(join(dir,'careers.mjs')));
 const {QUESTIONS,assess,answerVector,validAnswer}=await import(pathToFileURL(join(dir,'assessment.mjs')));
 const {dcf,DEFAULT_DCF,blackScholes,quantModel,TRANSACTIONS,statements,operatingForecast,lbo}=await import(pathToFileURL(join(dir,'models.mjs')));
@@ -110,4 +112,18 @@ test('banking workbook matches the independent DCF implementation',()=>{
 });
 test('quant case includes lagged positions, turnover and final liquidation',()=>{
  const cells=CAPSTONES[3].seeds.map(r=>[...r]);cells[0][0]=1;const r=workbook('quant',cells);assert.ok(r.correct);close(r.rows[0][5],(99/101-1)*100-.05);close(r.summary[1][1],(109/101-1)*100);const free=workbook('quant',cells.map(([pos])=>[pos,0]));assert.ok(free.summary[0][1]>r.summary[0][1]);assert.throws(()=>workbook('quant',cells.map(([pos,cost],i)=>[i===0?.5:pos,cost])),/0 or 1/);
+});
+
+test('glossary has unique searchable terms and complete explanations',()=>{
+ assert.ok(GLOSSARY.length>=50);assert.equal(new Set(GLOSSARY.map(t=>t.id)).size,GLOSSARY.length);for(const term of GLOSSARY){assert.ok(term.meaning.length>20);assert.ok(term.example.length>20);}
+});
+test('Africa case checks agree with independent calculations and reject blank or invalid answers',()=>{
+ const [startup,energy,payment]=AFRICA_CASES;close(startup.checks[0].answer,300000/(100000-25000));close(startup.checks[1].answer,900000/(3600000+900000)*100);close(energy.checks[0].answer,(1100000-400000)/500000);close(energy.checks[1].answer,(1100000*.8-400000)/500000);close(payment.checks[1].answer,1000000*.99*.4);
+ assert.ok(answerMatches('396,000',396000));assert.equal(answerMatches('',0),false);assert.equal(answerMatches('Infinity',4),false);
+});
+test('portfolio includes verified completed work and rejects stale worksheet results',()=>{
+ const p=emptyProgress();assert.equal(portfolioItems(p).length,0);const cells=CAPSTONES[0].seeds.map(r=>[...r]);cells[1][0]=200;p.labs['case-operations']={completed:true,checked:true,decision:1,note:'Documented fictional review with the supported booking correction and remaining evidence required before settlement confirmation.',cells};assert.equal(portfolioItems(p).length,1);assert.ok(portfolioItems(p)[0].csv.includes('2,200,30'));cells[1][0]=210;assert.equal(portfolioItems(p).length,0);
+});
+test('Africa completion creates an honest educational portfolio entry and exports',()=>{
+ const p=emptyProgress();p.labs['africa-dakar-startup']={completed:true,decision:1,answers:['4','20'],note:'Fictional diligence memo: check customer retention and cash evidence before evaluating a proposed funding decision. The valuation is an exercise assumption.'};const items=portfolioItems(p);assert.equal(items.length,1);assert.ok(portfolioMarkdown(items,'My projects','Learning finance').includes('not employment experience'));p.labs['africa-dakar-startup'].answers[0]='40';assert.equal(portfolioItems(p).length,0);
 });
