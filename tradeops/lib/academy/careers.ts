@@ -74,11 +74,73 @@ const rows:[string,number,string,string,Partial<Profile>?,Track?][]=[
  ['Real Estate Finance',5,'Analyze property investments and their financing.','Review property cash flow, debt service, and vacancy assumptions.',{analysis:4,enterprise:4,detail:3}],
  ['Project Finance',5,'Evaluate financing supported by a project’s cash flows.','Stress-test construction, revenue, and debt-service assumptions.',{analysis:4,detail:4,strategy:4}],
  ['Investor Relations',5,'Communicate company performance and strategy to investors.','Prepare an earnings explanation supported by reported results.',{people:4,markets:4,code:0,strategy:4},'accounting'],
+ ["Fixed Income Research", 1, "Analyze bond issuers, interest-rate exposure, and relative value.", "Compare issuer cash flows and downside debt-service coverage."],
+ ["Foreign Exchange Trading", 2, "Quote currencies and manage currency exposures.", "Review an order against position and loss limits."],
+ ["Commodities Trading", 2, "Analyze and trade commodity markets and related contracts.", "Compare demand assumptions with a scenario of weaker prices."],
+ ["ETF Capital Markets", 2, "Support exchange-traded fund liquidity and creation or redemption activity.", "Check a basket and investigate a pricing discrepancy."],
+ ["Execution Trading", 2, "Implement investment orders within execution and risk constraints.", "Compare execution costs and identify an unusual fill."],
+ ["Electronic Trading", 2, "Build and oversee automated market execution processes.", "Investigate a rejected order and check kill-switch controls."],
+ ["Prime Brokerage", 3, "Coordinate financing, custody, and trading services for investment clients.", "Review a financing balance and collateral shortfall."],
+ ["Securities Lending", 3, "Support temporary lending of securities and associated collateral.", "Check a loan recall, fee, and collateral balance."],
+ ["Repo Financing", 2, "Support secured cash financing using securities collateral.", "Calculate the cash advance after a collateral haircut."],
+ ["Collateral Management", 3, "Monitor collateral requirements and coordinate supported transfers.", "Investigate a margin call against available collateral."],
+ ["Margin Operations", 3, "Calculate and reconcile margin obligations.", "Compare an expected call with a counterparty statement."],
+ ["Asset Servicing", 3, "Process income, corporate actions, and investor entitlements.", "Check an entitlement against a position on the record date."],
+ ["Fund Accounting", 4, "Calculate and reconcile fund assets, liabilities, and net asset value.", "Reconcile a fund balance with custody and pricing evidence."],
+ ["Fund Administration", 3, "Coordinate fund records, investor reporting, and operating processes.", "Review a subscription request and missing documentation."],
+ ["Transfer Agency", 3, "Maintain investor ownership records and process investor transactions.", "Reconcile investor units after subscriptions and redemptions."],
+ ["Client Onboarding", 3, "Coordinate the evidence and approvals needed to establish a client relationship.", "Identify missing documentation before activating a client."],
+ ["Anti-Money Laundering", 3, "Investigate suspicious patterns and follow documented escalation processes.", "Review a fictional transaction alert and document the evidence."],
+ ["Know Your Customer", 3, "Verify client information and support risk-based due diligence.", "Compare declared business activity with supplied documentation."],
+ ["Sanctions Compliance", 3, "Review potential restrictions and follow specialist escalation procedures.", "Document an ambiguous name match for a compliance review."],
+ ["Financial Crime Investigations", 3, "Investigate financial activity using records and corroborating evidence.", "Distinguish a data error from an unexplained transaction pattern."],
+ ["Regulatory Reporting", 3, "Prepare and validate financial submissions under applicable reporting rules.", "Reconcile reported totals and document an unexplained difference."],
+ ["Operational Risk", 3, "Assess risks arising from people, processes, systems, and external events.", "Prioritize incidents using impact, likelihood, and control evidence."],
+ ["Credit Risk", 5, "Challenge borrower risk and monitor potential credit losses.", "Stress-test a borrower’s debt-service coverage."],
+ ["Liquidity Risk", 3, "Analyze the ability to meet cash obligations under stress.", "Compare projected outflows with available funding."],
+ ["Model Risk", 2, "Challenge model assumptions, implementation, and appropriate use.", "Test a model against an independent calculation and record its limits."],
+ ["Risk Model Validation", 2, "Independently assess the performance and limitations of risk models.", "Review missing data, sensitivity, and out-of-sample evidence."],
+ ["Financial Services Cybersecurity", 3, "Protect financial systems and support incident response.", "Prioritize a simulated incident and verify recovery controls."],
+ ["Financial Examination", 5, "Review financial institutions and their adherence to applicable requirements.", "Assess supporting evidence before recording a review finding."],
+ ["Payments Operations", 3, "Support reliable movement and reconciliation of payments.", "Investigate a duplicate payment and hold unsupported resubmission."],
+ ["Trade Finance", 5, "Support financing and payment arrangements for commercial trade.", "Review a financing request and missing shipment documentation."],
+ ["Retail Banking", 5, "Help individual customers access banking products and services.", "Clarify a customer’s needs and identify missing financial information."],
+ ["Mortgage Lending", 5, "Assess mortgage applications and supporting financial evidence.", "Calculate a fictional applicant’s payment and debt-to-income ratio."],
+ ["Consumer Credit", 5, "Analyze consumer borrowing capacity and lending risk.", "Review debt payments and identify limits of an affordability estimate."],
+ ["Personal Financial Planning", 1, "Help clients organize goals, cash flow, savings, and financial tradeoffs.", "Compare a savings projection with a client’s fictional goal."],
+ ["Retirement Planning", 1, "Evaluate retirement goals and the assumptions supporting a savings plan.", "Stress-test a savings projection with a lower assumed return."],
+ ["Pension Investment Management", 1, "Manage investment assets in the context of pension obligations.", "Review allocation risk and the limits of return assumptions."],
+ ["Institutional Investment Consulting", 1, "Advise institutions on investment policy and manager selection.", "Compare a mandate with portfolio and manager evidence."],
+ ["Endowment Management", 1, "Manage long-term assets supporting an institution’s mission.", "Review spending assumptions and investment concentration."],
+ ["Impact Investing", 1, "Evaluate financial returns alongside intended social or environmental outcomes.", "Compare an investment thesis with measurable outcome evidence."],
+ ["Sustainable Finance", 1, "Integrate environmental and social considerations into financing or investment work.", "Challenge a sustainability claim and identify missing evidence."],
+ ["Infrastructure Finance", 5, "Analyze financing for infrastructure assets and long-term projects.", "Stress-test project revenue and debt-service coverage."],
+ ["Sovereign Debt Analysis", 1, "Analyze government debt, fiscal capacity, and financing risks.", "Compare debt-service needs with fiscal and external funding assumptions."],
+ ["Development Finance", 5, "Support financing intended to advance development objectives.", "Review project cash flows and the intended development outcomes."],
+ ["Islamic Finance", 5, "Support financing structures subject to relevant contractual and Sharia governance review.", "Identify assumptions and questions requiring specialist structural review."],
+ ["Insurance Underwriting", 5, "Assess proposed insurance exposures and pricing evidence.", "Estimate expected claims and identify missing risk information."],
+ ["Reinsurance", 5, "Analyze arrangements that transfer part of an insurer’s risk.", "Compare expected claims with a stress case and documented limits."],
+ ["Forensic Accounting", 4, "Investigate financial records and explain supported findings.", "Trace an unusual ledger entry to its source evidence."],
+ ["Cost Accounting", 4, "Analyze production costs and support planning and reporting.", "Compare unit costs and explain a budget variance."],
+ ["Financial Systems Analysis", 4, "Improve systems that support accounting, planning, and reporting.", "Reconcile a migrated balance and investigate a mapping error."],
+ ["Insurance Claims Analysis", 5, "Review claims evidence and support consistent claim handling.", "Identify missing evidence before a fictional claims decision."],
 ];
 export const slug=(s:string)=>s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-$/,'');
 export const CAREERS=rows.map(([title,group,overview,task,override,track])=>{
  const g=groups[group];const profile={...g.p,...override};
- return {id:slug(title),title,category:g.name,overview,task,profile,track:track??g.track,skills:g.skills,tools:g.tools,environment:g.environment,balance:g.balance,pay:g.pay,progress:g.progress,
+ const name=title.toLowerCase();
+ // Added specialties use explicit editorial preferences instead of inheriting an identical group vector.
+ if(/personal financial|retirement planning|pension investment|endowment|institutional investment/.test(name))Object.assign(profile,{people:4,quant:2,code:1,pace:1,lifestyle:3,detail:4,strategy:3,enterprise:2});
+ if(/mortgage|consumer credit|credit risk|trade finance|sovereign debt/.test(name))Object.assign(profile,{analysis:4,quant:2,detail:4,risk:1,people:3,pace:2,enterprise:2});
+ if(/model risk|risk model validation/.test(name))Object.assign(profile,{analysis:4,quant:4,code:4,detail:4,risk:0,pace:2,lifestyle:3});
+ if(/foreign exchange|commodities trading|execution trading|repo financing/.test(name))Object.assign(profile,{quant:3,code:2,people:3,risk:4,pace:4,markets:4});
+ if(/electronic trading|cybersecurity|financial systems/.test(name))Object.assign(profile,{analysis:4,code:4,detail:4,quant:3,people:2,strategy:3});
+ if(/aml|anti-money|know your|sanctions|crime|examination|operational risk/.test(name))Object.assign(profile,{analysis:4,detail:4,risk:0,people:3,markets:1,enterprise:1,pace:2});
+ if(/insurance underwriting|insurance claims|reinsurance/.test(name))Object.assign(profile,{analysis:4,quant:3,detail:4,risk:1,markets:0,enterprise:1,people:3});
+ if(/impact investing|development finance|sustainable finance/.test(name))Object.assign(profile,{strategy:4,enterprise:4,analysis:4,people:4,quant:2,markets:2});
+ const specialty=/personal financial|retirement|pension|endowment|institutional investment|wealth|private banking/.test(name)?'Wealth, Planning & Institutional Clients':/insurance|actuarial|reinsurance/.test(name)?'Insurance & Actuarial Finance':/compliance|risk|anti-money|know your|sanctions|crime|examination|regulatory/.test(name)?'Risk, Compliance & Financial Regulation':/mortgage|consumer credit|retail banking|credit risk|commercial banking|corporate banking|trade finance/.test(name)?'Banking, Lending & Credit':/impact investing|sustainable finance|development finance|sovereign debt|islamic finance/.test(name)?'Public, Sustainable & Specialized Finance':g.name;
+ const foundation=track??(/insurance underwriting|insurance claims|reinsurance/.test(name)?'accounting':/anti-money|know your|sanctions|crime|examination|cybersecurity/.test(name)?'operations':g.track);
+ return {id:slug(title),title,category:specialty,overview,task,profile,track:foundation,skills:g.skills,tools:g.tools,environment:g.environment,balance:g.balance,pay:g.pay,progress:g.progress,
    weights:Object.fromEntries(DIMS.map(d=>[d,profile[d]>=3.5||profile[d]<=1?1.5:1])) as Profile};
 });
 export type Career=typeof CAREERS[number];

@@ -7,7 +7,7 @@ import {pathToFileURL} from 'node:url';
 import ts from 'typescript';
 // Compile pure domain modules for Node; production still uses Vite's TypeScript pipeline.
 const dir=mkdtempSync(join(tmpdir(),'tradeops-domain-'));
-for(const name of ['careers','assessment','models','lessons','trials','progress']){
+for(const name of ['careers','assessment','models','lessons','trials','progress','career-tools']){
  const source=readFileSync(new URL(`../lib/academy/${name}.ts`,import.meta.url),'utf8');
  const out=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText.replace(/from '(\.\/[^']+)'/g,"from '$1.mjs'");
  writeFileSync(join(dir,`${name}.mjs`),out);
@@ -17,6 +17,7 @@ const {QUESTIONS,assess,answerVector,validAnswer}=await import(pathToFileURL(joi
 const {dcf,DEFAULT_DCF,blackScholes,quantModel,TRANSACTIONS,statements,operatingForecast,lbo}=await import(pathToFileURL(join(dir,'models.mjs')));
 const {LESSONS,roadmap}=await import(pathToFileURL(join(dir,'lessons.mjs')));
 const {trialFor}=await import(pathToFileURL(join(dir,'trials.mjs')));
+const {CAREER_TOOLS,calculateTool,toolFor}=await import(pathToFileURL(join(dir,'career-tools.mjs')));
 const {emptyProgress,parseProgress,serializeProgress}=await import(pathToFileURL(join(dir,'progress.mjs')));
 process.on('exit',()=>rmSync(dir,{recursive:true,force:true}));
 const close=(x,y,tol=1e-6)=>assert.ok(Math.abs(x-y)<=tol,`${x} != ${y}`);
@@ -27,8 +28,8 @@ function fictional(target){return Object.fromEntries(QUESTIONS.map(q=>{
  }
  return [q.id,[q.options.map((_,i)=>({i,d:distance(i)})).sort((a,b)=>a.d-b.d)[0].i]];
 }));}
-test('54 career profiles and 30 distinct questions map to functioning learning/trials',()=>{
- assert.equal(CAREERS.length,54);assert.equal(QUESTIONS.length,30);assert.equal(new Set(QUESTIONS.map(q=>q.id)).size,30);assert.equal(new Set(LESSONS.map(l=>l.id)).size,LESSONS.length);
+test('Expanded career profiles and 30 distinct questions map to functioning learning/trials',()=>{
+ assert.ok(CAREERS.length>=100);assert.equal(new Set(CAREERS.map(c=>c.id)).size,CAREERS.length);assert.equal(QUESTIONS.length,30);assert.equal(new Set(QUESTIONS.map(q=>q.id)).size,30);assert.equal(new Set(LESSONS.map(l=>l.id)).size,LESSONS.length);
  for(const c of CAREERS){assert.ok(roadmap(c.track).length);assert.equal(trialFor(c).steps.length,3);assert.deepEqual(Object.keys(c.profile),DIMS);}
  for(const l of LESSONS){assert.ok(l.choices[l.answer]);assert.ok(Number.isFinite(l.practice.answer));}
 });
@@ -36,7 +37,7 @@ test('insufficient or skipped evidence does not invent career results',()=>{asse
 test('contrasting fictional interests produce distinct recommendations and broad dimensions',()=>{
  const quant=fictional(CAREERS.find(c=>c.id==='quantitative-research').profile),ops=fictional(CAREERS.find(c=>c.id==='trade-reconciliation').profile),venture=fictional(CAREERS.find(c=>c.id==='venture-capital').profile);
  const results=[quant,ops,venture].map(a=>assess(a));
- for(const r of results){assert.equal(r.enough,true);assert.ok(r.covered.length>=10);assert.equal(r.ranked.length,54);assert.ok(r.ranked.every(x=>x.score>=0&&x.score<=100));}
+ for(const r of results){assert.equal(r.enough,true);assert.ok(r.covered.length>=10);assert.equal(r.ranked.length,CAREERS.length);assert.ok(r.ranked.every(x=>x.score>=0&&x.score<=100));}
  assert.ok(results[0].ranked.slice(0,5).some(r=>r.career.track==='quant'));
  assert.ok(results[1].ranked.slice(0,5).some(r=>r.career.track==='operations'||r.career.track==='accounting'));
  assert.notDeepEqual(results[0].ranked.slice(0,5).map(r=>r.career.id),results[2].ranked.slice(0,5).map(r=>r.career.id));
@@ -70,3 +71,25 @@ test('Black-Scholes matches reference values, put-call parity, and expiry cases'
 test('backtest respects its information lag and costs reduce net wealth',()=>{const free=quantModel(3,0,.6),cost=quantModel(3,25,.6);assert.equal(free.rows.length,30);assert.ok(free.rows.slice(0,3).every(x=>x.position===0));assert.ok(cost.total<free.total);assert.ok(cost.drawdown>=0);assert.ok(cost.minVarianceWeight>=0&&cost.minVarianceWeight<=1);assert.throws(()=>quantModel(0,5,.6));assert.throws(()=>quantModel(2,5,1.2));});
 test('LBO bridges enterprise and debt to equity and compounds terminal cash flows',()=>{const v=lbo(100,10,.6,0,10,200,5);assert.equal(v.entryEquity,400);assert.equal(v.exitEquity,600);close(v.moic,1.5);close(v.irr,1.5**.2-1);assert.throws(()=>lbo(100,10,1,0,10,200,5));});
 test('storage respects assessment opt-in and survives malformed saved content',()=>{const p=emptyProgress();p.answers={math:[4]};p.quizStarted=true;p.path=['returns-and-descriptive-statistics'];assert.deepEqual(JSON.parse(serializeProgress(p)).answers,{});assert.equal(parseProgress(serializeProgress(p)).path.length,1);p.saveQuiz=true;assert.deepEqual(parseProgress(serializeProgress(p)).answers.math,[4]);assert.deepEqual(parseProgress('{'),emptyProgress());assert.equal(parseProgress(JSON.stringify({version:2,quizIndex:999,history:[null,{},'oops']})).quizIndex,29);});
+
+test('every profession has a valid specialist tool with finite default results',()=>{
+ for(const c of CAREERS)assert.ok(CAREER_TOOLS.includes(toolFor(c)));
+ for(const tool of CAREER_TOOLS){const p=Object.fromEntries(tool.fields.map(f=>[f.key,f.value]));assert.ok(calculateTool(tool.id,p).every(([,v])=>Number.isFinite(v)));assert.throws(()=>calculateTool(tool.id,{...p,[tool.fields[0].key]:NaN}));}
+});
+test('specialist loan amortization and credit loss agree with known cases',()=>{
+ const p={principal:1200,rate:0,years:1,cash:2400,pd:2,lgd:40};const rows=calculateTool('credit',p);close(rows[0][1],100);close(rows[2][1],2);close(rows[3][1],9.6);
+ const x=calculateTool('credit',{...p,principal:100000,rate:6,years:5});close(x[0][1],1933.2801529428275);
+});
+test('startup ownership and runway respond to funding and burn',()=>{
+ const rows=calculateTool('venture',{cash:600000,receipts:80000,costs:180000,valuation:8000000,funding:2000000});close(rows[1][1],6);close(rows[3][1],20);
+ close(calculateTool('venture',{cash:600000,receipts:180000,costs:180000,valuation:8000000,funding:0})[1][1],0);
+});
+test('property coverage, insurance stress, and cash-only planning reconcile',()=>{
+ const property=calculateTool('property',{rent:500000,vacancy:10,expenses:150000,cap:6,debt:200000});close(property[0][1],300000);close(property[1][1],5000000);close(property[2][1],1.5);
+ const insurance=calculateTool('insurance',{exposures:1000,frequency:5,severity:10000,premium:800000,expenses:180000});close(insurance[0][1],500000);close(insurance[2][1],85);close(insurance[3][1],750000);
+ const plan=calculateTool('planning',{balance:1000,saving:200,years:1,return:0,goal:3400});close(plan[0][1],3400);close(plan[2][1],0);
+});
+test('budget price and volume bridge exactly equals variance; controls remain explicit',()=>{
+ const rows=calculateTool('budget',{budgetUnits:10000,budgetPrice:20,actualUnits:9000,actualPrice:21,unitCost:12});close(rows[2][1],-11000);close(rows[3][1]+rows[4][1],rows[2][1]);close(rows[5][1],81000);
+ const risk=calculateTool('controls',{impact:4,likelihood:3,effectiveness:50});close(risk[0][1],12);close(risk[1][1],6);
+});
