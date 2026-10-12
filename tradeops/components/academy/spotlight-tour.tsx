@@ -12,7 +12,8 @@ const STEPS=[
 ];
 type Box={left:number;top:number;width:number;height:number;viewportWidth:number;viewportHeight:number};
 export function SpotlightTour({step,onStep,onClose}:{step:number;onStep:(n:number)=>void;onClose:()=>void}){
- const s=STEPS[step],reduced=useReducedMotion();const [box,setBox]=useState<Box|null>(null);const panel=useRef<HTMLDivElement>(null);const closeRef=useRef(onClose);closeRef.current=onClose;
+ const s=STEPS[step],reduced=useReducedMotion();const [box,setBox]=useState<Box|null>(null);const panel=useRef<HTMLDivElement>(null);const closeRef=useRef(onClose);
+ useEffect(()=>{closeRef.current=onClose;},[onClose]);
  useEffect(()=>{
   const previous=document.activeElement as HTMLElement|null;
   return()=>{if(previous?.isConnected)previous.focus({preventScroll:true});};
