@@ -64,6 +64,7 @@ test('DCF agrees with a level perpetuity and rejects an invalid terminal spread'
  close(dcf({...p,equityWeight:.5,costDebt:.06,tax:.25}).wacc,.0725);
  assert.throws(()=>dcf({...p,terminalGrowth:.1}),/greater/);assert.throws(()=>dcf({...p,shares:0}));assert.throws(()=>dcf({...p,revenue:NaN}));
  assert.ok(dcf({...DEFAULT_DCF,costEquity:.15}).enterprise<dcf(DEFAULT_DCF).enterprise);
+ close(dcf({...DEFAULT_DCF,note:'Analyst reasoning',decision:'Continue diligence',offer:1800}).enterprise,dcf(DEFAULT_DCF).enterprise);
 });
 test('Black-Scholes matches reference values, put-call parity, and expiry cases',()=>{const p=blackScholes(100,100,1,.05,.2);close(p.call,10.45058357,.0001);close(p.put,5.57352602,.0001);close(p.call-p.put,100-100*Math.exp(-.05),1e-7);assert.deepEqual(blackScholes(90,100,0,.05,.2),{call:0,put:10});close(blackScholes(100,100,1,.05,0).call,100-100*Math.exp(-.05));assert.throws(()=>blackScholes(-1,100,1,.05,.2));});
 test('backtest respects its information lag and costs reduce net wealth',()=>{const free=quantModel(3,0,.6),cost=quantModel(3,25,.6);assert.equal(free.rows.length,30);assert.ok(free.rows.slice(0,3).every(x=>x.position===0));assert.ok(cost.total<free.total);assert.ok(cost.drawdown>=0);assert.ok(cost.minVarianceWeight>=0&&cost.minVarianceWeight<=1);assert.throws(()=>quantModel(0,5,.6));assert.throws(()=>quantModel(2,5,1.2));});

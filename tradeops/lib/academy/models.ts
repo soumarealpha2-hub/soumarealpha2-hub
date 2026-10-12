@@ -26,7 +26,7 @@ export function blackScholes(spot:number,strike:number,years:number,rate:number,
 export type DcfInputs={revenue:number;growth:number;margin:number;tax:number;depreciation:number;capex:number;workingCapital:number;costEquity:number;costDebt:number;equityWeight:number;terminalGrowth:number;debt:number;cash:number;shares:number};
 export const DEFAULT_DCF:DcfInputs={revenue:1000,growth:.08,margin:.2,tax:.25,depreciation:.03,capex:.04,workingCapital:.1,costEquity:.11,costDebt:.05,equityWeight:.7,terminalGrowth:.025,debt:300,cash:80,shares:100};
 export function dcf(p:DcfInputs){
- if(!Object.values(p).every(Number.isFinite))throw Error('Enter a number in every assumption.');
+ if(!Object.keys(DEFAULT_DCF).every(key=>Number.isFinite(p[key as keyof DcfInputs])))throw Error('Enter a number in every assumption.');
  if(p.revenue<=0||p.shares<=0||p.growth<=-1||p.growth>1||p.terminalGrowth<=-1||p.tax<0||p.tax>1||p.equityWeight<0||p.equityWeight>1||p.costEquity<=0||p.costDebt<0||p.depreciation<0||p.capex<0||p.workingCapital<0||p.debt<0||p.cash<0||p.margin<0||p.margin>1)throw Error('Check the assumptions: use positive revenue and shares, valid percentages, and nonnegative debt and cash.');
  const wacc=p.equityWeight*p.costEquity+(1-p.equityWeight)*p.costDebt*(1-p.tax);
  if(wacc<=p.terminalGrowth)throw Error('WACC must be greater than terminal growth for this perpetual-growth model.');
