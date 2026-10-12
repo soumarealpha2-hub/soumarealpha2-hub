@@ -7,7 +7,7 @@ import {pathToFileURL} from 'node:url';
 import ts from 'typescript';
 // Compile pure domain modules for Node; production still uses Vite's TypeScript pipeline.
 const dir=mkdtempSync(join(tmpdir(),'tradeops-domain-'));
-for(const name of ['careers','assessment','models','lessons','trials','progress','career-tools']){
+for(const name of ['careers','assessment','models','lessons','trials','progress','career-tools','capstones']){
  const source=readFileSync(new URL(`../lib/academy/${name}.ts`,import.meta.url),'utf8');
  const out=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText.replace(/from '(\.\/[^']+)'/g,"from '$1.mjs'");
  writeFileSync(join(dir,`${name}.mjs`),out);
@@ -17,6 +17,7 @@ const {QUESTIONS,assess,answerVector,validAnswer}=await import(pathToFileURL(joi
 const {dcf,DEFAULT_DCF,blackScholes,quantModel,TRANSACTIONS,statements,operatingForecast,lbo}=await import(pathToFileURL(join(dir,'models.mjs')));
 const {LESSONS,roadmap}=await import(pathToFileURL(join(dir,'lessons.mjs')));
 const {trialFor}=await import(pathToFileURL(join(dir,'trials.mjs')));
+const {CAPSTONES,workbook,workbookCsv}=await import(pathToFileURL(join(dir,'capstones.mjs')));
 const {CAREER_TOOLS,calculateTool,toolFor}=await import(pathToFileURL(join(dir,'career-tools.mjs')));
 const {emptyProgress,parseProgress,serializeProgress}=await import(pathToFileURL(join(dir,'progress.mjs')));
 process.on('exit',()=>rmSync(dir,{recursive:true,force:true}));
@@ -92,4 +93,21 @@ test('property coverage, insurance stress, and cash-only planning reconcile',()=
 test('budget price and volume bridge exactly equals variance; controls remain explicit',()=>{
  const rows=calculateTool('budget',{budgetUnits:10000,budgetPrice:20,actualUnits:9000,actualPrice:21,unitCost:12});close(rows[2][1],-11000);close(rows[3][1]+rows[4][1],rows[2][1]);close(rows[5][1],81000);
  const risk=calculateTool('controls',{impact:4,likelihood:3,effectiveness:50});close(risk[0][1],12);close(risk[1][1],6);
+});
+
+test('every applied case starts with a documented, detectable workbook error',()=>{
+ for(const c of CAPSTONES){assert.ok(c.documents.length>=4);assert.ok(!workbook(c.id,c.seeds).correct);assert.ok(workbook(c.id,c.seeds).rows.every(r=>r.every(Number.isFinite)));}
+});
+test('operations workbook distinguishes reconciliation from settlement',()=>{
+ const cells=CAPSTONES[0].seeds.map(r=>[...r]);close(workbook('operations',cells).rows[1][6],300);cells[1][0]=200;const r=workbook('operations',cells);assert.ok(r.correct);close(r.summary[0][1],23000);close(r.summary[2][1],0);assert.equal(CAPSTONES[0].correct,1);
+});
+test('accounting case reconciles supported journals and the balance sheet',()=>{
+ const cells=CAPSTONES[1].seeds.map(r=>[...r]);cells[3][0]=800;const r=workbook('accounting',cells);assert.ok(r.correct);close(r.summary[0][1],17800);close(r.summary[2][1],6200);close(r.summary[3][1],3200);close(r.summary[4][1],13200);close(r.summary[6][1],0);
+ cells[3]=[900,900];assert.equal(workbook('accounting',cells).correct,false);
+});
+test('banking workbook matches the independent DCF implementation',()=>{
+ const cells=CAPSTONES[2].seeds.map(r=>[...r]);cells[0][2]=4;const r=workbook('banking',cells);assert.ok(r.correct);const d=dcf({...DEFAULT_DCF,costEquity:.09,equityWeight:1});close(r.summary[1][1],d.enterprise);close(r.summary[3][1],d.perShare);assert.ok(workbookCsv('banking',r.rows).includes('Revenue ($m)'));
+});
+test('quant case includes lagged positions, turnover and final liquidation',()=>{
+ const cells=CAPSTONES[3].seeds.map(r=>[...r]);cells[0][0]=1;const r=workbook('quant',cells);assert.ok(r.correct);close(r.rows[0][5],(99/101-1)*100-.05);close(r.summary[1][1],(109/101-1)*100);const free=workbook('quant',cells.map(([pos])=>[pos,0]));assert.ok(free.summary[0][1]>r.summary[0][1]);assert.throws(()=>workbook('quant',cells.map(([pos,cost],i)=>[i===0?.5:pos,cost])),/0 or 1/);
 });
