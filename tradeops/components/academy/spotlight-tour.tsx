@@ -6,8 +6,8 @@ import {X,ArrowUp} from 'lucide-react';
 
 const STEPS=[
  {route:'quiz',selector:'.ac-quiz-intro button, .ac-quiz .ac-answers, .ac-results',title:'Start with your interests',text:'This is where you start the career assessment. Answer at your own pace to discover careers that fit your interests. Your current skills do not limit your options.'},
- {route:'learn',selector:'.ac-track-directory > a',title:'Choose a learning track',text:'Select one of these tracks to open its beginner, intermediate, and advanced lessons. Each lesson includes an explanation, practice, and feedback.'},
- {route:'simulations',selector:'.ac-track-directory > a',title:'Try the actual work',text:'This opens the Operations desk. The other workspaces let you test a strategy, post journal entries, or build a valuation with fictional data.'},
+ {route:'learn',selector:'a[href="#learn/operations"]',title:'Choose a learning track',text:'Select one of these tracks to open its beginner, intermediate, and advanced lessons. Each lesson includes an explanation, practice, and feedback.'},
+ {route:'simulations',selector:'a[href="#operations/overview"]',title:'Try the actual work',text:'This opens the Operations desk. The other workspaces let you test a strategy, post journal entries, or build a valuation with fictional data.'},
  {route:'my-learning',selector:'.ac-stat-strip',title:'Pick up where you left off',text:'Your progress appears here. Below, you can resume lessons, organize your roadmap, and compare saved career results.'}
 ];
 type Box={left:number;top:number;width:number;height:number;viewportWidth:number;viewportHeight:number};
