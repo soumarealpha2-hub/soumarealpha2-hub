@@ -15,10 +15,10 @@ export function parseProgress(raw:string|null):AcademyProgress{
  try{const p:unknown=JSON.parse(raw);if(!record(p)||p.version!==2)return out;
   out.saveQuiz=p.saveQuiz===true;out.answers=cleanAnswers(p.answers);out.quizIndex=number(p.quizIndex,QUESTIONS.length-1);out.quizStarted=p.quizStarted===true;out.quizComplete=p.quizComplete===true;out.onboarding=p.onboarding==='done'?'done':'new';out.gamification=p.gamification===true;
   out.path=Array.isArray(p.path)?[...new Set(p.path.filter((x):x is string=>typeof x==='string'&&x.length<100))].slice(0,100):[];
-  out.explored=Array.isArray(p.explored)?[...new Set(p.explored.filter((x):x is string=>typeof x==='string'&&x.length<100))].slice(0,100):[];
+  out.explored=Array.isArray(p.explored)?[...new Set(p.explored.filter((x):x is string=>typeof x==='string'&&x.length<100))].slice(0,200):[];
   if(Array.isArray(p.history))out.history=p.history.filter(record).filter(h=>typeof h.date==='string'&&!Number.isNaN(Date.parse(h.date))).slice(-5).map(h=>({date:String(h.date),answers:cleanAnswers(h.answers)}));
   if(record(p.lessons))for(const [id,l] of Object.entries(p.lessons).slice(0,200)){if(!record(l))continue;out.lessons[id]={step:number(l.step,3),input:typeof l.input==='string'?l.input.slice(0,30):'',numericPassed:l.numericPassed===true,choice:typeof l.choice==='number'?number(l.choice,10):null,completed:l.completed===true,attempts:number(l.attempts,999),firstCorrect:l.firstCorrect===true};}
-  if(record(p.trials))for(const [id,t] of Object.entries(p.trials).slice(0,100)){if(!record(t))continue;out.trials[id]={step:number(t.step,3),choices:record(t.choices)?Object.fromEntries(Object.entries(t.choices).filter(([,v])=>typeof v==='number'&&v>=0&&v<10)): {},completed:t.completed===true,note:typeof t.note==='string'?t.note.slice(0,3000):''} as TrialState;}
+  if(record(p.trials))for(const [id,t] of Object.entries(p.trials).slice(0,200)){if(!record(t))continue;out.trials[id]={step:number(t.step,3),choices:record(t.choices)?Object.fromEntries(Object.entries(t.choices).filter(([,v])=>typeof v==='number'&&v>=0&&v<10)): {},completed:t.completed===true,note:typeof t.note==='string'?t.note.slice(0,3000):''} as TrialState;}
   if(record(p.labs))out.labs=p.labs;
   return out;
  }catch{return out;}
