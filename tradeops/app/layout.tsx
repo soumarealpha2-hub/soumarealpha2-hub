@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./fintech.css";
+import "./academy.css";
 
 export const metadata: Metadata = {
-  title: "TradeOps Academy | The Operations Playground",
+  title: "TradeOps Academy | Discover Finance. Practice the Work.",
   description: "An interactive trading operations portfolio by Alpha Soumaré. Explore sample settlements, exception control, and workload stress scenarios.",
   icons: {
     icon: "/favicon.svg",
