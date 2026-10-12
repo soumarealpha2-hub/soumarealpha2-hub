@@ -46,3 +46,6 @@
 @media(max-width:767px){.ac-start-path>li{gap:15px}.ac-start-path h2{font-size:22px}.ac-start-path p{font-size:13px}.ac-hub-links{grid-template-columns:1fr;gap:0}.ac-glossary-dialog{padding:23px 18px}.ac-glossary-dialog input{font-size:16px}.ac-portfolio-list h2{font-size:22px}.ac-portfolio-list p{font-size:13px}.ac-africa-check input{font-size:16px}.ac-hub-links h3{font-size:19px}}
 .ac-header .ac-glossary-trigger{font-size:12px;margin:0;flex-shrink:0}
 @media(max-width:767px){.ac-header .ac-glossary-trigger{flex-basis:100%;text-align:left;min-height:36px}}
+
+.ac-founder-heading{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.ac-founder-portrait{display:block;width:110px;height:auto;flex-shrink:0;border-radius:8px;border:1px solid #dbe5f3}.ac-founder-heading h2{flex:1;min-width:0}.ac-founder-byline{flex-basis:100%;font-size:11px;color:#586d84;margin-top:-6px}
+@media(max-width:767px){.ac-founder-portrait{width:88px}.ac-founder-heading{gap:14px}.ac-founder-heading h2{font-size:27px}.ac-founder-byline{font-size:11px;margin:0}}
