@@ -60,3 +60,6 @@
 @media(max-width:767px){.ac-founder-avatar .ac-founder-story-photo{width:230.4px;left:-116px;top:-125.6px}}
 
 .ac-founder-photo-link{display:block;flex-basis:100%;margin-top:12px}.ac-founder-full-photo{display:block;width:280px;max-width:100%;height:auto;border-radius:8px;border:1px solid #dbe5f3}@media(max-width:767px){.ac-founder-full-photo{width:240px}}
+
+/* Preserve the complete event scene, hiding only the uploaded screenshot borders. */
+.ac-founder-intro{grid-template-columns:1fr 1fr;align-items:center}.ac-founder-heading{display:block}.ac-founder-byline{display:block;margin:16px 0 24px}.ac-founder-narrative p{margin-bottom:16px}.ac-founder-scene .ac-founder-photo-link{position:relative;width:100%;max-width:460px;aspect-ratio:1152/1144;overflow:hidden;border-radius:10px;margin:0 auto}.ac-founder-scene .ac-founder-full-photo{position:absolute;top:-39.16%;left:0;width:100%;max-width:none;height:auto;border:0;border-radius:0}@media(max-width:767px){.ac-founder-intro{grid-template-columns:1fr;gap:20px}.ac-founder-scene .ac-founder-photo-link{max-width:460px}.ac-founder-byline{margin:12px 0 20px}}
