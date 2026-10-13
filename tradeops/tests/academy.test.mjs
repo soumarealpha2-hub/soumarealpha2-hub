@@ -7,7 +7,7 @@ import {pathToFileURL} from 'node:url';
 import ts from 'typescript';
 // Compile pure domain modules for Node; production still uses Vite's TypeScript pipeline.
 const dir=mkdtempSync(join(tmpdir(),'tradeops-domain-'));
-for(const name of ['careers','assessment','models','lessons','trials','progress','career-tools','capstones','learning-hub','finance-glossary','employers','resume-match','assistant','chat-contract','resume-upload']){
+for(const name of ['careers','assessment','models','lesson-levels','lessons','trials','progress','career-tools','capstones','learning-hub','finance-glossary','employers','resume-match','assistant','chat-contract','resume-upload']){
  const source=readFileSync(new URL(`../lib/academy/${name}.ts`,import.meta.url),'utf8');
  const out=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText.replace(/from '(\.\/[^']+)'/g,"from '$1.mjs'");
  writeFileSync(join(dir,`${name}.mjs`),out.replace("from '../learning'", "from './legacy-learning.mjs'"));
@@ -21,7 +21,7 @@ const {employerGuide,personalEmployerFit}=await import(pathToFileURL(join(dir,'e
 const {CAREERS,DIMS}=await import(pathToFileURL(join(dir,'careers.mjs')));
 const {QUESTIONS,assess,answerVector,validAnswer}=await import(pathToFileURL(join(dir,'assessment.mjs')));
 const {dcf,DEFAULT_DCF,blackScholes,quantModel,TRANSACTIONS,statements,operatingForecast,lbo}=await import(pathToFileURL(join(dir,'models.mjs')));
-const {LESSONS,roadmap}=await import(pathToFileURL(join(dir,'lessons.mjs')));
+const {LESSONS,TOPICS,LEVELS,LEVEL_LABEL,lessonAtLevel,checkLessonCalculation,roadmap}=await import(pathToFileURL(join(dir,'lessons.mjs')));
 const {trialFor}=await import(pathToFileURL(join(dir,'trials.mjs')));
 const {CAPSTONES,workbook,workbookCsv}=await import(pathToFileURL(join(dir,'capstones.mjs')));
 const {CAREER_TOOLS,calculateTool,toolFor}=await import(pathToFileURL(join(dir,'career-tools.mjs')));
@@ -193,4 +193,45 @@ test('resume uploads reject unsupported, empty, oversized and unreadable files',
  assert.throws(()=>cleanResumeText('   '),/scanned/);
  assert.throws(()=>cleanResumeText('x'.repeat(25001)),/too long/);
  assert.equal(cleanResumeText('  '+ 'Experience in Excel and accounting. '.repeat(4)+'  '),'Experience in Excel and accounting. '.repeat(4).trim());
+});
+
+test('all 45 lesson topics have three distinct, complete difficulty editions',()=>{
+ assert.equal(TOPICS.length,45);assert.equal(LESSONS.length,135);
+ assert.deepEqual(LEVELS.map(l=>LEVEL_LABEL[l]),['Beginner','Medium','Hard']);
+ assert.equal(new Set(LESSONS.map(l=>l.id)).size,135);
+ for(const topic of TOPICS){
+  const editions=LEVELS.map(level=>lessonAtLevel(topic.id,level));
+  assert.ok(editions.every(Boolean));assert.equal(editions[0].id,topic.id);
+  assert.equal(new Set(editions.map(l=>l.practice.prompt)).size,3,topic.id);
+  assert.equal(new Set(editions.map(l=>l.question)).size,3,topic.id);
+  for(const l of editions){assert.ok(l.learn.length>=2&&l.example&&l.explain&&l.practice.hint);assert.ok(l.choices[l.answer]);assert.equal(l.track,topic.track);assert.ok(Number.isFinite(l.practice.answer));}
+ }
+ for(const track of ['operations','quant','banking','accounting']){
+  const sizes=LEVELS.map(level=>roadmap(track,level).length);assert.ok(sizes[0]>0);assert.ok(sizes.every(n=>n===sizes[0]));
+ }
+ for(const tool of CAREER_TOOLS)assert.ok(TOPICS.some(t=>t.id===`specialist-${tool.id}`));
+ for(const id of ['markets','lifecycle','settlement','matching','reconciliation','exceptions','controls','cutoff'])assert.ok(TOPICS.some(t=>t.id===`operations-${id}`));
+});
+test('difficulty progress and all roadmap entries survive reload without cross-credit',()=>{
+ const p=emptyProgress();p.path=LESSONS.map(l=>l.id);
+ const beginner=lessonAtLevel('probability-and-expected-outcomes','Beginner');
+ const medium=lessonAtLevel(beginner.id,'Intermediate');const hard=lessonAtLevel(beginner.id,'Advanced');
+ p.lessons[beginner.id]={step:3,input:'3',numericPassed:true,choice:1,completed:true,attempts:1,firstCorrect:true};
+ p.lessons[medium.id]={step:1,input:'2',numericPassed:false,choice:null,completed:false,attempts:0,firstCorrect:false};
+ const saved=parseProgress(serializeProgress(p));assert.equal(saved.path.length,135);
+ assert.equal(saved.lessons[beginner.id].completed,true);assert.equal(saved.lessons[medium.id].input,'2');assert.equal(saved.lessons[medium.id].completed,false);assert.equal(saved.lessons[hard.id],undefined);
+});
+test('hard lesson calculations agree with independent financial model checks',()=>{
+ const exercise=(id,level='Advanced')=>lessonAtLevel(id,level);
+ close(exercise('portfolio-allocation-and-diversification').practice.answer,.25*.04+.25*.04+2*.5*.5*.2*.2*.5);
+ close(exercise('discounted-cash-flow-valuation').practice.answer,90/1.1+(100+102/(.10-.02))/1.1**2,.005);
+ close(exercise('leveraged-buyout-returns').practice.answer,(Math.pow((100*6-350)/200,1/5)-1)*100);
+ close(exercise('specialist-insurance').practice.answer,(500000*1.2*1.25+150000)/900000*100);
+ close(exercise('specialist-property').practice.answer,(1-(400000*.9/.06)/(400000/.05))*100);
+ close(exercise('wacc-and-free-cash-flow','Intermediate').practice.answer,(.7*.12+.3*.06*.75)*100);
+ close(exercise('derivatives-and-black-scholes').practice.answer,12-105+98);
+ close(exercise('quantitative-research-and-model-review').practice.answer,(1-Math.pow(.95,3))*100);
+ assert.ok(checkLessonCalculation(exercise('leveraged-buyout-returns'),'4.56'));
+ assert.equal(checkLessonCalculation(exercise('portfolio-allocation-and-diversification'),'.035'),false);
+ for(const l of LESSONS){assert.ok(checkLessonCalculation(l,String(l.practice.answer)));assert.equal(checkLessonCalculation(l,''),false);assert.equal(checkLessonCalculation(l,'Infinity'),false);assert.equal(checkLessonCalculation(l,String(l.practice.answer+1)),false);}
 });
