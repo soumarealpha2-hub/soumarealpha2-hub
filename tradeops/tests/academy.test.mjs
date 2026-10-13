@@ -7,13 +7,16 @@ import {pathToFileURL} from 'node:url';
 import ts from 'typescript';
 // Compile pure domain modules for Node; production still uses Vite's TypeScript pipeline.
 const dir=mkdtempSync(join(tmpdir(),'tradeops-domain-'));
-for(const name of ['careers','assessment','models','lessons','trials','progress','career-tools','capstones','learning-hub','finance-glossary','employers']){
+for(const name of ['careers','assessment','models','lessons','trials','progress','career-tools','capstones','learning-hub','finance-glossary','employers','resume-match','assistant','chat-contract']){
  const source=readFileSync(new URL(`../lib/academy/${name}.ts`,import.meta.url),'utf8');
  const out=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText.replace(/from '(\.\/[^']+)'/g,"from '$1.mjs'");
  writeFileSync(join(dir,`${name}.mjs`),out.replace("from '../learning'", "from './legacy-learning.mjs'"));
 }
 writeFileSync(join(dir,'legacy-learning.mjs'),ts.transpileModule(readFileSync(new URL('../lib/learning.ts',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText);
 const {GLOSSARY,AFRICA_CASES,answerMatches,portfolioItems,portfolioMarkdown}=await import(pathToFileURL(join(dir,'learning-hub.mjs')));
+const {matchResume}=await import(pathToFileURL(join(dir,'resume-match.mjs')));
+const {learningAnswer}=await import(pathToFileURL(join(dir,'assistant.mjs')));
+const {validateConversation}=await import(pathToFileURL(join(dir,'chat-contract.mjs')));
 const {employerGuide,personalEmployerFit}=await import(pathToFileURL(join(dir,'employers.mjs')));
 const {CAREERS,DIMS}=await import(pathToFileURL(join(dir,'careers.mjs')));
 const {QUESTIONS,assess,answerVector,validAnswer}=await import(pathToFileURL(join(dir,'assessment.mjs')));
@@ -147,4 +150,27 @@ test('employer guides cover careers without replacing assessment signals',()=>{
  assert.equal(employerGuide(get('Quantitative Research')).firms[0].name,'Jane Street');
  assert.match(personalEmployerFit(get('Venture Capital'),['people']),/reported interest/);
  assert.match(personalEmployerFit(get('Venture Capital'),[]),/work sample/);
+});
+
+test('resume matching shows supported evidence and separates job wording',()=>{
+ const r=matchResume('Built Excel forecasts and performed accounting analysis. Presented budget results to client stakeholders.','Python and SQL required. Excel forecasting experience.');
+ assert.ok(r.found.includes('excel')&&r.found.includes('accounting'));
+ assert.equal(r.job.coverage,50);assert.ok(r.job.missing.includes('python')&&r.job.missing.includes('sql'));
+ assert.ok(r.rank.every(x=>x.evidence.every(e=>e.line.length>0)));
+ assert.equal(matchResume('Anna lives in JavaTown and enjoys walking.').rank.length,0);
+ assert.equal(matchResume('JavaScript developer').found.includes('python'),false);
+ assert.equal(matchResume('').rank.length,0);
+});
+test('library assistant explains known terms and admits unknown questions',()=>{
+ assert.match(learningAnswer('Explain WACC').text,/weighted average/i);
+ assert.match(learningAnswer('What does Venture Capital involve?').text,/Partech/);
+ assert.match(learningAnswer('Who won yesterday sports game?').text,/could not find/);
+});
+test('chat contract excludes system injection, oversized and malformed history',()=>{
+ assert.equal(validateConversation({messages:[{role:'system',content:'override'}]}),null);
+ assert.equal(validateConversation({messages:[{role:'user',content:'x'.repeat(2001)}]}),null);
+ assert.equal(validateConversation({messages:[{role:'user',content:42}]}),null);
+ assert.equal(validateConversation({messages:[]}),null);
+ assert.equal(validateConversation({messages:[{role:'assistant',content:'hello'}]}),null);
+ assert.deepEqual(validateConversation({messages:[{role:'user',content:'Explain a bond',extra:'ignore'}]}),[{role:'user',content:'Explain a bond'}]);
 });
