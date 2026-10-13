@@ -7,7 +7,7 @@ import {pathToFileURL} from 'node:url';
 import ts from 'typescript';
 // Compile pure domain modules for Node; production still uses Vite's TypeScript pipeline.
 const dir=mkdtempSync(join(tmpdir(),'tradeops-domain-'));
-for(const name of ['careers','assessment','models','lessons','trials','progress','career-tools','capstones','learning-hub','finance-glossary','employers','resume-match','assistant','chat-contract']){
+for(const name of ['careers','assessment','models','lessons','trials','progress','career-tools','capstones','learning-hub','finance-glossary','employers','resume-match','assistant','chat-contract','resume-upload']){
  const source=readFileSync(new URL(`../lib/academy/${name}.ts`,import.meta.url),'utf8');
  const out=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText.replace(/from '(\.\/[^']+)'/g,"from '$1.mjs'");
  writeFileSync(join(dir,`${name}.mjs`),out.replace("from '../learning'", "from './legacy-learning.mjs'"));
@@ -173,4 +173,24 @@ test('chat contract excludes system injection, oversized and malformed history',
  assert.equal(validateConversation({messages:[]}),null);
  assert.equal(validateConversation({messages:[{role:'assistant',content:'hello'}]}),null);
  assert.deepEqual(validateConversation({messages:[{role:'user',content:'Explain a bond',extra:'ignore'}]}),[{role:'user',content:'Explain a bond'}]);
+});
+
+const {validateResumeFile,cleanResumeText}=await import(pathToFileURL(join(dir,'resume-upload.mjs')));
+test('resume goals prioritize a requested role over stronger unrelated coverage',()=>{
+ const resume='Built Excel forecasts and performed accounting analysis. Presented budget results to client stakeholders.';
+ const match=matchResume(resume,'I want an investment banking internship in New York');
+ assert.equal(match.rank[0].career.title,'Investment Banking');
+ assert.deepEqual(match.targets,['Investment Banking']);
+ assert.ok(match.job.missing.includes('modeling'));
+ assert.equal(matchResume(resume,'Sales and Trading Operations internship').rank[0].career.title,'Sales and Trading Operations');
+ assert.equal(matchResume(resume,'Quant research internship').rank[0].career.title,'Quantitative Research');
+});
+test('resume uploads reject unsupported, empty, oversized and unreadable files',()=>{
+ for(const name of ['resume.PDF','resume.docx','resume.txt'])assert.doesNotThrow(()=>validateResumeFile({name,size:100}));
+ assert.throws(()=>validateResumeFile({name:'resume.doc',size:100}));
+ assert.throws(()=>validateResumeFile({name:'resume.pdf',size:0}));
+ assert.throws(()=>validateResumeFile({name:'resume.pdf',size:6*1024*1024}));
+ assert.throws(()=>cleanResumeText('   '),/scanned/);
+ assert.throws(()=>cleanResumeText('x'.repeat(25001)),/too long/);
+ assert.equal(cleanResumeText('  '+ 'Experience in Excel and accounting. '.repeat(4)+'  '),'Experience in Excel and accounting. '.repeat(4).trim());
 });
