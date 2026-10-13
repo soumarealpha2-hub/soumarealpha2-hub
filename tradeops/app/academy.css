@@ -58,3 +58,5 @@
 /* Position the original event photo inside the circular display without editing it. */
 .ac-founder-avatar .ac-founder-story-photo{width:288px;left:-145px;top:-157px}
 @media(max-width:767px){.ac-founder-avatar .ac-founder-story-photo{width:230.4px;left:-116px;top:-125.6px}}
+
+.ac-founder-photo-link{display:block;flex-basis:100%;margin-top:12px}.ac-founder-full-photo{display:block;width:280px;max-width:100%;height:auto;border-radius:8px;border:1px solid #dbe5f3}@media(max-width:767px){.ac-founder-full-photo{width:240px}}
