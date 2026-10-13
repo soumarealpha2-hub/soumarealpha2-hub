@@ -7,13 +7,14 @@ import {pathToFileURL} from 'node:url';
 import ts from 'typescript';
 // Compile pure domain modules for Node; production still uses Vite's TypeScript pipeline.
 const dir=mkdtempSync(join(tmpdir(),'tradeops-domain-'));
-for(const name of ['careers','assessment','models','lessons','trials','progress','career-tools','capstones','learning-hub']){
+for(const name of ['careers','assessment','models','lessons','trials','progress','career-tools','capstones','learning-hub','finance-glossary','employers']){
  const source=readFileSync(new URL(`../lib/academy/${name}.ts`,import.meta.url),'utf8');
  const out=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText.replace(/from '(\.\/[^']+)'/g,"from '$1.mjs'");
  writeFileSync(join(dir,`${name}.mjs`),out.replace("from '../learning'", "from './legacy-learning.mjs'"));
 }
 writeFileSync(join(dir,'legacy-learning.mjs'),ts.transpileModule(readFileSync(new URL('../lib/learning.ts',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText);
 const {GLOSSARY,AFRICA_CASES,answerMatches,portfolioItems,portfolioMarkdown}=await import(pathToFileURL(join(dir,'learning-hub.mjs')));
+const {employerGuide,personalEmployerFit}=await import(pathToFileURL(join(dir,'employers.mjs')));
 const {CAREERS,DIMS}=await import(pathToFileURL(join(dir,'careers.mjs')));
 const {QUESTIONS,assess,answerVector,validAnswer}=await import(pathToFileURL(join(dir,'assessment.mjs')));
 const {dcf,DEFAULT_DCF,blackScholes,quantModel,TRANSACTIONS,statements,operatingForecast,lbo}=await import(pathToFileURL(join(dir,'models.mjs')));
@@ -126,4 +127,22 @@ test('portfolio includes verified completed work and rejects stale worksheet res
 });
 test('Africa completion creates an honest educational portfolio entry and exports',()=>{
  const p=emptyProgress();p.labs['africa-dakar-startup']={completed:true,decision:1,answers:['4','20'],note:'Fictional diligence memo: check customer retention and cash evidence before evaluating a proposed funding decision. The valuation is an exercise assumption.'};const items=portfolioItems(p);assert.equal(items.length,1);assert.ok(portfolioMarkdown(items,'My projects','Learning finance').includes('not employment experience'));p.labs['africa-dakar-startup'].answers[0]='40';assert.equal(portfolioItems(p).length,0);
+});
+
+test('expanded glossary retains old bookmarks and broad topic coverage',()=>{
+ assert.ok(GLOSSARY.length>=190);
+ assert.equal(new Set(GLOSSARY.map(t=>t.id)).size,GLOSSARY.length);
+ for(const id of ['wacc','settlement','runway'])assert.ok(GLOSSARY.some(t=>t.id===id));
+ for(const category of ['Derivatives','Insurance','Fintech','Personal finance','Quantitative finance'])assert.ok(GLOSSARY.some(t=>t.category===category));
+ assert.ok(GLOSSARY.every(t=>t.meaning.length>15&&t.example.length>15));
+});
+test('employer guides cover careers without replacing assessment signals',()=>{
+ for(const c of CAREERS){const g=employerGuide(c);assert.ok(g.firms.length&&g.interests.length);assert.ok(g.firms.every(f=>f.url.startsWith('https://')&&f.focus));}
+ const get=title=>CAREERS.find(c=>c.title===title);
+ assert.equal(employerGuide(get('Venture Capital')).firms[0].name,'Partech');
+ assert.equal(employerGuide(get('Actuarial Science')).firms[0].name,'Swiss Re');
+ assert.equal(employerGuide(get('Financial Examination')).firms[0].name,'FDIC');
+ assert.equal(employerGuide(get('Quantitative Research')).firms[0].name,'Jane Street');
+ assert.match(personalEmployerFit(get('Venture Capital'),['people']),/reported interest/);
+ assert.match(personalEmployerFit(get('Venture Capital'),[]),/work sample/);
 });
