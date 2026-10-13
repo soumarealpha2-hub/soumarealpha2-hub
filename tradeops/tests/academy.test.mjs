@@ -116,7 +116,8 @@ test('quant case includes lagged positions, turnover and final liquidation',()=>
 });
 
 test('glossary has unique searchable terms and complete explanations',()=>{
- assert.ok(GLOSSARY.length>=50);assert.equal(new Set(GLOSSARY.map(t=>t.id)).size,GLOSSARY.length);for(const term of GLOSSARY){assert.ok(term.meaning.length>20);assert.ok(term.example.length>20);}
+ assert.ok(GLOSSARY.length>=50);assert.equal(new Set(GLOSSARY.map(t=>t.id)).size,GLOSSARY.length);
+ assert.equal(new Set(GLOSSARY.map(t=>t.term.toLowerCase())).size,GLOSSARY.length);for(const term of GLOSSARY){assert.ok(term.meaning.length>20);assert.ok(term.example.length>20);}
 });
 test('Africa case checks agree with independent calculations and reject blank or invalid answers',()=>{
  const [startup,energy,payment]=AFRICA_CASES;close(startup.checks[0].answer,300000/(100000-25000));close(startup.checks[1].answer,900000/(3600000+900000)*100);close(energy.checks[0].answer,(1100000-400000)/500000);close(energy.checks[1].answer,(1100000*.8-400000)/500000);close(payment.checks[1].answer,1000000*.99*.4);
@@ -132,6 +133,7 @@ test('Africa completion creates an honest educational portfolio entry and export
 test('expanded glossary retains old bookmarks and broad topic coverage',()=>{
  assert.ok(GLOSSARY.length>=190);
  assert.equal(new Set(GLOSSARY.map(t=>t.id)).size,GLOSSARY.length);
+ assert.equal(new Set(GLOSSARY.map(t=>t.term.toLowerCase())).size,GLOSSARY.length);
  for(const id of ['wacc','settlement','runway'])assert.ok(GLOSSARY.some(t=>t.id===id));
  for(const category of ['Derivatives','Insurance','Fintech','Personal finance','Quantitative finance'])assert.ok(GLOSSARY.some(t=>t.category===category));
  assert.ok(GLOSSARY.every(t=>t.meaning.length>15&&t.example.length>15));
