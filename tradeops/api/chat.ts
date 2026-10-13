@@ -3,7 +3,7 @@ import {validateConversation} from '../lib/academy/chat-contract.js';
 
 export const maxDuration=30;
 const json=(data:unknown,status=200)=>Response.json(data,{status,headers:{'Cache-Control':'no-store'}});
-export function GET(){return json({configured:Boolean(process.env.AI_GATEWAY_API_KEY||process.env.VERCEL_OIDC_TOKEN)});}
+export function GET(request:Request){return json({configured:Boolean(process.env.AI_GATEWAY_API_KEY||process.env.VERCEL_OIDC_TOKEN||request.headers.get('x-vercel-oidc-token'))});}
 // Best-effort per-instance throttling; the Gateway credit/budget limit remains the account-level cap.
 const requests=new Map<string,{start:number;count:number}>();
 export async function POST(request:Request){
@@ -13,7 +13,7 @@ export async function POST(request:Request){
  const list=validateConversation(body);if(!list)return json({error:'Use 1–10 short user and assistant messages.'},400);
  const now=Date.now();for(const [key,v] of requests)if(now-v.start>60000)requests.delete(key);
  const ip=createHash('sha256').update(request.headers.get('x-vercel-forwarded-for')??request.headers.get('x-forwarded-for')??'unknown').digest('hex');const current=requests.get(ip)??{start:now,count:0};if(current.count>=8||requests.size>1000)return json({error:'RATE_LIMIT'},429);current.count++;requests.set(ip,current);
- if(!process.env.AI_GATEWAY_API_KEY&&!process.env.VERCEL_OIDC_TOKEN)return json({error:'AI connection is not configured. The learning library is available.'},503);
+
  try{
  const {generateText}=await import('ai');
  const context=body&&typeof body==='object'&&'context' in body&&typeof body.context==='string'?body.context.slice(0,6000):'TradeOps has careers, learning tracks, simulations, a glossary, and a private resume matcher.';
