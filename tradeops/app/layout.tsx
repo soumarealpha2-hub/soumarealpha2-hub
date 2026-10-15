@@ -4,8 +4,8 @@ import "./fintech.css";
 import "./academy.css";
 
 export const metadata: Metadata = {
-  title: "TradeOps Academy | Discover Finance. Practice the Work.",
-  description: "An interactive trading operations portfolio by Alpha Soumaré. Explore sample settlements, exception control, and workload stress scenarios.",
+  title: "First Seat Academy | Find Your Place in Finance.",
+  description: "Find your place in finance. Explore careers, build your skills, and practice realistic finance scenarios with First Seat Academy, created by Alpha Soumaré.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
