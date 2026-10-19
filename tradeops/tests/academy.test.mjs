@@ -255,3 +255,13 @@ test('resume goals distinguish consulting specialties and shared definitions are
  for(const term of ['Trade','Trade settlement','Reconciliation','Consulting','Revenue','Profit'])assert.equal(GLOSSARY.filter(t=>t.term===term).length,1,term);
  assert.match(learningAnswer('What is a trade?').text,/purchase or sale/);
 });
+
+ test('saved consulting-only recommendations retain their scope after reload',()=>{
+ const p=emptyProgress();p.saveQuiz=true;
+ const answers=fictional(CAREERS.find(c=>c.id==='investment-banking').profile);
+ p.history=[{date:'2026-10-19T17:00:00Z',answers,scope:'consulting'}];
+ const saved=parseProgress(serializeProgress(p)).history[0];
+ assert.equal(saved.scope,'consulting');assert.equal(assess(saved.answers,saved.scope).ranked.length,18);
+ assert.ok(assess(saved.answers,saved.scope).ranked.every(r=>r.career.category==='Consulting'));
+ assert.equal(roadmap('operations','Beginner')[0],'operations-markets');
+ });

@@ -77,4 +77,4 @@ export const READING:Record<Track,{title:string;url:string}[]>={
  accounting:[{title:'OpenStax: principles of financial accounting',url:'https://openstax.org/books/principles-financial-accounting/pages/3-1-describe-principles-assumptions-and-concepts-of-accounting-and-their-relationship-to-financial-statements'}],
  banking:[{title:'NYU Stern: Damodaran valuation materials',url:'https://pages.stern.nyu.edu/~adamodar/'}],
 };
-export const roadmap=(track:Track,level?:Level)=>LESSONS.filter(l=>l.track===track&&(!level||l.level===level)).sort((a,b)=>LEVELS.indexOf(a.level)-LEVELS.indexOf(b.level)).map(l=>l.id);
+export const roadmap=(track:Track,level?:Level)=>LESSONS.filter(l=>l.track===track&&(!level||l.level===level)).sort((a,b)=>LEVELS.indexOf(a.level)-LEVELS.indexOf(b.level)||Number(b.id.startsWith('operations-'))-Number(a.id.startsWith('operations-'))).map(l=>l.id);
