@@ -143,3 +143,28 @@
 .fs-preview-bottom{padding-top:8px;min-height:28px}
 @media(min-width:768px){.fs-preview-roles button{min-height:34px;padding-block:6px}.fs-preview-choices button{min-height:38px;padding-block:7px}.fs-preview-facts dt{min-height:14px}}
 @media(max-width:767px){.fs-preview-feedback{min-height:0}.fs-preview-heading{padding:18px}.fs-preview-body{padding:16px 18px}.fs-home-hero{padding-bottom:20px}.fs-home-hero+.fs-career-city{margin-top:4px}}
+
+/* Clearly bounded homepage chapters with one consistent spacing rhythm. */
+.fs-home-sections{display:grid;gap:24px;padding-bottom:12px}
+.fs-home-sections>section{margin:0;border:1px solid #d6e1ee;border-radius:14px;background:#fff;padding:28px;min-width:0;box-shadow:0 3px 12px #173b6005}
+.fs-home-sections>.fs-home-hero{gap:36px;padding:28px;align-items:start}
+.fs-home-sections>.fs-career-city{padding:0;margin:0;overflow:hidden}
+.fs-home-sections>.fs-home-careers>.fs-editorial-row{border:0;margin:0 0 24px;padding:0;gap:32px}
+.fs-home-sections .fs-career-categories{margin:0;gap:12px;grid-template-columns:repeat(3,minmax(0,1fr))}
+.fs-home-sections .fs-career-categories>a{padding:16px;border:1px solid #dce6f2;border-radius:8px;background:#f7faff;font-size:13px}
+.fs-home-sections .fs-career-categories>a:hover{border-color:#8eb2ed;background:#eef4ff}
+.fs-home-sections .ac-section-heading{margin:0 0 22px}
+.fs-home-sections>.fs-consulting-feature{background:#f4f8fe;gap:36px}
+.fs-home-sections>.fs-tools-section{display:block}
+.fs-tools-section>div:first-child{margin-bottom:20px}
+.fs-tools-section h2 br{display:none}
+.fs-tools-section .fs-utility-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.fs-tools-section .fs-utility-links>a,.fs-tools-section .fs-utility-links>a:first-child{padding:20px;border:1px solid #d9e4f0;border-radius:10px;background:#f7faff;align-items:flex-start;min-width:0}
+.fs-tools-section .fs-utility-links>a:hover{border-color:#8eb2ed;background:#eef4ff}
+.fs-tools-section .fs-utility-links>a>div{min-width:0}.fs-tools-section .fs-utility-links>a>svg{flex-shrink:0;margin-top:4px}
+.fs-tools-section .fs-utility-links h3{font-size:19px;margin:0}.fs-tools-section .fs-utility-links p{margin:8px 0 0;font-size:14px;line-height:1.6}
+.fs-home-sections>.ac-founder{padding:28px;margin:0}
+.fs-home-sections>.ac-next{margin:0;padding:28px;gap:24px;background:#f4f8fe}
+.fs-home-sections>section .ac-eyebrow:first-child{margin-top:0}
+@media(max-width:1000px){.fs-home-sections .fs-career-categories{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:767px){.fs-home-sections{gap:18px}.fs-home-sections>section,.fs-home-sections>.fs-home-hero,.fs-home-sections>.ac-founder,.fs-home-sections>.ac-next{padding:20px 16px;border-radius:11px}.fs-home-sections>.fs-career-city{padding:0}.fs-home-sections>.fs-home-hero{gap:24px}.fs-home-sections>.fs-home-careers>.fs-editorial-row{gap:16px;margin-bottom:20px}.fs-home-sections .fs-career-categories,.fs-tools-section .fs-utility-links{grid-template-columns:1fr;gap:10px}.fs-home-sections .fs-career-categories>a{padding:14px}.fs-tools-section .fs-utility-links>a,.fs-tools-section .fs-utility-links>a:first-child{padding:16px}.fs-home-sections>.fs-consulting-feature{gap:22px}.fs-home-sections>.ac-next{align-items:flex-start;flex-direction:column}.fs-home-sections .fs-home-hero h1{font-size:clamp(32px,9.7vw,40px)}.fs-home-sections .fs-preview-heading{padding:16px}.fs-home-sections .fs-preview-body{padding:14px}}
