@@ -12,7 +12,7 @@ const ORGS:Companion[]=[
  {name:'Bissapio',short:'Bissapio',logo:'bissapio.png',roles:[role('Founding Team Member','Jun 2022 – Present','Part-time','New York · On-site','Back-end strategy and operations.')]},
  {name:'NYU Vertically Integrated Projects (VIP)',short:'NYU VIP',logo:'nyu.svg',roles:[role('Tech Catalyst – Innovation and Emerging Products','Jan 2026 – Present','Part-time','New York · On-site','Optics Team: venture insights, emerging technology research and development.')]},
  {name:'Handshake AI',short:'Handshake AI',logo:'handshake.svg',roles:[role('Artificial Intelligence Researcher','Jan 2026 – Sep 2026','Part-time','','Project Hedgehong / LLM research: logic gaps and automation.')]},
- {name:'Same Day Delivery Inc.',short:'Same Day Delivery',logo:'same-day-delivery.png',roles:[role('Strategy and Operations Intern','Jun 2026 – Aug 2026','Internship','United States · Hybrid','AI-driven logistics and fleet technology development.')]},
+ {name:'Same Day Delivery Inc.',short:'Same Day Delivery',logo:'same-day-delivery.svg',roles:[role('Strategy and Operations Intern','Jun 2026 – Aug 2026','Internship','United States · Hybrid','AI-driven logistics and fleet technology development.')]},
  {name:'BGO × Project Destined',short:'BGO × Project Destined',logo:'bgo.svg',roles:[role('AI Commercial Real Estate Fellow','Feb 2026 – May 2026','Part-time','New York · Hybrid','Joint fellowship with BGO and Project Destined, focused on AI in industrial and commercial real estate.')]},
  {name:'Project Destined',short:'Project Destined',logo:'destined.png',roles:[role('Asset Management Program','Jan 2026 – May 2026','Part-time','New York City metropolitan area · Remote','Asset management and development fundamentals.'),role('Real Estate Private Equity Intern','Sep 2025 – Oct 2025','Internship','United States · Remote','Real estate private equity fundamentals.')]},
  {name:'Beats by Dre × Extern',short:'Beats by Dre × Extern',logo:'beats.png',roles:[role('Marketing and Brand Strategy Extern','Jun 2025 – Jul 2025','Externship','United States','Joint program with Beats by Dre and Extern, focused on Gen Z-driven product innovation and digital engagement.')]},
@@ -22,7 +22,7 @@ const ORGS:Companion[]=[
 ];
 function OrgMark({org}:{org:Companion}){
  const [failed,setFailed]=useState(false);
- return org.logo&&!failed?<img src={org.logo.startsWith('/')||org.logo.startsWith('https:')?org.logo:`/journey/orgs/${org.logo}`} alt="" width={76} height={52} loading="lazy" onError={()=>setFailed(true)}/>:<span className="fs-companion-monogram">{org.short}</span>;
+ return org.logo&&!failed?<img src={org.logo.startsWith('/')||org.logo.startsWith('https:')?org.logo:`/journey/orgs/${org.logo}`} style={org.logo==='same-day-delivery.svg'||org.logo==='ubiq.svg'?{background:'#fff',borderRadius:6,padding:3,boxSizing:'border-box'}:undefined} alt="" width={76} height={52} loading="lazy" onError={()=>setFailed(true)}/>:<span className="fs-companion-monogram">{org.short}</span>;
 }
 export function JourneyCompanions(){
  const [selected,setSelected]=useState(0),[paused,setPaused]=useState(false);
