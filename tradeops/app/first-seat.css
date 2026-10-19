@@ -73,3 +73,22 @@
 .fs-home-hero .ac-actions{margin:20px 0 10px}
 .fs-home-hero>div>.ac-meta{margin:0;line-height:1.6}
 @media(max-width:767px){.fs-home-hero{padding-top:4px;padding-bottom:32px}.fs-home-hero>div>.ac-eyebrow{margin-bottom:14px}.fs-home-hero .fs-home-deck{margin-top:18px!important}}
+
+/* Every career remains discoverable without an unstructured wall of links. */
+.fs-career-categories{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 28px;margin:-28px 0 44px}
+.fs-career-categories>a{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 0;border-bottom:1px solid var(--ac-line);font-size:14px;font-weight:600;min-width:0}
+.fs-career-categories>a>svg{flex-shrink:0}.fs-career-categories small{display:block;font-size:12px;font-weight:400;margin-top:5px}
+.fs-foundation-filters{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:20px}
+.fs-foundation-filters .ac-field{max-width:none;margin-bottom:10px}.fs-foundation-filters input,.fs-foundation-filters select{width:100%;min-width:0}
+.fs-foundation-note{font-size:14px;max-width:85ch;color:var(--ac-muted);margin:10px 0 22px}
+.fs-foundation-groups{border-top:1px solid var(--ac-line)}
+.fs-foundation-groups>details{border-bottom:1px solid var(--ac-line)}
+.fs-foundation-groups summary{padding:17px 0;cursor:pointer;font-size:15px;line-height:1.6}
+.fs-foundation-groups summary strong{font-weight:550}.fs-foundation-groups summary>span{font-size:12px;color:var(--ac-muted);margin-left:14px;white-space:nowrap}
+.fs-foundation-groups details[open]>summary{color:var(--ac-blue)}
+.fs-foundation-rows article{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:18px 20px;border-top:1px solid #e7edf4;background:#f8fafd}
+.fs-foundation-rows h3{font-size:16px}.fs-foundation-rows h3 a:hover{text-decoration:underline}.fs-foundation-rows p{font-size:12px;margin:6px 0 0;color:var(--ac-muted)}
+.fs-foundation-links{display:flex;gap:18px;flex-shrink:0}.fs-foundation-links a{display:flex;align-items:center;gap:6px;min-height:44px;font-size:13px;color:var(--ac-blue)}
+.fs-shared-tracks{margin-top:28px}.fs-shared-tracks>summary{padding:16px 0;cursor:pointer;font-size:16px;font-weight:600}
+@media(max-width:1000px){.fs-career-categories{grid-template-columns:repeat(2,minmax(0,1fr))}.fs-foundation-rows article{align-items:flex-start;flex-direction:column;gap:6px}}
+@media(max-width:767px){.fs-career-categories{grid-template-columns:1fr;margin:-12px 0 32px}.fs-foundation-filters{grid-template-columns:1fr;gap:4px}.fs-foundation-groups summary{font-size:14px}.fs-foundation-groups summary>span{display:block;margin-left:18px}.fs-foundation-rows article{padding:16px}.fs-foundation-links{flex-wrap:wrap;gap:6px 18px}.fs-foundation-links a{font-size:12px}.fs-foundation-rows h3{font-size:16px;overflow-wrap:anywhere}}
