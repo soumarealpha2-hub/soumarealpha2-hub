@@ -1,11 +1,12 @@
 'use client';
 import {ArrowRight,HelpCircle} from 'lucide-react';
 import type {ReactNode} from 'react';
+import {GLOSSARY} from '@/lib/academy/learning-hub';
 import {GlossaryButton} from './glossary';
 export const go=(path:string)=>{window.location.hash=path;};
 export function LinkButton({to,children,secondary=false}:{to:string;children:ReactNode;secondary?:boolean}){return <a className={secondary?'ac-button secondary':'ac-button'} href={`#${to}`}>{children}<ArrowRight size={16} aria-hidden="true"/></a>;}
 export function PageTitle({eyebrow,title,children}:{eyebrow:string;title:string;children?:ReactNode}){return <header className="ac-page-title"><p className="ac-eyebrow">{eyebrow}</p><h1>{title}</h1>{children&&<p>{children}</p>}</header>;}
-export function Explain({term,children}:{term:string;children:ReactNode}){return <details className="ac-explain"><summary><HelpCircle size={14}/><span>Explain {term}</span></summary><p>{children}</p><GlossaryButton term={term} label="Open this term in the glossary"/></details>;}
+export function Explain({term,children}:{term:string;children:ReactNode}){const shared=GLOSSARY.find(t=>t.term.toLowerCase()===term.toLowerCase()||t.id===term.toLowerCase());return <details className="ac-explain"><summary><HelpCircle size={14}/><span>Explain {term}</span></summary><p>{shared?.meaning??children}</p>{shared&&<p><strong>Example:</strong> {shared.example}</p>}<GlossaryButton term={term} label="Open this term in the glossary"/></details>;}
 export function Empty({children}:{children:ReactNode}){return <p className="ac-empty">{children}</p>;}
 export const money=(x:number,digits=0)=>new Intl.NumberFormat('en-US',{maximumFractionDigits:digits,minimumFractionDigits:digits}).format(x);
 export const pct=(x:number)=>`${(x*100).toFixed(2)}%`;

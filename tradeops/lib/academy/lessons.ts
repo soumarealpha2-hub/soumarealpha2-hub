@@ -38,7 +38,7 @@ const FOUNDATION_LESSONS:Lesson[]=[
  make('operations','Advanced','Controls regulatory awareness and incident review',['Operational controls combine prevention, detection, correction, and documentation. Separate responsibilities when an illustrative workflow calls for independent review.','Regulatory obligations vary by product, market, jurisdiction, and firm. Use approved procedures and current sources; this sandbox is not a production policy manual.'],'After an instruction mismatch, an analyst checks the approved source, obtains the required review, and retains the evidence before release.',['Preventive control','A check intended to stop an error or unauthorized action before it occurs.'],'An unverified instruction change arrives near cutoff. The best action is:',['Bypass review to meet the deadline','Maintain the hold, verify through approved channels, and escalate','Assume familiar names prove validity'],1,'Urgency does not establish authenticity or authorize bypassing controls.','A queue has 40 records and 4 exceptions. What percentage are exceptions?',10,'percent','4 / 40 × 100.','Investigate a break and document both the correction and a preventive improvement.'),
 ];
 export const LEVELS:Level[]=['Beginner','Intermediate','Advanced'];
-export const LEVEL_LABEL:Record<Level,string>={Beginner:'Beginner',Intermediate:'Medium',Advanced:'Hard'};
+export const LEVEL_LABEL:Record<Level,string>={Beginner:'Beginner',Intermediate:'Intermediate',Advanced:'Advanced'};
 export const LEVEL_DESCRIPTION:Record<Level,string>={Beginner:'Plain-language ideas and a guided first calculation.',Intermediate:'Linked calculations and practical decisions.',Advanced:'Stress scenarios, competing constraints, and evidence review.'};
 const operationsPractice:Record<string,Lesson['practice']>={
  markets:{prompt:'A fictional equity trade buys 100 shares at $50. What is its trade value?',answer:5000,unit:'dollars',hint:'Quantity × price: 100 × 50.'},
@@ -77,4 +77,4 @@ export const READING:Record<Track,{title:string;url:string}[]>={
  accounting:[{title:'OpenStax: principles of financial accounting',url:'https://openstax.org/books/principles-financial-accounting/pages/3-1-describe-principles-assumptions-and-concepts-of-accounting-and-their-relationship-to-financial-statements'}],
  banking:[{title:'NYU Stern: Damodaran valuation materials',url:'https://pages.stern.nyu.edu/~adamodar/'}],
 };
-export const roadmap=(track:Track,level?:Level)=>LESSONS.filter(l=>l.track===track&&(!level||l.level===level)).sort((a,b)=>LEVELS.indexOf(a.level)-LEVELS.indexOf(b.level)).map(l=>l.id);
+export const roadmap=(track:Track,level?:Level)=>LESSONS.filter(l=>l.track===track&&(!level||l.level===level)).sort((a,b)=>LEVELS.indexOf(a.level)-LEVELS.indexOf(b.level)||Number(b.id.startsWith('operations-'))-Number(a.id.startsWith('operations-'))).map(l=>l.id);

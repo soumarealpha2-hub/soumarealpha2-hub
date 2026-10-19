@@ -1,3 +1,4 @@
+import {consultingDetail} from './consulting-details';
 import {DIMENSIONS,DIMS,type Career,type Dimension} from './careers';
 type Employer={name:string;url:string;focus:string};
 const firms:Record<string,Employer>={
@@ -15,6 +16,8 @@ const firms:Record<string,Employer>={
 };
 export function employerGuide(c:Career){
  const n=c.title.toLowerCase();let ids:string[],setting:string;
+ const consulting=consultingDetail(c.title);
+ if(consulting){return {firms:[consulting.employer],setting:'Consulting and specialist advisory teams',interests:DIMS.filter(d=>c.profile[d]>=3.5).slice(0,4),roleSearch:'consulting' in c&&c.consulting?c.consulting.entryTitles.join(', '):c.title,questions:['What work do entry-level colleagues do each week?','How much travel and client-site work is expected?','How are new colleagues trained and their work reviewed?']};}
  if(/financial examination/.test(n)){ids=['fdic'];setting='Public financial regulators and supervisory agencies';}
  else if(/islamic/.test(n)){ids=['isdb'];setting='Islamic financial institutions and specialist structuring teams';}
  else if(/development|impact|sustainable|project finance|infrastructure|sovereign/.test(n)){ids=['ifc','br'];setting='Development institutions, project-finance teams, and investment managers';}

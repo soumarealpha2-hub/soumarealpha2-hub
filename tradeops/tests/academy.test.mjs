@@ -7,7 +7,7 @@ import {pathToFileURL} from 'node:url';
 import ts from 'typescript';
 // Compile pure domain modules for Node; production still uses Vite's TypeScript pipeline.
 const dir=mkdtempSync(join(tmpdir(),'tradeops-domain-'));
-for(const name of ['careers','assessment','models','lesson-levels','lessons','trials','progress','career-tools','capstones','learning-hub','finance-glossary','employers','resume-match','assistant','chat-contract','resume-upload']){
+for(const name of ['consulting','consulting-details','foundations','careers','assessment','models','lesson-levels','lessons','trials','progress','career-tools','capstones','learning-hub','finance-glossary','employers','resume-match','assistant','chat-contract','resume-upload']){
  const source=readFileSync(new URL(`../lib/academy/${name}.ts`,import.meta.url),'utf8');
  const out=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText.replace(/from '(\.\/[^']+)'/g,"from '$1.mjs'");
  writeFileSync(join(dir,`${name}.mjs`),out.replace("from '../learning'", "from './legacy-learning.mjs'"));
@@ -197,7 +197,7 @@ test('resume uploads reject unsupported, empty, oversized and unreadable files',
 
 test('all 45 lesson topics have three distinct, complete difficulty editions',()=>{
  assert.equal(TOPICS.length,45);assert.equal(LESSONS.length,135);
- assert.deepEqual(LEVELS.map(l=>LEVEL_LABEL[l]),['Beginner','Medium','Hard']);
+ assert.deepEqual(LEVELS.map(l=>LEVEL_LABEL[l]),['Beginner','Intermediate','Advanced']);
  assert.equal(new Set(LESSONS.map(l=>l.id)).size,135);
  for(const topic of TOPICS){
   const editions=LEVELS.map(level=>lessonAtLevel(topic.id,level));
@@ -235,3 +235,33 @@ test('hard lesson calculations agree with independent financial model checks',()
  assert.equal(checkLessonCalculation(exercise('portfolio-allocation-and-diversification'),'.035'),false);
  for(const l of LESSONS){assert.ok(checkLessonCalculation(l,String(l.practice.answer)));assert.equal(checkLessonCalculation(l,''),false);assert.equal(checkLessonCalculation(l,'Infinity'),false);assert.equal(checkLessonCalculation(l,String(l.practice.answer+1)),false);}
 });
+
+test('consulting specialties have distinct exercises, relevant employers, and separate saved work',async()=>{
+ const {consultingDetail}=await import(pathToFileURL(join(dir,'consulting-details.mjs')));
+ const {trialStorageId}=await import(pathToFileURL(join(dir,'trials.mjs')));
+ const specialties=CAREERS.filter(c=>c.category==='Consulting');
+ assert.equal(specialties.length,18);
+ const openings=new Set();
+ for(const career of specialties){const detail=consultingDetail(career.title),trial=trialFor(career);assert.equal(detail.day.length,3);assert.ok(detail.subroles);assert.ok(detail.employer.url.startsWith('https://'));assert.equal(trial.steps.length,3);for(const step of trial.steps){assert.ok(step.choices[step.answer]);assert.ok(step.feedback.length>70);}openings.add(trial.steps[0].brief);assert.notEqual(trialStorageId(career),career.id);assert.equal(employerGuide(career).firms[0].url,detail.employer.url);}
+ assert.equal(openings.size,18);
+ const p=emptyProgress(),c=specialties[0];p.trials[c.id]={step:3,choices:{},completed:true,note:'Earlier foundation practice'};p.trials[trialStorageId(c)]={step:1,choices:{0:1},completed:false,note:''};
+ const restored=parseProgress(serializeProgress(p));assert.equal(restored.trials[c.id].completed,true);assert.equal(restored.trials[trialStorageId(c)].completed,false);
+});
+test('resume goals distinguish consulting specialties and shared definitions are consistent',()=>{
+ const resume='Analyzed customer data using SQL, Excel, and statistics. Presented research to client stakeholders.';
+ assert.equal(matchResume(resume,'I want data analytics consulting').rank[0].career.title,'Data & analytics consulting');
+ assert.equal(matchResume(resume,'economic consulting').rank[0].career.title,'Economic consulting');
+ const consulting=matchResume(resume,'I want to explore consulting');assert.ok(consulting.rank.every(r=>r.career.category==='Consulting'));
+ for(const term of ['Trade','Trade settlement','Reconciliation','Consulting','Revenue','Profit'])assert.equal(GLOSSARY.filter(t=>t.term===term).length,1,term);
+ assert.match(learningAnswer('What is a trade?').text,/purchase or sale/);
+});
+
+ test('saved consulting-only recommendations retain their scope after reload',()=>{
+ const p=emptyProgress();p.saveQuiz=true;
+ const answers=fictional(CAREERS.find(c=>c.id==='investment-banking').profile);
+ p.history=[{date:'2026-10-19T17:00:00Z',answers,scope:'consulting'}];
+ const saved=parseProgress(serializeProgress(p)).history[0];
+ assert.equal(saved.scope,'consulting');assert.equal(assess(saved.answers,saved.scope).ranked.length,18);
+ assert.ok(assess(saved.answers,saved.scope).ranked.every(r=>r.career.category==='Consulting'));
+ assert.equal(roadmap('operations','Beginner')[0],'operations-markets');
+ });

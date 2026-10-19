@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "./fintech.css";
 import "./academy.css";
+import "./first-seat.css";
 
 export const metadata: Metadata = {
   title: "First Seat Academy | Find Your Place in Finance.",

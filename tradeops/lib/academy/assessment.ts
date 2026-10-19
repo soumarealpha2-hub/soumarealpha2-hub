@@ -54,7 +54,9 @@ export function answerVector(question:AssessmentQuestion,answer:number[]):Partia
   return [d,a.reduce((s,n)=>s+(question.options[n].scores[d]??2),0)/a.length];
  }));
 }
-export function assess(answers:Answers){
+export type CareerScope='all'|'finance'|'consulting';
+export function careerScope(value:unknown):CareerScope{return value==='finance'||value==='consulting'?value:'all';}
+export function assess(answers:Answers,scope:unknown='all'){
  const observations=Object.fromEntries(DIMS.map(d=>[d,[] as number[]])) as Record<Dimension,number[]>;
  let answered=0;
  for(const question of QUESTIONS){const a=validAnswer(question,answers[question.id]);if(!a.length||question.kind==='rank'&&a.length!==question.options.length)continue;answered++;
@@ -63,7 +65,7 @@ export function assess(answers:Answers){
  const profile=Object.fromEntries(DIMS.map(d=>[d,observations[d].length?observations[d].reduce((a,b)=>a+b,0)/observations[d].length:2])) as Profile;
  const covered=DIMS.filter(d=>observations[d].length>=2);
  const enough=answered>=10&&covered.length>=5;
- const ranked=enough?CAREERS.map(c=>{let distance=0,weights=0;for(const d of DIMS){if(!observations[d].length)continue;const w=c.weights[d];distance+=w*Math.abs(profile[d]-c.profile[d])/4;weights+=w;}
+ const ranked=enough?CAREERS.filter(c=>scope==='consulting'?c.category==='Consulting':scope==='finance'?c.category!=='Consulting':true).map(c=>{let distance=0,weights=0;for(const d of DIMS){if(!observations[d].length)continue;const w=c.weights[d];distance+=w*Math.abs(profile[d]-c.profile[d])/4;weights+=w;}
   const score=Math.round(100*(1-distance/weights));
   const reasons=covered.filter(d=>profile[d]>=2.6&&c.profile[d]>=3).sort((a,b)=>profile[b]-profile[a]).slice(0,3);
   const tradeoffs=covered.filter(d=>Math.abs(profile[d]-c.profile[d])>=1.1).sort((a,b)=>Math.abs(profile[b]-c.profile[b])-Math.abs(profile[a]-c.profile[a])).slice(0,2);
