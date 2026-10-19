@@ -1,3 +1,4 @@
+import {CONSULTING_SPECIALTIES} from './consulting';
 export type Track = 'operations'|'quant'|'accounting'|'banking';
 export const TRACKS: {id:Track;title:string;short:string;description:string}[] = [
  {id:'operations',title:'Sales & Trading Operations',short:'Operations',description:'Follow trades, investigate breaks, and keep the process moving.'},
@@ -126,7 +127,7 @@ const rows:[string,number,string,string,Partial<Profile>?,Track?][]=[
  ["Insurance Claims Analysis", 5, "Review claims evidence and support consistent claim handling.", "Identify missing evidence before a fictional claims decision."],
 ];
 export const slug=(s:string)=>s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-$/,'');
-export const CAREERS=rows.map(([title,group,overview,task,override,track])=>{
+const FINANCE_CAREERS=rows.map(([title,group,overview,task,override,track])=>{
  const g=groups[group];const profile={...g.p,...override};
  const name=title.toLowerCase();
  // Added specialties use explicit editorial preferences instead of inheriting an identical group vector.
@@ -143,5 +144,10 @@ export const CAREERS=rows.map(([title,group,overview,task,override,track])=>{
  return {id:slug(title),title,category:specialty,overview,task,profile,track:foundation,skills:g.skills,tools:g.tools,environment:g.environment,balance:g.balance,pay:g.pay,progress:g.progress,
    weights:Object.fromEntries(DIMS.map(d=>[d,profile[d]>=3.5||profile[d]<=1?1.5:1])) as Profile};
 });
+export const CAREERS = [...FINANCE_CAREERS, ...CONSULTING_SPECIALTIES.map((c)=>{
+ const group=groups.find(g=>g.track===c.track)??groups[0];
+ const profile={...group.p,...c.preferences};
+ return {id:'consulting-'+slug(c.title),title:c.title,category:'Consulting',overview:c.overview,task:c.clientProblem,profile,track:c.track,skills:c.skills.join(', '),tools:'Spreadsheets, interviews, research and communication tools as relevant',environment:'Project teams investigate a client problem, test evidence, share recommendations and support implementation.',balance:'Client needs and project deadlines vary widely. Ask about travel, working hours and team expectations.',pay:'Compare current published compensation and location-specific role information; packages vary by firm and role.',progress:c.entryTitles.join(' / ')+' → consultant → manager or specialist leadership',weights:Object.fromEntries(DIMS.map(d=>[d,profile[d]>=3.5||profile[d]<=1?1.5:1])) as Profile,consulting:c};
+})];
 export type Career=typeof CAREERS[number];
 export const CAREER_SOURCE='https://www.cfainstitute.org/programs/cfa-program/careers';
