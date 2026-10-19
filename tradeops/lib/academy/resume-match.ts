@@ -5,7 +5,7 @@ const SKILLS:Record<string,string[]>={
 export const normalize=(s:string)=>s.toLowerCase().replace(/[’']/g,'').replace(/[^a-z0-9+#&]+/g,' ').trim();
 function includesPhrase(text:string,phrase:string){return (` ${text} `).includes(` ${normalize(phrase)} `);}
 export function roleSkills(c:Career){const n=c.title.toLowerCase();const common=['analysis','communication'];
- if(c.category==='Consulting'){if(/cybersecurity/.test(n))return [...common,'cyber','controls','coding'];if(/technology|digital|enterprise systems|data & analytics/.test(n))return [...common,'coding','business','process'];if(/operations|supply chain|implementation|organizational change/.test(n))return [...common,'process','consulting','business'];return [...common,'consulting','business','excel'];}
+ if(c.category==='Consulting'){if(/data & analytics|economic/.test(n))return [...common,'statistics','excel','sql'];if(/human capital|organizational change/.test(n))return [...common,'change','leadership','consulting'];if(/accounting advisory/.test(n))return [...common,'accounting','excel','controls'];if(/transaction advisory|restructuring/.test(n))return [...common,'modeling','accounting','planning'];if(/cybersecurity/.test(n))return [...common,'cyber','controls','coding'];if(/technology|digital|enterprise systems|data & analytics/.test(n))return [...common,'coding','business','process'];if(/operations|supply chain|implementation|organizational change/.test(n))return [...common,'process','consulting','business'];return [...common,'consulting','business','excel'];}
  if(/insurance|actuarial|reinsurance/.test(n))return [...common,'insurance','statistics','excel'];
  if(/real estate|mortgage/.test(n))return [...common,'property','credit','modeling','excel'];
  if(/quant|data|electronic|cybersecurity|financial systems/.test(n))return [...common,'python','sql','coding','statistics'];
@@ -26,7 +26,8 @@ const GOAL_ALIASES:Record<string,string[]>={
 };
 export function goalCareers(goal:string):Career[]{
  const text=normalize(goal);if(!text)return [];
- const exact=CAREERS.filter(c=>[c.title,...(GOAL_ALIASES[c.id]??[])].some(p=>includesPhrase(text,p)));
+ const exact=CAREERS.filter(c=>[c.title,c.category==='Consulting'?c.title.replace(/ & /g,' and '):c.title,...(GOAL_ALIASES[c.id]??[])].some(p=>includesPhrase(text,p)));
+ if(/\bconsulting\b/.test(text)&&!exact.length){const candidates=CAREERS.filter(c=>c.category==='Consulting');const ignore=new Set(['and','consulting','consultant','services','i','want','to','in','a']);const tokens=text.split(' ').filter(t=>!ignore.has(t)&&t.length>2);const scored=candidates.map(c=>({c,n:normalize(c.title+' '+(c.consulting?.entryTitles.join(' ')??'')).split(' ').filter(t=>tokens.includes(t)).length}));const best=Math.max(...scored.map(x=>x.n));return best?scored.filter(x=>x.n===best).map(x=>x.c):candidates;}
  // Prefer a complete specific role over a title contained inside that role.
  if(exact.length)return exact.filter(c=>!exact.some(other=>other!==c&&normalize(other.title).includes(normalize(c.title))));
  const generic=new Set(['finance','financial','and','of','the']);

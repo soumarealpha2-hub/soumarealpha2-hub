@@ -1,3 +1,4 @@
+import {consultingDetail} from './consulting-details';
 import type {Career} from './careers';
 export type TrialStep={time:string;title:string;brief:string;choices:string[];answer:number;feedback:string};
 export type Trial={id:string;title:string;skills:string[];steps:TrialStep[]};
@@ -49,6 +50,7 @@ export const TRIALS:Record<string,Trial>={
  s('Client update','Describe uncertainty','A client asks whether the price will rebound. What is appropriate?',['Guarantee recovery','Explain the scenario, uncertainty, and relevant risks','Invent information about other orders'],1,'Communicate what is known, what is uncertain, and the applicable limitations on disclosure.') ]},
 };
 export function trialFor(career:Career):Trial{
+ if('consulting' in career&&career.consulting){const d=consultingDetail(career.title);return {id:career.id,title:career.consulting.exercise,skills:[...career.consulting.skills],steps:d.steps};}
  if(career.id==='venture-capital')return TRIALS.venture;
  if(career.id==='private-equity')return TRIALS.privateEquity;
  if(['asset-management','portfolio-management','investment-risk-management','wealth-management','private-banking'].includes(career.id))return TRIALS.portfolio;
@@ -58,3 +60,5 @@ export function trialFor(career:Career):Trial{
  if(['sales-and-trading','derivatives-trading','trading-strategy'].includes(career.id))return TRIALS.trading;
  return TRIALS[career.track];
 }
+
+export const trialStorageId=(career:Career)=>career.category==='Consulting'?`consulting-work-${career.id}`:career.id;

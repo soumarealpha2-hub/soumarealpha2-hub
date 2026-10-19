@@ -1,4 +1,5 @@
 'use client';
+import {DayTrial} from './learning';
 import {useState} from 'react';
 import {LessonLevels} from './lesson-level-links';
 import {CAREERS} from '@/lib/academy/careers';
@@ -9,6 +10,7 @@ import {PageTitle,LinkButton,Explain,NumberField,money,DownloadButton} from './c
 type LabState={values:Record<string,number>;answer:string;practiceDone:boolean;quizDone:boolean;note:string};
 export function CareerLab({id}:{id?:string}){
  const career=CAREERS.find(c=>c.id===id);const tool=career?toolFor(career):CAREER_TOOLS.find(t=>t.id===id);
+ if(career?.category==='Consulting')return <DayTrial key={career.id} careerId={career.id}/>;
  if(!tool)return <><PageTitle eyebrow="Career practice library" title="Choose the work you want to try.">Seven specialist starter labs complement the four full workspaces. Each lab includes a short lesson, a working calculation, practice, and a knowledge check.</PageTitle><div className="ac-track-directory">{CAREER_TOOLS.map(t=><a href={`#career-lab/${t.id}`} key={t.id}><div><h2>{t.title}</h2><p>{t.intro}</p><small>Learn · calculate · practice · review</small></div></a>)}</div><LinkButton to="careers" secondary>Find a profession</LinkButton></>;
  return <Lab key={tool.id} toolId={tool.id} careerId={career?.id}/>;
 }
