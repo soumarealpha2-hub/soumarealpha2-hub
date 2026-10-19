@@ -103,3 +103,16 @@
 .fs-guide-ring{box-shadow:0 0 0 4px #2563eb16;border:2px solid #2563eb;background:transparent}
 .fs-tour-guide.is-minimized{width:auto;padding:6px;border-radius:18px}.fs-tour-guide.is-minimized .fs-guide-top{gap:0}
 @media(max-width:767px){.fs-tour-guide{right:12px;bottom:12px;width:290px;padding:12px}}
+
+/* Readable headings and labels across desktop and narrow screens. */
+.academy :is(h1,h2,h3){text-wrap:balance;overflow-wrap:break-word;word-break:normal}
+.academy :is(button,.ac-button,.ac-text-link){line-height:1.45}
+.academy .ac-button{max-width:100%;white-space:normal;text-align:center}
+.academy :is(.ac-button,.ac-text-link)>svg{flex-shrink:0}
+.fs-preview-kicker{line-height:1.6}.fs-preview-kicker svg{flex-shrink:0}
+.fs-preview-role{flex-wrap:wrap;row-gap:2px}
+.fs-career-categories>a>span,.fs-foundation-rows article>div,.fs-guide-top>div{min-width:0}
+.fs-foundation-links{max-width:100%}.fs-foundation-links a{line-height:1.5}
+.fs-guide-top strong{line-height:1.45}.fs-guide-top small{line-height:1.5}
+.fs-guide-icon{flex-shrink:0}.fs-guide-actions{flex-wrap:wrap}
+@media(max-width:767px){.fs-home-hero h1{font-size:clamp(36px,10.8vw,44px)}.fs-preview-facts dd{font-size:clamp(15px,4.5vw,17px)}.ac-section-heading{flex-wrap:wrap;gap:12px}.ac-text-link{white-space:normal}}
