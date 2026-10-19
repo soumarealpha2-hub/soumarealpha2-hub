@@ -1,5 +1,5 @@
 'use client';
-import {useState, type CSSProperties} from 'react';
+import {useId,useState, type CSSProperties} from 'react';
 
 type Role={title:string;date:string;type:string;location:string;detail:string};
 type Companion={name:string;short:string;logo:string;roles:Role[]};
@@ -21,8 +21,9 @@ const ORGS:Companion[]=[
  {name:'GO Project',short:'GO Project',logo:'https://assets.classy.org/33417895/9f9a3208-a8f1-11ef-a102-0e6a9168ca03.png',roles:[role('Go Getter Intern','Jun 2024 – Aug 2024','Internship','United States · On-site','Fifth-grade English language and math development.')]}
 ];
 function OrgMark({org}:{org:Companion}){
- const [failed,setFailed]=useState(false);
- if(org.logo==='ubiq-official.png'&&!failed)return <span style={{display:'block',width:'100%',height:'100%',borderRadius:6,backgroundColor:'#062d58',backgroundImage:"url('/journey/orgs/ubiq-official.png')",backgroundRepeat:'no-repeat',backgroundSize:'235% auto',backgroundPosition:'center 7%'}} aria-hidden="true"/>;
+ const [failed,setFailed]=useState(false);const clipId=useId();
+ if(org.logo==='ubiq-official.png'&&!failed)return <svg viewBox="435 75 650 305" width={76} height={52} style={{display:'block',width:'100%',height:'100%',overflow:'visible'}} aria-hidden="true"><defs><clipPath id={clipId}><path d="M449 228 L541 136 H587 V181 H633 V136 H679 V182 L701 161 V90 H748 V136 H840 V183 L875 136 H921 V183 L968 136 H1070 V274 L978 366 H871 V321 L826 366 H771 V277 L682 366 H449 Z"/></clipPath></defs><image href="/journey/orgs/ubiq-official.png" width="1519" height="1170" clipPath={`url(#${clipId})`}/></svg>;
+ if(org.logo==='bissapio-official.png'&&!failed)return <svg viewBox="0 0 332 391" width={76} height={52} style={{display:'block',width:'100%',height:'100%',overflow:'visible'}} aria-hidden="true"><defs><clipPath id={clipId}><path d="M8 145 L8 87 L19 55 L39 27 L69 12 L119 8 L132 29 L157 28 L183 44 L239 38 L249 83 L276 124 L291 141 L327 131 L332 216 L306 229 L309 258 L299 282 L280 296 L260 320 L246 345 L219 367 L188 380 L166 367 L152 332 L138 309 L130 277 L110 249 L95 231 L8 226 L0 202 L0 155 Z"/></clipPath></defs><image href="/journey/orgs/bissapio-official.png" width="332" height="391" clipPath={`url(#${clipId})`}/></svg>;
  return org.logo&&!failed?<img src={org.logo.startsWith('/')||org.logo.startsWith('https:')?org.logo:`/journey/orgs/${org.logo}`} style={org.logo==='same-day-delivery-official.png'||org.logo==='bissapio-official.png'?{background:'#fff',borderRadius:6,padding:3,boxSizing:'border-box'}:undefined} alt="" width={76} height={52} loading="lazy" onError={()=>setFailed(true)}/>:<span className="fs-companion-monogram">{org.short}</span>;
 }
 export function JourneyCompanions(){
