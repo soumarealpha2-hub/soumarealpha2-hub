@@ -5,13 +5,14 @@ import {LESSONS} from '@/lib/academy/lessons';
 import {useAcademy} from './use-academy';
 import {LinkButton} from './common';
 import {FounderJourney} from './founder-journey';
+import {CareerPreview} from './career-preview';
 
 export function Home({onTour}:{onTour:()=>void}){
  const {progress}=useAcademy();const resume=LESSONS.find(l=>progress.lessons[l.id]&&!progress.lessons[l.id]?.completed);
  return <>
   <section className="fs-home-hero">
    <div><p className="ac-eyebrow">Your first seat at the table</p><h1>Find your career<br/>in <em>finance.</em></h1><p className="fs-home-deck">Understand the work before choosing the path.</p><p>Explore finance and consulting. Learn the language, try a real kind of task, and build from wherever you are today.</p><div className="ac-actions"><LinkButton to={resume?`learn/${resume.id}`:'start'}>{resume?'Resume your lesson':'Find your starting point'}</LinkButton><a className="ac-text-link" href="#careers">Explore careers <ArrowRight size={16}/></a></div><p className="ac-meta">No experience required · No account needed · Learn at your pace</p></div>
-   <aside className="fs-ticket" aria-label="Preview of your first exercise"><div className="fs-ticket-top"><span>THE PRACTICE DESK</span><span>001 / Trade ticket</span></div><h2>A small task.<br/>A useful first skill.</h2><p>A buyer wants 100 shares of fictional NOVA stock. Each share costs $50. What amount needs to be paid?</p><dl><div><dt>Buyer</dt><dd>River Fund</dd></div><div><dt>Seller</dt><dd>Harbor Fund</dd></div><div><dt>Quantity</dt><dd>100 shares</dd></div><div><dt>Price</dt><dd>$50 per share</dd></div></dl><a className="fs-ticket-action" href="#start/task">Start your first trade <ArrowRight size={17}/></a><small>Fictional training data. We’ll explain every step.</small></aside>
+   <CareerPreview/>
   </section>
   <section className="fs-editorial-row"><div><p className="ac-eyebrow">01 / Find the work that interests you</p><h2>There’s more than<br/>one way in.</h2></div><div><p>Follow money through a business, investigate a mismatch, analyze data, or help a client solve a problem. Career profiles show the work and the tradeoffs.</p><div className="ac-actions"><LinkButton to="careers" secondary>Explore finance careers</LinkButton><LinkButton to="careers/consulting" secondary>Explore consulting careers</LinkButton></div><a className="ac-text-link" href="#quiz">Not sure yet? Try the career discovery quiz →</a></div></section>
   <section className="ac-section"><div className="ac-section-heading"><div><p className="ac-eyebrow">02 / Build a foundation</p><h2>Learn one idea. Put it to work.</h2></div><a className="ac-text-link" href="#learn">All learning paths →</a></div><div className="fs-path-list">{TRACKS.map((t,i)=>{const ls=LESSONS.filter(l=>l.track===t.id&&l.level==='Beginner');const done=ls.filter(l=>progress.lessons[l.id]?.completed).length;return <a key={t.id} href={`#learn/${t.id}`}><span className="ac-index">0{i+1}</span><h3>{t.title}</h3><p>{t.description}</p><span className="ac-meta">{done?`${done} / ${ls.length} beginner lessons complete`:'Beginner to Advanced'}</span><ArrowRight size={18}/></a>;})}</div></section>
