@@ -64,3 +64,12 @@
 .ac-founder-scene .ac-founder-photo-link{max-width:380px;margin:0 0 0 auto;border-radius:6px}
 @media(max-width:1000px) and (min-width:768px){.fs-home-hero{gap:30px;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.fs-preview-heading{padding:22px}.fs-preview-body{padding:18px}.ac-founder-intro{gap:30px}.ac-founder-intro h2{font-size:29px}}
 @media(max-width:767px){.fs-home-hero{grid-template-columns:minmax(0,1fr);gap:28px}.fs-preview-heading{padding:22px}.fs-preview-heading h2{font-size:30px}.fs-preview-body{padding:18px}.fs-preview-facts dd{font-size:17px}.fs-preview-roles button{min-height:44px}.fs-preview-feedback{min-height:115px}.fs-preview-bottom{flex-wrap:wrap}.fs-preview-bottom button{min-height:44px}.ac-founder-intro{grid-template-columns:minmax(0,1fr);gap:24px}.ac-founder-intro h2{font-size:29px}.ac-founder-heading>.ac-eyebrow{margin-bottom:12px}.ac-founder-byline{margin-bottom:18px}.ac-founder-intro .ac-founder-narrative p{font-size:14px}.ac-founder-scene .ac-founder-photo-link{max-width:380px;margin:0 auto}}
+
+/* Keep the introduction aligned with the career preview, without a large empty gap. */
+.fs-home-hero{align-items:start;padding-top:10px;padding-bottom:44px}
+.fs-home-hero>div>.ac-eyebrow{margin:0 0 16px}
+.fs-home-hero .fs-home-deck{margin-top:20px!important;margin-bottom:16px}
+.fs-home-hero>div>p:not(.ac-eyebrow):not(.fs-home-deck):not(.ac-meta){margin-top:0;margin-bottom:20px}
+.fs-home-hero .ac-actions{margin:20px 0 10px}
+.fs-home-hero>div>.ac-meta{margin:0;line-height:1.6}
+@media(max-width:767px){.fs-home-hero{padding-top:4px;padding-bottom:32px}.fs-home-hero>div>.ac-eyebrow{margin-bottom:14px}.fs-home-hero .fs-home-deck{margin-top:18px!important}}
