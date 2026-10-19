@@ -116,3 +116,5 @@
 .fs-guide-top strong{line-height:1.45}.fs-guide-top small{line-height:1.5}
 .fs-guide-icon{flex-shrink:0}.fs-guide-actions{flex-wrap:wrap}
 @media(max-width:767px){.fs-home-hero h1{font-size:clamp(36px,10.8vw,44px)}.fs-preview-facts dd{font-size:clamp(15px,4.5vw,17px)}.ac-section-heading{flex-wrap:wrap;gap:12px}.ac-text-link{white-space:normal}}
+
+.fs-home-deck{text-wrap:balance}.academy p{text-wrap:pretty}
