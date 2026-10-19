@@ -79,3 +79,6 @@
 .ac-brand-wordmark>strong{font-size:10px;font-weight:600;letter-spacing:3.8px;text-transform:uppercase}
 @media(max-width:767px){.ac-brand{gap:9px}.ac-brand img{width:38px;height:38px}.ac-brand-wordmark>span{font-size:23px}.ac-brand-wordmark>strong{font-size:9px;letter-spacing:3.4px}}
 @media(max-width:360px){.ac-brand img{width:34px;height:34px}.ac-brand-wordmark>span{font-size:21px}.ac-brand-wordmark>strong{font-size:8px;letter-spacing:3.2px}}
+
+/* Beginner onboarding: compact editorial controls, responsive without horizontal overflow. */
+.ac-onboarding-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:22px 0 12px}.ac-onboarding-choices .ac-field{min-width:0}.ac-onboarding-choices select{max-width:100%;width:100%}.academy .ac-note{border-left:3px solid var(--ac-blue);padding:14px 18px;background:#f5f8ff;color:var(--ac-ink)}@media(max-width:650px){.ac-onboarding-choices{grid-template-columns:minmax(0,1fr)}.academy{overflow-wrap:anywhere}.ac-main{min-width:0}}
