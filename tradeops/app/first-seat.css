@@ -240,3 +240,24 @@
 .fs-work-link-list a svg{color:var(--ac-blue)}
 .fs-work-link-list a:hover strong{color:var(--ac-blue)}
 @media(max-width:767px){.fs-home-sections>.fs-home-hero{padding-top:8px}.fs-work-link-list>a{grid-template-columns:1fr 18px;gap:4px 10px}.fs-work-link-list a span,.fs-work-link-list a strong{grid-column:1}.fs-work-link-list a svg{grid-column:2;grid-row:2}}
+
+
+/* First Seat homepage: founder career introduction directly after the hero. */
+.fs-home-sections>.fs-founder-career{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.07fr);gap:54px;align-items:start;border-top:1px solid #dce5ef;padding:52px 0 42px}
+.fs-founder-career h2{font-size:clamp(29px,3.4vw,45px);line-height:1.15;letter-spacing:-1.5px;font-weight:600;max-width:16ch}
+.fs-founder-career h2 em{font-style:normal;color:var(--ac-blue)}
+.fs-founder-career-copy>.fs-founder-career-lead{font-size:18px;line-height:1.6;font-weight:550;color:var(--ac-ink);margin:24px 0 16px}
+.fs-founder-career-copy>p:not(.ac-eyebrow):not(.fs-founder-career-lead){font-size:14px;line-height:1.85;max-width:60ch;margin:0 0 14px}
+.fs-founder-career-copy>.ac-text-link{margin-top:12px;min-height:35px}
+.fs-founder-career-profile{display:grid;grid-template-columns:145px minmax(0,1fr);gap:24px;padding:25px 0;border-top:2px solid var(--ac-ink);border-bottom:1px solid #dce5ef;min-width:0}
+.fs-founder-career-profile>img{display:block;width:145px;height:194px;object-fit:cover;object-position:center 12%;border-radius:3px;background:#eef3fa}
+.fs-founder-career-profile-copy>.ac-eyebrow{margin-bottom:12px!important}
+.fs-founder-career-profile ol{list-style:none;padding:0;margin:0}
+.fs-founder-career-profile li{display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;padding:13px 0;border-top:1px solid #e3eaf2;min-width:0}
+.fs-founder-career-profile li:first-child{border-top:0;padding-top:0}
+.fs-founder-career-profile li>span{color:var(--ac-blue);font-size:10px;font-weight:700;letter-spacing:.6px;padding-top:3px}
+.fs-founder-career-profile li strong{font-size:14px;font-weight:650;color:var(--ac-ink);line-height:1.45}
+.fs-founder-career-profile li p{font-size:12px;line-height:1.65;margin:6px 0 0;max-width:42ch}
+@media(max-width:1000px){.fs-home-sections>.fs-founder-career{gap:28px}.fs-founder-career-profile{grid-template-columns:105px minmax(0,1fr);gap:17px}.fs-founder-career-profile>img{width:105px;height:145px}}
+@media(max-width:767px){.fs-home-sections>.fs-founder-career{grid-template-columns:minmax(0,1fr);gap:28px;padding:34px 0 24px}.fs-founder-career h2{font-size:31px}.fs-founder-career-copy>.fs-founder-career-lead{font-size:16px}.fs-founder-career-profile{grid-template-columns:105px minmax(0,1fr);padding:20px 0}.fs-founder-career-profile>img{width:105px;height:140px}.fs-founder-career-profile li{grid-template-columns:34px minmax(0,1fr);gap:8px}.fs-founder-career-profile li strong{font-size:13px}}
+@media(max-width:360px){.fs-founder-career-profile{grid-template-columns:1fr}.fs-founder-career-profile>img{width:132px;height:148px}.fs-founder-career-profile li{grid-template-columns:40px minmax(0,1fr)}}

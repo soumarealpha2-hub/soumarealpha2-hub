@@ -4,6 +4,8 @@ export type AssessmentQuestion={id:string;category:string;prompt:string;kind:'si
 const o=(label:string,scores:Partial<Profile>):Option=>({label,scores});
 const q=(id:string,category:string,prompt:string,kind:AssessmentQuestion['kind'],options:Option[],hint?:string):AssessmentQuestion=>({id,category,prompt,kind,options,hint});
 const scale=(id:string,category:string,prompt:string,scores:Partial<Profile>,reverse=false)=>q(id,category,prompt,'scale',['Strongly disagree','Disagree','Mixed / unsure','Agree','Strongly agree'].map((s,i)=>o(s,Object.fromEntries(Object.keys(scores).map(d=>[d,reverse?4-i:i])))));
+// A focused career-discovery quiz. Keep enough variety for useful, exploratory comparisons.
+const SHORT_QUIZ_IDS=new Set(['problem','reward','curiosity','coding','rhythm','reading','decade','boundaries']);
 export const QUESTIONS:AssessmentQuestion[]=[
  q('problem','Working style','A project stalls because two reports disagree. What do you do first?','single',[o('Trace the figures back to their sources.',{analysis:4,detail:4,people:1,strategy:2}),o('Bring the contributors together to understand the difference.',{analysis:2,detail:2,people:4,strategy:3}),o('Map the process and find where the handoff failed.',{analysis:3,detail:3,people:2,strategy:4}),o('Write a small check to locate the mismatch.',{analysis:4,detail:3,people:1,strategy:2,code:4})]),
  q('reward','Motivation','Which outcomes would make a week feel worthwhile? Choose up to three.','multi',[o('Helping someone make a clearer decision.',{people:4,strategy:3}),o('Discovering a pattern in messy evidence.',{analysis:4,quant:3}),o('Making a process reliable.',{detail:4,risk:0}),o('Helping a young business grow.',{enterprise:4,strategy:4}),o('Building a tool that others can use.',{code:4,strategy:3})]),
@@ -35,7 +37,7 @@ export const QUESTIONS:AssessmentQuestion[]=[
  q('support','Learning preferences','What would help you learn an unfamiliar topic? Choose up to three.','multi',[o('A worked example before I try.',{}),o('A short reading with definitions.',{}),o('A dataset or tool to experiment with.',{}),o('A realistic scenario with feedback.',{})],'Used for learning advice, not career ranking.'),
  q('impact','Motivation','Which contribution feels most meaningful to you?','single',[o('Help a business fund and execute a growth plan.',{enterprise:4,strategy:4,people:3}),o('Help people make informed financial decisions.',{people:4,analysis:3}),o('Make a complex system more reliable.',{detail:4,code:3,risk:0}),o('Discover a useful idea through research.',{analysis:4,quant:4,strategy:3})]),
  q('boundaries','Lifestyle','A role is intellectually exciting but its busy periods are unpredictable. Which is closest to your preference?','single',[o('I would seek a more predictable role.',{lifestyle:4,pace:1}),o('I would consider it if busy periods are limited and planned.',{lifestyle:3,pace:2}),o('I could accept unpredictability for work I enjoy.',{lifestyle:1,pace:4}),o('I am unsure and would want to try the work first.',{lifestyle:2,pace:2})]),
-];
+].filter(question=>SHORT_QUIZ_IDS.has(question.id));
 export type Answers=Record<string,number[]>;
 export function validAnswer(question:AssessmentQuestion,value:unknown):number[]{
  if(!Array.isArray(value))return [];
@@ -64,7 +66,7 @@ export function assess(answers:Answers,scope:unknown='all'){
  }
  const profile=Object.fromEntries(DIMS.map(d=>[d,observations[d].length?observations[d].reduce((a,b)=>a+b,0)/observations[d].length:2])) as Profile;
  const covered=DIMS.filter(d=>observations[d].length>=2);
- const enough=answered>=10&&covered.length>=5;
+ const enough=answered>=6&&covered.length>=4;
  const ranked=enough?CAREERS.filter(c=>scope==='consulting'?c.category==='Consulting':scope==='finance'?c.category!=='Consulting':true).map(c=>{let distance=0,weights=0;for(const d of DIMS){if(!observations[d].length)continue;const w=c.weights[d];distance+=w*Math.abs(profile[d]-c.profile[d])/4;weights+=w;}
   const score=Math.round(100*(1-distance/weights));
   const reasons=covered.filter(d=>profile[d]>=2.6&&c.profile[d]>=3).sort((a,b)=>profile[b]-profile[a]).slice(0,3);
