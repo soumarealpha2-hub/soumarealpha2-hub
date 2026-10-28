@@ -1,5 +1,7 @@
 import {FOUNDATION_TERMS} from './foundations';
 import {FINANCE_TERMS} from './finance-glossary';
+import {PLAIN_FINANCE_TERMS} from './plain-finance';
+import {PLAIN_CORE_TERMS} from './plain-core';
 import {CONCEPTS} from '../learning';
 import {CAPSTONES,workbook,workbookCsv} from './capstones';
 import {CAREER_TOOLS,calculateTool} from './career-tools';
@@ -39,7 +41,11 @@ const CORE_GLOSSARY=[...CONCEPTS.map(c=>({id:c.id,term:c.term,meaning:c.meaning,
  ['fx','Foreign exchange (FX)','Exchange of one currency for another; quote direction, fees, and timing affect the amount received.','At an invented rate of 0.40 destination units per source unit, 990,000 source units convert to 396,000 destination units.','Markets']
 ] as string[][]).map(([id,term,meaning,example,category])=>({id,term,meaning,example,category}))];
 const combined=[...CORE_GLOSSARY,...FINANCE_TERMS.filter(t=>!CORE_GLOSSARY.some(c=>c.term.toLowerCase()===t.term.toLowerCase()))];
-export const GLOSSARY=[...combined.map(t=>{const simple=FOUNDATION_TERMS.find(f=>f.id===t.id||f.term.toLowerCase()===t.term.toLowerCase());return simple?{...t,...simple,id:t.id}:t;}),...FOUNDATION_TERMS.filter(f=>!combined.some(t=>t.id===f.id||t.term.toLowerCase()===f.term.toLowerCase()))].sort((a,b)=>a.term.localeCompare(b.term));
+const FOUNDATION_AND_FINANCE=[...combined.map(t=>{const simple=FOUNDATION_TERMS.find(f=>f.id===t.id||f.term.toLowerCase()===t.term.toLowerCase());return simple?{...t,...simple,id:t.id}:t;}),...FOUNDATION_TERMS.filter(f=>!combined.some(t=>t.id===f.id||t.term.toLowerCase()===f.term.toLowerCase()))];
+export const GLOSSARY=FOUNDATION_AND_FINANCE.map(t=>{
+ const plain=PLAIN_CORE_TERMS[t.term.toLowerCase()]??PLAIN_FINANCE_TERMS[t.term.toLowerCase()];
+ return {...t,meaning:plain?.meaning??t.meaning,example:plain?.example??t.example,technicalMeaning:t.meaning,technicalExample:t.example};
+}).sort((a,b)=>a.term.localeCompare(b.term));
 export type AfricaCase={id:string;title:string;location:string;brief:string;evidence:string[];checks:{question:string;answer:number;unit:string;hint:string}[];question:string;choices:string[];correct:number;explanation:string;related:string};
 export const AFRICA_CASES:AfricaCase[]=[
  {id:'dakar-startup',title:'Review a Dakar startup funding round',location:'Dakar, Senegal · fictional startup',brief:'Teranga Market is a fictional commerce platform. Review runway and a proposed seed round, then prepare a diligence note. Financial figures are denominated in USD for this teaching example.',evidence:['Cash: $300,000. Monthly cash receipts: $25,000. Monthly cash costs: $100,000. Assume these flows stay constant for the runway exercise.','A proposed primary investment of $900,000 uses a $3.6m pre-money valuation. There are no convertibles, option-pool changes, preferences, fees, or other share classes in this simplified round.','Reported revenue grew, but supporting customer-retention data is missing. These are invented company facts, not claims about Senegalese businesses or market conditions.'],checks:[{question:'Before the round, how many months of cash runway remain?',answer:4,unit:'months',hint:'Net burn is 100,000 − 25,000 = 75,000. Divide current cash by net burn.'},{question:'What percentage would the new investor own in this simple round?',answer:20,unit:'%',hint:'Divide 900,000 by 3,600,000 + 900,000, then multiply by 100.'}],question:'What is a supported next step before an investment decision?',choices:['Commit solely because the company is growing','Request retention, cash economics, customer evidence, and founder or market diligence','Treat the fictional valuation as a current market benchmark'],correct:1,explanation:'A runway and ownership calculation do not establish investment quality. Investigate evidence, unit economics, governance, and uncertainties before a documented decision.',related:'career-lab/venture-capital'},
