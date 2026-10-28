@@ -321,3 +321,14 @@
 .fs-founder-experience-content>p:last-child{font-size:12.5px}
 @media(max-width:1000px){.fs-founder-career-intro{grid-template-columns:minmax(0,1fr) minmax(220px,.65fr);gap:28px}.fs-founder-career-portrait{max-width:320px}.fs-founder-experience-header{grid-template-columns:1fr 1.4fr}.fs-founder-experience-header>span{grid-column:1/-1}.fs-founder-experience-list{column-gap:26px}}
 @media(max-width:767px){.fs-home-sections>.fs-founder-career{padding:30px 0}.fs-founder-career-intro{grid-template-columns:1fr;gap:22px}.fs-founder-career-portrait{justify-self:start;width:100%;max-width:360px}.fs-founder-career-portrait img{aspect-ratio:3/2}.fs-founder-experience{margin-top:35px}.fs-founder-experience-header{display:block}.fs-founder-experience-header>p:not(.ac-eyebrow){margin:10px 0}.fs-founder-experience-header>span{display:block}.fs-founder-experience-list{grid-template-columns:1fr}.fs-founder-experience-item{grid-template-columns:82px minmax(0,1fr);gap:13px;padding:17px 0;min-height:0}.fs-founder-experience-mark{width:82px;height:65px}.fs-founder-experience-content h4{font-size:15px}}
+
+/* Oct 2026: legible partner marks and a larger, balanced founder portrait. */
+.fs-founder-career-intro{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,4.5vw,60px);align-items:center}
+.fs-founder-career-portrait{width:100%;max-width:520px;justify-self:end}
+.fs-founder-career-portrait img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;object-position:center 42%}
+.fs-founder-experience-item{grid-template-columns:112px minmax(0,1fr);gap:18px}
+.fs-founder-experience-mark{width:110px;height:82px;padding:6px}
+.fs-founder-experience-mark.is-beats img{display:block;width:60px;height:60px;max-width:none;max-height:none;object-fit:cover;object-position:center;padding:0}
+.fs-founder-experience-mark.is-go-project img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;padding:0}
+@media (max-width:1000px){.fs-founder-career-intro{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px}.fs-founder-career-portrait{max-width:480px}}
+@media (max-width:767px){.fs-founder-career-intro{grid-template-columns:1fr;gap:22px}.fs-founder-career-portrait{width:100%;max-width:520px;justify-self:stretch}.fs-founder-career-portrait img{width:100%;aspect-ratio:3/2}.fs-founder-experience-item{grid-template-columns:100px minmax(0,1fr);gap:14px}.fs-founder-experience-mark{width:98px;height:75px}.fs-founder-experience-mark.is-beats img{width:58px;height:58px}}

@@ -126,7 +126,7 @@ const FOUNDER_EXPERIENCES = [
     "role": "Marketing & Brand Strategy Extern",
     "date": "Jun – Jul 2025",
     "detail": "Researched Gen Z consumer insights, product innovation, and digital engagement.",
-    "logo": null
+    "logo": "/journey/orgs/beats-symbol.webp"
   },
   {
     "organization": "Ubiq",
@@ -147,7 +147,7 @@ const FOUNDER_EXPERIENCES = [
     "role": "Go Getter Intern",
     "date": "Jun – Aug 2024",
     "detail": "Supported fifth-grade students in English-language and mathematics learning.",
-    "logo": null
+    "logo": "https://assets.classy.org/33417895/9f9a3208-a8f1-11ef-a102-0e6a9168ca03.png"
   }
 ];
 
@@ -190,7 +190,7 @@ function FounderCareerIntro(){
 
 function CompanyMark({name,logo}:{name:string;logo:string|null}){
  const [imageError,setImageError]=useState(false);
- const treatment=name==='NYU Tandon School of Engineering'?'nyu':name==='Project Destined'?'destined':name==='BGO × Project Destined'?'wide':name==='Same Day Delivery'?'wide':name==='Beats by Dre × Extern'?'beats':name==='Ubiq'?'ubiq':name==='Goldman Sachs'?'goldman':name==='Bissapio'?'bissapio':'standard';
+ const treatment=name==='NYU Tandon School of Engineering'?'nyu':name==='Project Destined'?'destined':name==='BGO × Project Destined'?'wide':name==='Same Day Delivery'?'wide':name==='Beats by Dre × Extern'?'beats':name==='GO Project'?'go-project':name==='Ubiq'?'ubiq':name==='Goldman Sachs'?'goldman':name==='Bissapio'?'bissapio':'standard';
  const fallback=name==='Beats by Dre × Extern'?'beats':name==='Ubiq'?'Ubiq':name==='GO Project'?'GO':name==='Goldman Sachs'?'GS':name==='National Society of Black Engineers · NYU'?'NSBE':name.split(' ').slice(0,2).map(word=>word[0]).join('').toUpperCase();
  return <div className={`fs-founder-experience-mark is-${treatment}`} aria-hidden="true">
   {logo&&!imageError?<img src={logo} alt="" width={96} height={64} loading="lazy" decoding="async" onError={()=>setImageError(true)}/>:<span>{fallback}</span>}
