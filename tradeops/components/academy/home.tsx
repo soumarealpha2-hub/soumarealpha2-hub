@@ -17,7 +17,7 @@ export function Home({onTour}:{onTour:()=>void}){
     <h1>Your first seat<br/>in <em>finance</em> starts here.</h1>
     <p className="fs-home-deck">Not sure which finance career is for you? Start with 8 quick questions.</p>
     <p>Discover careers that match what interests you, then try the actual work to see what feels right.</p>
-    <div className="ac-actions"><LinkButton to="quiz">Take the 8-question career quiz</LinkButton><LinkButton to="start/desk" secondary>Try an operations task</LinkButton></div>
+    <div className="ac-actions"><LinkButton to="quiz">Take the 8-question career quiz</LinkButton></div>
     <a className="ac-text-link" href="#start">Completely new to finance? Start learning here <ArrowRight size={16}/></a>
     <div className="fs-direct-work" aria-labelledby="fs-direct-work-title">
      <h2 id="fs-direct-work-title">Choose the work you want to try</h2>
