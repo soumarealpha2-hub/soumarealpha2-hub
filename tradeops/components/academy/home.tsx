@@ -9,7 +9,7 @@ import {CareerPreview} from './career-preview';
 import {CareerCategories,FoundationDirectory} from './foundation-directory';
 
 export function Home({onTour}:{onTour:()=>void}){
- const {progress}=useAcademy();const resume=LESSONS.find(l=>progress.lessons[l.id]&&!progress.lessons[l.id]?.completed);
+ const {progress}=useAcademy();
  return <div className="fs-home-sections">
   <section className="fs-home-hero">
    <div className="fs-work-hero-copy">
