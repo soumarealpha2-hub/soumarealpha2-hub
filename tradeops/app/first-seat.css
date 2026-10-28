@@ -261,3 +261,31 @@
 @media(max-width:1000px){.fs-home-sections>.fs-founder-career{gap:28px}.fs-founder-career-profile{grid-template-columns:105px minmax(0,1fr);gap:17px}.fs-founder-career-profile>img{width:105px;height:145px}}
 @media(max-width:767px){.fs-home-sections>.fs-founder-career{grid-template-columns:minmax(0,1fr);gap:28px;padding:34px 0 24px}.fs-founder-career h2{font-size:31px}.fs-founder-career-copy>.fs-founder-career-lead{font-size:16px}.fs-founder-career-profile{grid-template-columns:105px minmax(0,1fr);padding:20px 0}.fs-founder-career-profile>img{width:105px;height:140px}.fs-founder-career-profile li{grid-template-columns:34px minmax(0,1fr);gap:8px}.fs-founder-career-profile li strong{font-size:13px}}
 @media(max-width:360px){.fs-founder-career-profile{grid-template-columns:1fr}.fs-founder-career-profile>img{width:132px;height:148px}.fs-founder-career-profile li{grid-template-columns:40px minmax(0,1fr)}}
+
+/* One consolidated founder story and complete experience directory. */
+.fs-home-sections>.fs-founder-career{display:block;padding:50px 0 54px;border-top:1px solid #dce5ef}
+.fs-founder-career-intro{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);gap:68px;align-items:start}
+.fs-founder-career-copy{min-width:0}
+.fs-founder-career-copy>p:not(.ac-eyebrow){max-width:62ch}
+.fs-founder-career-portrait{margin:0;max-width:420px;width:100%;justify-self:end}
+.fs-founder-career-portrait img{display:block;width:100%;height:auto;max-height:390px;object-fit:cover;object-position:center 23%;border-radius:4px;background:#eef3fa}
+.fs-founder-career-portrait figcaption{padding:12px 0;border-bottom:1px solid #dce5ef;color:#16304e;font-size:13px;font-weight:650}
+.fs-founder-career-portrait figcaption span{display:block;font-size:12px;font-weight:400;color:#667991;margin-top:2px}
+.fs-founder-experience{margin-top:54px;scroll-margin-top:28px}
+.fs-founder-experience-header{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.2fr) auto;gap:8px 40px;align-items:end;padding-bottom:25px}
+.fs-founder-experience-header>.ac-eyebrow{grid-column:1/-1;margin-bottom:3px!important}
+.fs-founder-experience-header h3{font-size:clamp(25px,2.7vw,35px);letter-spacing:-1px;line-height:1.2}
+.fs-founder-experience-header>p:not(.ac-eyebrow){margin:0;color:#596c82;font-size:13px;line-height:1.7}
+.fs-founder-experience-header>span{color:#6b7d91;font-size:11px;text-align:right;white-space:nowrap}
+.fs-founder-experience-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:48px}
+.fs-founder-experience-item{display:grid;grid-template-columns:64px minmax(0,1fr);gap:15px;padding:21px 0;border-top:1px solid #dce5ef;min-width:0}
+.fs-founder-experience-mark{width:57px;height:51px;display:flex;align-items:center;justify-content:center;background:#f5f7fa;border:1px solid #e9edf3;border-radius:5px;overflow:hidden}
+.fs-founder-experience-mark img{display:block;width:100%;height:100%;padding:5px;object-fit:contain}
+.fs-founder-experience-mark span{color:#2354a8;font-size:17px;font-weight:700}
+.fs-founder-experience-content{min-width:0}
+.fs-founder-experience-date{font-size:11px!important;color:#225de0!important;font-weight:650;margin:0 0 5px!important}
+.fs-founder-experience-content h4{font-size:16px;font-weight:700;letter-spacing:-.25px;line-height:1.4;margin:0;color:#17314d}
+.fs-founder-experience-content strong{display:block;font-size:13px;font-weight:600;line-height:1.55;color:#324c68;margin:4px 0}
+.fs-founder-experience-content>p:last-child{font-size:12px;line-height:1.7;color:#596c82;margin:6px 0 0;max-width:54ch}
+@media(max-width:1000px){.fs-founder-career-intro{gap:34px;grid-template-columns:minmax(0,1.05fr) minmax(220px,.95fr)}.fs-founder-experience-header{grid-template-columns:1fr 1fr;gap:12px 30px}.fs-founder-experience-header>span{grid-column:1/-1;text-align:left}.fs-founder-experience-list{column-gap:28px}}
+@media(max-width:767px){.fs-home-sections>.fs-founder-career{padding:36px 0 30px}.fs-founder-career-intro{grid-template-columns:minmax(0,1fr);gap:26px}.fs-founder-career-portrait{justify-self:start;max-width:360px}.fs-founder-career-portrait img{max-height:340px}.fs-founder-experience{margin-top:36px}.fs-founder-experience-header{display:block;padding-bottom:20px}.fs-founder-experience-header h3{font-size:29px}.fs-founder-experience-header>p:not(.ac-eyebrow){margin-top:10px}.fs-founder-experience-header>span{display:block;margin-top:12px}.fs-founder-experience-list{grid-template-columns:1fr}.fs-founder-experience-item{grid-template-columns:58px minmax(0,1fr);gap:12px;padding:17px 0}}

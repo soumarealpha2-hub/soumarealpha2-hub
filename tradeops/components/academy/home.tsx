@@ -1,10 +1,9 @@
 'use client';
-import {ArrowRight} from 'lucide-react';
+import {ArrowRight,ArrowDown} from 'lucide-react';
 import {TRACKS} from '@/lib/academy/careers';
 import {LESSONS} from '@/lib/academy/lessons';
 import {useAcademy} from './use-academy';
 import {LinkButton} from './common';
-import {FounderJourney} from './founder-journey';
 import {CareerPreview} from './career-preview';
 import {CareerCategories,FoundationDirectory} from './foundation-directory';
 
@@ -39,31 +38,151 @@ export function Home({onTour}:{onTour:()=>void}){
   <section className="ac-section"><div className="ac-section-heading"><div><p className="ac-eyebrow">Build a foundation</p><h2>Foundations for every career.</h2></div><a className="ac-text-link" href="#learn">All learning paths →</a></div><FoundationDirectory/><details className="fs-shared-tracks"><summary>Browse the four shared foundation tracks</summary><div className="fs-path-list">{TRACKS.map((t,i)=>{const ls=LESSONS.filter(l=>l.track===t.id&&l.level==='Beginner');const done=ls.filter(l=>progress.lessons[l.id]?.completed).length;return <a key={t.id} href={`#learn/${t.id}`}><span className="ac-index">0{i+1}</span><h3>{t.title}</h3><p>{t.description}</p><span className="ac-meta">{done?`${done} / ${ls.length} beginner lessons complete`:'Beginner to advanced'}</span><ArrowRight size={18}/></a>;})}</div></details></section>
   <section className="fs-consulting-feature"><div><p className="ac-eyebrow">Try a client problem</p><h2>Why are the deliveries late?</h2><p>A retailer spends four days waiting for pickup. Investigate the handoff, calculate the effect of a change, and decide what a pilot should measure.</p><LinkButton to="day/consulting-operations-supply-chain-consulting">Try the consulting work sample</LinkButton></div><div className="fs-process-note"><p className="ac-eyebrow">Operations & supply chain consulting</p><ol><li><span>01</span><div><strong>Understand the problem</strong><p>Look at where the order spends its time.</p></div></li><li><span>02</span><div><strong>Compare the options</strong><p>Consider speed, cost, and service quality.</p></div></li><li><span>03</span><div><strong>Recommend a next step</strong><p>Use evidence and explain what to test.</p></div></li></ol></div></section>
   <section className="fs-editorial-row fs-tools-section"><div><p className="ac-eyebrow">Your learning toolkit</p><h2>A place to practice. <br/>Room to ask questions.</h2></div><div className="fs-utility-links">{[['start/desk','First day on the operations desk','Solve three short matching, reconciliation, and exception-management tasks.'],['simulations','Practice workspaces','Compare records, investigate exceptions, and work with business numbers.'],['resume-match','Resume match','Upload your resume and describe what you want to explore.'],['my-learning','My learning','Resume lessons and see the work you have completed.'],['glossary','Plain-English glossary','Read definitions and examples without losing your place.']].map(([to,title,description])=><a key={to} href={`#${to}`}><div><h3>{title}</h3><p>{description}</p></div><ArrowRight size={17}/></a>)}</div></section>
-  <div id="full-founder-journey"><FounderJourney/></div>
   <section className="ac-next"><div><p className="ac-eyebrow">Take your first seat</p><h2>You can start with one question.</h2><p>Use Ask First Seat for help with a term or a lesson, or take a short guided tour of the website.</p></div><button className="ac-button secondary" onClick={onTour}>Show me around</button></section>
  </div>;
 }
 
+const FOUNDER_EXPERIENCES = [
+  {
+    "organization": "First Seat Academy",
+    "role": "Founder",
+    "date": "Oct 2026 – Present",
+    "detail": "Built a free platform where beginners can explore finance and consulting careers through lessons and realistic work samples.",
+    "logo": "/first-seat-logo.svg"
+  },
+  {
+    "organization": "Goldman Sachs",
+    "role": "Incoming Operations Summer Analyst",
+    "date": "Summer 2027 · New York",
+    "detail": "Incoming analyst in FICC & Equities / Sales & Trading Operations.",
+    "logo": "/journey/orgs/goldman.svg"
+  },
+  {
+    "organization": "National Society of Black Engineers · NYU",
+    "role": "Finance Chair",
+    "date": "May 2026 – Present",
+    "detail": "Manage chapter budgeting and funding to support student programming and events.",
+    "logo": "/journey/orgs/nsbe.png"
+  },
+  {
+    "organization": "NYU Tandon School of Engineering",
+    "role": "Undergraduate Teaching Assistant",
+    "date": "Aug 2025 – Present",
+    "detail": "Support engineering students with technical assignments, labs, and hands-on instruction.",
+    "logo": "/journey/orgs/nyu.svg"
+  },
+  {
+    "organization": "Bissapio",
+    "role": "Founding Team Member · Strategy & Operations",
+    "date": "Jun 2022 – Present",
+    "detail": "Help grow a West African hibiscus beverage brand through operations, strategy, and community-focused initiatives.",
+    "logo": "/journey/orgs/bissapio-logo.png"
+  },
+  {
+    "organization": "NYU Vertically Integrated Projects",
+    "role": "Tech Catalyst · Innovation & Emerging Products",
+    "date": "Jan 2026 – Present",
+    "detail": "Work on emerging technology research, product development, and collaborative student projects.",
+    "logo": "/journey/orgs/nyu-vip.webp"
+  },
+  {
+    "organization": "Handshake AI",
+    "role": "Artificial Intelligence Researcher",
+    "date": "Jan – Sep 2026",
+    "detail": "Evaluated reasoning and automation behavior in AI research tasks.",
+    "logo": "/journey/orgs/handshake.svg"
+  },
+  {
+    "organization": "Same Day Delivery",
+    "role": "Strategy & Operations Intern",
+    "date": "Jun – Aug 2026",
+    "detail": "Improved hiring workflows and explored logistics technology for a fleet of more than 100 vehicles.",
+    "logo": "/journey/orgs/same-day-delivery-official.png"
+  },
+  {
+    "organization": "BGO × Project Destined",
+    "role": "AI Commercial Real Estate Fellow",
+    "date": "Feb – May 2026",
+    "detail": "Used data and AI tools to study commercial real estate investment portfolios.",
+    "logo": "/journey/orgs/bgo.svg"
+  },
+  {
+    "organization": "Project Destined",
+    "role": "Asset Management Program",
+    "date": "Jan – May 2026",
+    "detail": "Studied how real estate investments are managed and how property performance is evaluated.",
+    "logo": "/journey/orgs/destined.png"
+  },
+  {
+    "organization": "Project Destined",
+    "role": "Real Estate Private Equity Intern",
+    "date": "Sep – Oct 2025",
+    "detail": "Built foundational skills in private equity and commercial real estate analysis.",
+    "logo": "/journey/orgs/destined.png"
+  },
+  {
+    "organization": "Beats by Dre × Extern",
+    "role": "Marketing & Brand Strategy Extern",
+    "date": "Jun – Jul 2025",
+    "detail": "Researched Gen Z consumer insights, product innovation, and digital engagement.",
+    "logo": "/journey/orgs/beats.png"
+  },
+  {
+    "organization": "Ubiq",
+    "role": "Insider Program",
+    "date": "Apr – May 2025",
+    "detail": "Explored product management, business strategy, and operations.",
+    "logo": "/journey/orgs/ubiq-official.png"
+  },
+  {
+    "organization": "EY",
+    "role": "Expedition EY Program",
+    "date": "Jan – May 2025",
+    "detail": "Participated in professional development and learned about business career pathways.",
+    "logo": "/journey/orgs/ey.png"
+  },
+  {
+    "organization": "GO Project",
+    "role": "Go Getter Intern",
+    "date": "Jun – Aug 2024",
+    "detail": "Supported fifth-grade students in English-language and mathematics learning.",
+    "logo": null
+  }
+];
+
 function FounderCareerIntro(){
- const highlights=[
-  {time:'NOW',label:'NYU Tandon · Teaching & Technology',detail:'I study Business & Technology Management and help students learn engineering concepts as an undergraduate teaching assistant.'},
-  {time:'2026',label:'Strategy, Operations & Investing',detail:'I worked on delivery operations at Same Day Delivery and studied real estate investments through BGO × Project Destined. I also help build Bissapio, a West African beverage business.'},
-  {time:'NEXT',label:'Goldman Sachs · Summer 2027',detail:'I’m joining Goldman Sachs in New York as an incoming Operations Summer Analyst, focused on Sales & Trading Operations.'}
- ];
- return <section className="fs-founder-career" aria-labelledby="fs-founder-career-title">
-  <div className="fs-founder-career-copy">
-   <p className="ac-eyebrow">Meet the founder</p>
-   <h2 id="fs-founder-career-title">From Brooklyn to finance. <em>Here’s my story.</em></h2>
-   <p className="fs-founder-career-lead">I’m Alpha Soumaré, a student at NYU Tandon and the founder of First Seat Academy.</p>
-   <p>I grew up on Greene Avenue in Brooklyn without much exposure to what people actually do in corporate careers. As I started exploring finance, technology, and operations, I realized how much easier it is to choose a path once you can see the work for yourself.</p>
-   <p>That’s why I created First Seat Academy: to help the next student explore those careers without needing connections or experience first.</p>
-   <a className="ac-text-link" href="#my-story">Explore my journey from Brooklyn <ArrowRight size={16}/></a>
+ return <section id="my-story" className="fs-founder-career" aria-labelledby="fs-founder-career-title">
+  <div className="fs-founder-career-intro">
+   <div className="fs-founder-career-copy">
+    <p className="ac-eyebrow">Meet the founder</p>
+    <h2 id="fs-founder-career-title">From Brooklyn to finance. <em>Here’s my story.</em></h2>
+    <p className="fs-founder-career-lead">I’m Alpha Soumaré, a student at NYU Tandon and the founder of First Seat Academy.</p>
+    <p>I grew up on Greene Avenue in Brooklyn without much exposure to what people actually do in corporate careers. As I started exploring finance, technology, and operations, I realized how much easier it is to choose a path once you can see the work for yourself.</p>
+    <p>I created First Seat Academy so students can discover careers, learn the basics, and try the work without needing connections or prior experience.</p>
+    <a className="ac-text-link" href="#my-experience">Explore my experience <ArrowDown size={16}/></a>
+   </div>
+   <figure className="fs-founder-career-portrait">
+    <img src="/journey/alpha-soumare-story.jpg" alt="Alpha Soumaré at a professional event" width={1152} height={2048} loading="lazy" decoding="async"/>
+    <figcaption>Alpha Soumaré <span>Founder · First Seat Academy</span></figcaption>
+   </figure>
   </div>
-  <div className="fs-founder-career-profile">
-   <img src="/journey/alpha-soumare-story.jpg" alt="Alpha Soumaré, founder of First Seat Academy" width={1152} height={2048} loading="lazy" decoding="async"/>
-   <div className="fs-founder-career-profile-copy">
-    <p className="ac-eyebrow">My career so far</p>
-    <ol>{highlights.map(item=><li key={item.time}><span>{item.time}</span><div><strong>{item.label}</strong><p>{item.detail}</p></div></li>)}</ol>
+  <div className="fs-founder-experience" id="my-experience">
+   <div className="fs-founder-experience-header">
+    <p className="ac-eyebrow">My experience</p>
+    <h3>Learning by doing.</h3>
+    <p>From teaching and building businesses to finance, technology, investing, and operations, here’s the work that shaped First Seat Academy.</p>
+    <span>15 roles and programs across 14 organizations</span>
+   </div>
+   <div className="fs-founder-experience-list">
+    {FOUNDER_EXPERIENCES.map(item=><article className="fs-founder-experience-item" key={item.organization+item.role}>
+     <div className="fs-founder-experience-mark" aria-hidden="true">{item.logo?<img src={item.logo} alt="" width={56} height={42} loading="lazy"/>:<span>GO</span>}</div>
+     <div className="fs-founder-experience-content">
+      <p className="fs-founder-experience-date">{item.date}</p>
+      <h4>{item.organization}</h4>
+      <strong>{item.role}</strong>
+      <p>{item.detail}</p>
+     </div>
+    </article>)}
    </div>
   </div>
  </section>;
