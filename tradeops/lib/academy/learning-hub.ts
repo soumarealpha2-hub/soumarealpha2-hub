@@ -2,6 +2,7 @@ import {FOUNDATION_TERMS} from './foundations';
 import {FINANCE_TERMS} from './finance-glossary';
 import {PLAIN_FINANCE_TERMS} from './plain-finance';
 import {PLAIN_CORE_TERMS} from './plain-core';
+import {PLAIN_EXTRA_TERMS} from './plain-extra';
 import {CONCEPTS} from '../learning';
 import {CAPSTONES,workbook,workbookCsv} from './capstones';
 import {CAREER_TOOLS,calculateTool} from './career-tools';
@@ -43,7 +44,7 @@ const CORE_GLOSSARY=[...CONCEPTS.map(c=>({id:c.id,term:c.term,meaning:c.meaning,
 const combined=[...CORE_GLOSSARY,...FINANCE_TERMS.filter(t=>!CORE_GLOSSARY.some(c=>c.term.toLowerCase()===t.term.toLowerCase()))];
 const FOUNDATION_AND_FINANCE=[...combined.map(t=>{const simple=FOUNDATION_TERMS.find(f=>f.id===t.id||f.term.toLowerCase()===t.term.toLowerCase());return simple?{...t,...simple,id:t.id}:t;}),...FOUNDATION_TERMS.filter(f=>!combined.some(t=>t.id===f.id||t.term.toLowerCase()===f.term.toLowerCase()))];
 export const GLOSSARY=FOUNDATION_AND_FINANCE.map(t=>{
- const plain=PLAIN_CORE_TERMS[t.term.toLowerCase()]??PLAIN_FINANCE_TERMS[t.term.toLowerCase()];
+ const plain=PLAIN_EXTRA_TERMS[t.term.toLowerCase()]??PLAIN_CORE_TERMS[t.term.toLowerCase()]??PLAIN_FINANCE_TERMS[t.term.toLowerCase()];
  return {...t,meaning:plain?.meaning??t.meaning,example:plain?.example??t.example,technicalMeaning:t.meaning,technicalExample:t.example};
 }).sort((a,b)=>a.term.localeCompare(b.term));
 export type AfricaCase={id:string;title:string;location:string;brief:string;evidence:string[];checks:{question:string;answer:number;unit:string;hint:string}[];question:string;choices:string[];correct:number;explanation:string;related:string};
