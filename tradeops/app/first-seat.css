@@ -289,3 +289,35 @@
 .fs-founder-experience-content>p:last-child{font-size:12px;line-height:1.7;color:#596c82;margin:6px 0 0;max-width:54ch}
 @media(max-width:1000px){.fs-founder-career-intro{gap:34px;grid-template-columns:minmax(0,1.05fr) minmax(220px,.95fr)}.fs-founder-experience-header{grid-template-columns:1fr 1fr;gap:12px 30px}.fs-founder-experience-header>span{grid-column:1/-1;text-align:left}.fs-founder-experience-list{column-gap:28px}}
 @media(max-width:767px){.fs-home-sections>.fs-founder-career{padding:36px 0 30px}.fs-founder-career-intro{grid-template-columns:minmax(0,1fr);gap:26px}.fs-founder-career-portrait{justify-self:start;max-width:360px}.fs-founder-career-portrait img{max-height:340px}.fs-founder-experience{margin-top:36px}.fs-founder-experience-header{display:block;padding-bottom:20px}.fs-founder-experience-header h3{font-size:29px}.fs-founder-experience-header>p:not(.ac-eyebrow){margin-top:10px}.fs-founder-experience-header>span{display:block;margin-top:12px}.fs-founder-experience-list{grid-template-columns:1fr}.fs-founder-experience-item{grid-template-columns:58px minmax(0,1fr);gap:12px;padding:17px 0}}
+
+/* Refined, proportional founder portrait and brand marks. */
+.fs-home-sections>.fs-founder-career{padding:44px 0 48px}
+.fs-founder-career-intro{grid-template-columns:minmax(0,1.15fr) minmax(260px,.65fr);gap:40px;align-items:center}
+.fs-founder-career-portrait{width:100%;max-width:350px;justify-self:end}
+.fs-founder-career-portrait img{width:100%;height:auto;aspect-ratio:3 / 2;max-height:none;object-fit:cover;object-position:center center;border:1px solid #e0e6ee;border-radius:5px}
+.fs-founder-career-portrait figcaption{padding:10px 0;font-size:12px}
+.fs-founder-career-portrait figcaption span{font-size:11px}
+.fs-founder-experience{margin-top:46px}
+.fs-founder-experience-header{grid-template-columns:minmax(0,.85fr) minmax(0,1.2fr) auto;align-items:center;gap:28px;padding-bottom:22px}
+.fs-founder-experience-header>div>.ac-eyebrow{margin:0 0 10px!important}
+.fs-founder-experience-header>div>h3{font-size:clamp(24px,2.6vw,33px);letter-spacing:-1px}
+.fs-founder-experience-header>p:not(.ac-eyebrow){max-width:48ch}
+.fs-founder-experience-list{column-gap:36px}
+.fs-founder-experience-item{grid-template-columns:96px minmax(0,1fr);gap:18px;align-items:start;padding:23px 0;min-height:146px}
+.fs-founder-experience-mark{width:96px;height:70px;flex-shrink:0;background:#fff;border:1px solid #e0e7ef;border-radius:7px;overflow:hidden;padding:5px;display:flex;align-items:center;justify-content:center}
+.fs-founder-experience-mark img{display:block;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;object-position:center;padding:2px}
+.fs-founder-experience-mark.is-nyu{background:#57068c;border-color:#57068c}
+.fs-founder-experience-mark.is-nyu img{padding:5px}
+.fs-founder-experience-mark.is-destined{background:#173453;border-color:#173453}
+.fs-founder-experience-mark.is-destined img{padding:3px}
+.fs-founder-experience-mark.is-goldman img{width:64px;height:60px;padding:2px}
+.fs-founder-experience-mark.is-bissapio img{padding:0}
+.fs-founder-experience-mark.is-wide img{padding:2px 0}
+.fs-founder-experience-mark.is-beats span{font-size:23px;letter-spacing:-1.1px;font-weight:750;color:#c62631}
+.fs-founder-experience-mark.is-ubiq span{font-size:24px;letter-spacing:-1px;font-weight:750;color:#173f5c}
+.fs-founder-experience-mark span{font-size:20px;line-height:1.1;font-weight:750;color:#23476f}
+.fs-founder-experience-content h4{font-size:15px;line-height:1.4}
+.fs-founder-experience-content strong{font-size:12.5px}
+.fs-founder-experience-content>p:last-child{font-size:12.5px}
+@media(max-width:1000px){.fs-founder-career-intro{grid-template-columns:minmax(0,1fr) minmax(220px,.65fr);gap:28px}.fs-founder-career-portrait{max-width:320px}.fs-founder-experience-header{grid-template-columns:1fr 1.4fr}.fs-founder-experience-header>span{grid-column:1/-1}.fs-founder-experience-list{column-gap:26px}}
+@media(max-width:767px){.fs-home-sections>.fs-founder-career{padding:30px 0}.fs-founder-career-intro{grid-template-columns:1fr;gap:22px}.fs-founder-career-portrait{justify-self:start;width:100%;max-width:360px}.fs-founder-career-portrait img{aspect-ratio:3/2}.fs-founder-experience{margin-top:35px}.fs-founder-experience-header{display:block}.fs-founder-experience-header>p:not(.ac-eyebrow){margin:10px 0}.fs-founder-experience-header>span{display:block}.fs-founder-experience-list{grid-template-columns:1fr}.fs-founder-experience-item{grid-template-columns:82px minmax(0,1fr);gap:13px;padding:17px 0;min-height:0}.fs-founder-experience-mark{width:82px;height:65px}.fs-founder-experience-content h4{font-size:15px}}

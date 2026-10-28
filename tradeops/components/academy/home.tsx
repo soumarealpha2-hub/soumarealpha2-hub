@@ -1,4 +1,5 @@
 'use client';
+import {useState} from 'react';
 import {ArrowRight,ArrowDown} from 'lucide-react';
 import {TRACKS} from '@/lib/academy/careers';
 import {LESSONS} from '@/lib/academy/lessons';
@@ -125,14 +126,14 @@ const FOUNDER_EXPERIENCES = [
     "role": "Marketing & Brand Strategy Extern",
     "date": "Jun – Jul 2025",
     "detail": "Researched Gen Z consumer insights, product innovation, and digital engagement.",
-    "logo": "/journey/orgs/beats.png"
+    "logo": null
   },
   {
     "organization": "Ubiq",
     "role": "Insider Program",
     "date": "Apr – May 2025",
     "detail": "Explored product management, business strategy, and operations.",
-    "logo": "/journey/orgs/ubiq-official.png"
+    "logo": null
   },
   {
     "organization": "EY",
@@ -162,20 +163,19 @@ function FounderCareerIntro(){
     <a className="ac-text-link" href="#my-experience">Explore my experience <ArrowDown size={16}/></a>
    </div>
    <figure className="fs-founder-career-portrait">
-    <img src="/journey/alpha-soumare-story.jpg" alt="Alpha Soumaré at a professional event" width={1152} height={2048} loading="lazy" decoding="async"/>
+    <img src="/journey/alpha-soumare-story.jpg" alt="Alpha Soumaré speaking with other students at a professional event" width={512} height={512} loading="lazy" decoding="async"/>
     <figcaption>Alpha Soumaré <span>Founder · First Seat Academy</span></figcaption>
    </figure>
   </div>
   <div className="fs-founder-experience" id="my-experience">
    <div className="fs-founder-experience-header">
-    <p className="ac-eyebrow">My experience</p>
-    <h3>Learning by doing.</h3>
+    <div><p className="ac-eyebrow">My experience</p><h3>Learning by doing.</h3></div>
     <p>From teaching and building businesses to finance, technology, investing, and operations, here’s the work that shaped First Seat Academy.</p>
-    <span>15 roles and programs across 14 organizations</span>
+    <span>15 roles and programs</span>
    </div>
    <div className="fs-founder-experience-list">
     {FOUNDER_EXPERIENCES.map(item=><article className="fs-founder-experience-item" key={item.organization+item.role}>
-     <div className="fs-founder-experience-mark" aria-hidden="true">{item.logo?<img src={item.logo} alt="" width={56} height={42} loading="lazy"/>:<span>GO</span>}</div>
+     <CompanyMark name={item.organization} logo={item.logo}/>
      <div className="fs-founder-experience-content">
       <p className="fs-founder-experience-date">{item.date}</p>
       <h4>{item.organization}</h4>
@@ -186,4 +186,13 @@ function FounderCareerIntro(){
    </div>
   </div>
  </section>;
+}
+
+function CompanyMark({name,logo}:{name:string;logo:string|null}){
+ const [imageError,setImageError]=useState(false);
+ const treatment=name==='NYU Tandon School of Engineering'?'nyu':name==='Project Destined'?'destined':name==='BGO × Project Destined'?'wide':name==='Same Day Delivery'?'wide':name==='Beats by Dre × Extern'?'beats':name==='Ubiq'?'ubiq':name==='Goldman Sachs'?'goldman':name==='Bissapio'?'bissapio':'standard';
+ const fallback=name==='Beats by Dre × Extern'?'beats':name==='Ubiq'?'Ubiq':name==='GO Project'?'GO':name==='Goldman Sachs'?'GS':name==='National Society of Black Engineers · NYU'?'NSBE':name.split(' ').slice(0,2).map(word=>word[0]).join('').toUpperCase();
+ return <div className={`fs-founder-experience-mark is-${treatment}`} aria-hidden="true">
+  {logo&&!imageError?<img src={logo} alt="" width={96} height={64} loading="lazy" decoding="async" onError={()=>setImageError(true)}/>:<span>{fallback}</span>}
+ </div>;
 }
