@@ -158,8 +158,10 @@ function FounderCareerIntro(){
     <p className="ac-eyebrow">Meet the founder</p>
     <h2 id="fs-founder-career-title">From Brooklyn to finance. <em>Here’s my story.</em></h2>
     <p className="fs-founder-career-lead">I’m Alpha Soumaré, a student at NYU Tandon and the founder of First Seat Academy.</p>
-    <p>I grew up on Greene Avenue in Brooklyn without much exposure to what people actually do in corporate careers. As I started exploring finance, technology, and operations, I realized how much easier it is to choose a path once you can see the work for yourself.</p>
-    <p>I created First Seat Academy so students can discover careers, learn the basics, and try the work without needing connections or prior experience.</p>
+    <p>I grew up on Greene Avenue in Brooklyn, raised by immigrant parents who came to the United States to build a better future for our family. Growing up, I wasn’t surrounded by people working on Wall Street, in consulting, or at major technology companies. I didn’t have many people I could turn to who could explain what an investment banker, financial analyst, or consultant actually did, let alone how to become one.</p>
+    <p>As I got older and eventually made my way to NYU Tandon, I started exploring these industries through internships, professional programs, and conversations with people working in finance and technology. Those experiences opened my eyes to careers I barely knew existed growing up. I realized that talent and ambition aren’t always the problem. Sometimes, students simply don’t know what opportunities are out there or where to begin.</p>
+    <p>That’s why I created <strong>First Seat Academy</strong>. I wanted to build the resource I wish I had growing up in Brooklyn: a free platform where students, especially those from immigrant families and communities with limited corporate exposure, can explore careers, understand financial concepts in simple language, and experience what the work actually looks like before choosing a path.</p>
+    <p><strong>Because your background shouldn’t determine which opportunities you get to discover.</strong></p>
     <a className="ac-text-link" href="#my-experience">Explore my experience <ArrowDown size={16}/></a>
    </div>
    <figure className="fs-founder-career-portrait">
