@@ -334,8 +334,14 @@
 @media (max-width:767px){.fs-founder-career-intro{grid-template-columns:1fr;gap:22px}.fs-founder-career-portrait{width:100%;max-width:520px;justify-self:stretch}.fs-founder-career-portrait img{width:100%;aspect-ratio:3/2}.fs-founder-experience-item{grid-template-columns:100px minmax(0,1fr);gap:14px}.fs-founder-experience-mark{width:98px;height:75px}.fs-founder-experience-mark.is-beats img{width:58px;height:58px}}
 
 /* First Seat Academy: consistent editorial onboarding refinements */
+.fs-home-sections .fs-first-steps{grid-template-columns:minmax(0,1fr);gap:24px}
+.fs-home-sections .fs-first-steps-heading h2{max-width:24ch}
 .fs-home-sections .fs-first-steps-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:1px solid #dbe5f0;border-bottom:1px solid #dbe5f0}
-.fs-home-sections .fs-first-steps-list>a{min-width:0;padding:24px 18px;border-right:1px solid #dbe5f0;border-radius:0;box-shadow:none}
+.fs-home-sections .fs-first-steps-list>a{display:flex;flex-direction:column;align-items:flex-start;gap:12px;min-width:0;padding:24px 18px;border-right:1px solid #dbe5f0;border-bottom:0;border-radius:0;box-shadow:none}
+.fs-home-sections .fs-first-steps-list>a>span{font-size:11px;line-height:1.5;white-space:normal}
+.fs-home-sections .fs-first-steps-list>a>strong{font-size:19px;line-height:1.35}
+.fs-home-sections .fs-first-steps-list>a>p{width:100%;margin:0!important;font-size:14px;line-height:1.65}
+.fs-home-sections .fs-first-steps-list>a>svg{margin-top:auto}
 .fs-home-sections .fs-first-steps-list>a:last-child{border-right:0}
 .fs-home-sections .fs-first-steps-list>a:hover{background:#f3f7fc}
 .fs-home-sections .fs-first-steps-list>a:focus-visible,.fs-home-sections .ac-text-link:focus-visible{outline:3px solid #2563eb;outline-offset:4px}
