@@ -3,12 +3,13 @@ import {useState} from 'react';
 import {LinkButton,PageTitle} from './common';
 import {useLab} from './use-academy';
 
-type DeskProgress={step:number;complete:boolean};
-const defaults:DeskProgress={step:0,complete:false};
+type DeskProgress={step:number;complete:boolean;everCompleted:boolean};
+const defaults:DeskProgress={step:0,complete:false,everCompleted:false};
 function validate(value:unknown):DeskProgress{
  const v=value&&typeof value==='object'?value as Partial<DeskProgress>:{};
  const step=typeof v.step==='number'&&Number.isFinite(v.step)?Math.max(0,Math.min(3,Math.floor(v.step))):0;
- return {step,complete:v.complete===true&&step===3};
+ const complete=v.complete===true&&step===3;
+ return {step:complete?3:Math.min(2,step),complete,everCompleted:complete||v.everCompleted===true};
 }
 const tasks=[
  {label:'Trade matching',title:'Two sides. One disagreement.',intro:'A trade is an agreement to buy or sell a financial asset. Both sides should record the same details.',heads:['Field','Buyer record','Seller record'],rows:[['Security','AAPL shares','AAPL shares'],['Quantity','100 shares','110 shares'],['Price','$250 per share','$250 per share']],question:'What should you flag before matching this trade?',choices:[['price','A price difference'],['quantity','The 10-share quantity difference'],['symbol','A different stock symbol']],answer:'quantity',feedback:'Both sides agree on the stock and price, but disagree on the number of shares. Investigate and correct the quantity with evidence before treating the records as matched.',term:'Matching',definition:'Comparing the two sides of a trade to make sure important details agree.'},
@@ -22,11 +23,11 @@ export function DeskChallenge(){
  const [checked,setChecked]=useState(false);
  const task=tasks[Math.min(progress.step,2)];
  const correct=answer===task.answer;
- const advance=()=>{if(!correct)return;setProgress({step:Math.min(3,progress.step+1),complete:progress.step===2});setAnswer('');setChecked(false);};
+ const advance=()=>{if(!correct)return;setProgress({step:Math.min(3,progress.step+1),complete:progress.step===2,everCompleted:progress.everCompleted||progress.step===2});setAnswer('');setChecked(false);};
  return <div className="fs-desk"><a className="ac-back" href="#simulations">← All practice workspaces</a>
  <PageTitle eyebrow="Interactive lesson · 5 minutes · fictional data" title="Your first day on the operations desk.">Make three decisions: check a trade, reconcile a record, and handle an exception. We explain each concept before you try it.</PageTitle>
  <ol className="fs-desk-progress" aria-label="Challenge progress">{tasks.map((t,i)=><li key={t.label} className={i<progress.step?'is-done':i===progress.step?'is-current':''}>{i+1}. {t.label}{i<progress.step?' ✓':''}</li>)}</ol>
- {progress.complete?<section className="fs-desk-done" role="status"><p className="ac-eyebrow">Challenge completed</p><h2>You made three careful operations decisions.</h2><p>You matched trade records, investigated a holdings difference, and protected an unverified settlement-instruction change. Your completion is saved on this device.</p><div className="ac-actions"><LinkButton to="my-learning">See my progress</LinkButton><LinkButton to="operations/learning" secondary>Keep learning operations</LinkButton><button className="ac-button secondary" onClick={()=>{setProgress(defaults);setAnswer('');setChecked(false);}}>Practice again</button></div></section>:
+ {progress.complete?<section className="fs-desk-done" role="status"><p className="ac-eyebrow">Challenge completed</p><h2>You made three careful operations decisions.</h2><ul><li><strong>Trade still unmatched.</strong> You flagged 100 shares on one record and 110 on the other. Someone must confirm the correct quantity.</li><li><strong>20 shares still unexplained.</strong> You chose to investigate why one record shows 250 shares and the other shows 230. The cause is still unknown.</li><li><strong>Payment instructions on hold.</strong> You chose to verify the new account before using it. No money or shares have moved.</li></ul><div className="ac-actions"><LinkButton to="my-learning">See my progress</LinkButton><LinkButton to="operations/learning" secondary>Keep learning operations</LinkButton><button className="ac-button secondary" onClick={()=>{setProgress({...defaults,everCompleted:true});setAnswer('');setChecked(false);}}>Practice again</button></div></section>:
  <section className="fs-desk-card" aria-labelledby="fs-desk-title"><p className="ac-eyebrow">Task {progress.step+1} of 3 · {task.label}</p><h2 id="fs-desk-title">{task.title}</h2><p className="fs-desk-lede">{task.intro}</p>
  <div className="ac-table-wrap"><table className="fs-desk-data"><thead><tr>{task.heads.map(h=><th key={h} scope="col">{h}</th>)}</tr></thead><tbody>{task.rows.map((row,i)=><tr key={i}>{row.map((cell,j)=><td key={j}>{cell}</td>)}</tr>)}</tbody></table></div>
  <details className="fs-desk-definition"><summary>What does “{task.term}” mean?</summary><p>{task.definition}</p></details>
